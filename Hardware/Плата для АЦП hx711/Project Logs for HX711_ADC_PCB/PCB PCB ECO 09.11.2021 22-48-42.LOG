@@ -1,0 +1,72 @@
+Added Component: Designator=U1(HX711)
+Add component (AddParameter): Name = "ComponentKind"; Value = "TH"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "HeplURL"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://www.chipdip.ru/product0/8002691862"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HeplURL"; Value = "https://www.chipdip.ru/product0/8002691862"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "OKYSTAR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "8002691862"; VariantName = "[No Variations]"
+Added Component: Designator=X1(CON: PLS-6)
+Add component (AddParameter): Name = "ComponentKind"; Value = "TH"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = "https://www.chipdip.ru/product/pls-6"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Connfly electronic (Zhenqin)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = "PLS-6 (DS1021-1x6)"; VariantName = "[No Variations]"
+Added Component: Designator=X2(CON: PLS-4)
+Add component (AddParameter): Name = "ComponentKind"; Value = "TH"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = "https://www.chipdip.ru/product/pls-4"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Connfly electronic (Zhenqin)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = "PLS-4 (DS-1021-1x4)"; VariantName = "[No Variations]"
+Added Component: Designator=X3(CON: PLS-2)
+Add component (AddParameter): Name = "ComponentKind"; Value = "TH"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = "https://www.chipdip.ru/product/pls-2"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Connfly electronic (Zhenqin)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = "PLS-2 (DS1021-1x2)"; VariantName = "[No Variations]"
+Added Component: Designator=X4(CON: PLS-4)
+Add component (AddParameter): Name = "ComponentKind"; Value = "TH"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = "https://www.chipdip.ru/product/pls-4"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Connfly electronic (Zhenqin)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = "PLS-4 (DS-1021-1x4)"; VariantName = "[No Variations]"
+Added Component: Designator=X5(CON: PLS-4)
+Add component (AddParameter): Name = "ComponentKind"; Value = "TH"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = "https://www.chipdip.ru/product/pls-4"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Connfly electronic (Zhenqin)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = "PLS-4 (DS-1021-1x4)"; VariantName = "[No Variations]"
+Added Component: Designator=X6(CON: PLS-3)
+Add component (AddParameter): Name = "ComponentKind"; Value = "TH"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = "https://www.chipdip.ru/product/pls-3"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Connfly electronic (Zhenqin)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = "PLS-3 (DS1021-1x3)"; VariantName = "[No Variations]"
+Added Component: Designator=X7(CON: DG142V-5.08-4P)
+Add component (AddParameter): Name = "ComponentKind"; Value = "TH"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = "https://www.chipdip.ru/product0/8001774654"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Degson Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = "DG142R-5.08-04P-14-00AH"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=DT Pin=X2-2
+Added Pin To Net: NetName=DT Pin=X4-2
+Added Net: Name=DT
+Added Pin To Net: NetName=GND Pin=X2-1
+Added Pin To Net: NetName=GND Pin=X3-2
+Added Net: Name=GND
+Added Pin To Net: NetName=IN_A+ Pin=X1-4
+Added Pin To Net: NetName=IN_A+ Pin=X7-4
+Added Pin To Net: NetName=IN_A+ Pin=X7-4
+Added Net: Name=IN_A+
+Added Pin To Net: NetName=IN_A- Pin=X1-3
+Added Pin To Net: NetName=IN_A- Pin=X7-3
+Added Pin To Net: NetName=IN_A- Pin=X7-3
+Added Net: Name=IN_A-
+Added Pin To Net: NetName=SCK Pin=X2-3
+Added Pin To Net: NetName=SCK Pin=X4-3
+Added Net: Name=SCK
+Added Pin To Net: NetName=VCC_SENS+ Pin=X1-1
+Added Pin To Net: NetName=VCC_SENS+ Pin=X7-1
+Added Pin To Net: NetName=VCC_SENS+ Pin=X7-1
+Added Net: Name=VCC_SENS+
+Added Pin To Net: NetName=VCC_SENS- Pin=X1-2
+Added Pin To Net: NetName=VCC_SENS- Pin=X7-2
+Added Pin To Net: NetName=VCC_SENS- Pin=X7-2
+Added Net: Name=VCC_SENS-
+Added Pin To Net: NetName=VCC Pin=X2-4
+Added Pin To Net: NetName=VCC Pin=X3-1
+Added Net: Name=VCC
+Added Class: Name=Scheme
+Added Room: Name=Scheme
