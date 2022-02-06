@@ -2,6 +2,13 @@
 
 Файлы по проектам аграрки
 
+# Папка 3D - содержит 3D модели и сборки
+
+
+# Папка Hardware - содержит проекты печатных плат
+BlueTractor_v1.1-2021(revised for PCB) - переработанный проект платы контроллера бестрессового взвешивания. Основная цель - актуальная библиотека компонентов. 
+Плата для АЦП hx711 - платка с АЦП, которая устанавливается на Arduino Uno
+
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
