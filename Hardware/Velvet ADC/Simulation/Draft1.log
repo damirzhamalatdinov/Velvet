@@ -1,0 +1,22 @@
+Circuit: * D:\HighClassSystems\Projects\KazATU\Velvet\Hardware\Velvet ADC v1.1\Simulation\Draft1.asc
+
+Direct Newton iteration for .op point succeeded.
+
+Date: Sun Mar 06 21:50:09 2022
+Total elapsed time: 0.219 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 2085
+traniter = 2082
+tranpoints = 1042
+accept = 1042
+rejected = 0
+matrix size = 9
+fillins = 2
+solver = Normal
+Matrix Compiler1: 706 байт object code size  0.2/0.1/[0.1]
+Matrix Compiler2: 855 байт object code size  0.1/0.2/[0.1]
+
+
