@@ -1,1 +1,12 @@
-/Hardware/Velvet Controller/History
+
+# Hardware folder
+Hardware/Velvet Controller/History
+Hardware/Velvet Controller/__Previews
+
+Hardware/Velvet ADC/History
+Hardware/Velvet ADC/__Previews
+
+
+# Docs
+*.bkp
+
