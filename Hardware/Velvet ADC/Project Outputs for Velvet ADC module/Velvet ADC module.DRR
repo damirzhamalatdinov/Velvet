@@ -1,0 +1,18 @@
+----------------------------------------------------------------------------------------------------------------------------------
+NCDrill File Report For: Velvet ADC module.PcbDoc   29.06.2022  10:10:56
+----------------------------------------------------------------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : Velvet ADC module.TXT
+
+Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
+----------------------------------------------------------------------------------------------------------------------------------
+T1      12mil (0.3mm)                                             Round             1         PTH        0.00inch (0.00mm)
+T2      16mil (0.4mm)                                             Round             6         PTH        0.00inch (0.00mm)
+T3      35mil (0.9mm)                                             Round             12        PTH        0.00inch (0.00mm)
+T4      39mil (1mm)                                               Round             5         PTH        0.00inch (0.00mm)
+T5      55mil (1.4mm)                                             Round             25        PTH        0.00inch (0.00mm)
+----------------------------------------------------------------------------------------------------------------------------------
+Totals                                                                              49
+
+Total Processing Time (hh:mm:ss) : 00:00:00
