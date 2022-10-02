@@ -1,4 +1,4 @@
-DRC Rules Export File for PCB: C:\Files\Velvet\Hardware\Velvet ADC\Velvet ADC module.PcbDoc
+DRC Rules Export File for PCB: D:\HighClassSystems\Projects\KazATU\Velvet\Hardware\Velvet ADC\Velvet ADC module.PcbDoc
 RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0
 RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion|Scope=Board|Minimum=2.95
 RuleKind=Width|RuleName=Width|Scope=Board|Minimum=4.92
