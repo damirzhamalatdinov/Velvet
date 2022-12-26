@@ -6,7 +6,19 @@ Hardware/Velvet Controller/__Previews
 Hardware/Velvet ADC/History
 Hardware/Velvet ADC/__Previews
 
+# Software folder
+Software/velvet_wifi/.pio/
+Software/velvet_wifi/.vscode/
 
+Software/velvet/build/
+Software/velvet/Drivers/
+Software/velvet/Middlewares/
+Software/velvet/USB_DEVICE/
+
+Software/velvet_bootloader/build/
+Software/velvet_bootloader/Drivers/
+Software/velvet_bootloader/Middlewares/
+Software/velvet_bootloader/USB_DEVICE/
 # Docs
 *.bkp
 
