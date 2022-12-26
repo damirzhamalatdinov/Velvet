@@ -1,0 +1,586 @@
+ARM GAS  /tmp/ccJBYbcP.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"rfid.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.uiCrc16Cal,"ax",%progbits
+  18              		.align	1
+  19              		.global	uiCrc16Cal
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	uiCrc16Cal:
+  27              	.LVL0:
+  28              	.LFB130:
+  29              		.file 1 "Core/Src/rfid.c"
+   1:Core/Src/rfid.c **** #include "rfid.h"
+   2:Core/Src/rfid.c **** 
+   3:Core/Src/rfid.c **** unsigned int uiCrc16Cal(unsigned char const  * pucY, unsigned char ucX)
+   4:Core/Src/rfid.c **** {
+  30              		.loc 1 4 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 4 1 is_stmt 0 view .LVU1
+  35 0000 00B5     		push	{lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 4
+  38              		.cfi_offset 14, -4
+  39 0002 8646     		mov	lr, r0
+   5:Core/Src/rfid.c **** 	unsigned char ucI,ucJ;
+  40              		.loc 1 5 2 is_stmt 1 view .LVU2
+   6:Core/Src/rfid.c **** 	unsigned short int  uiCrcValue = PRESET_VALUE;
+  41              		.loc 1 6 2 view .LVU3
+  42              	.LVL1:
+   7:Core/Src/rfid.c **** 
+   8:Core/Src/rfid.c ****    	for(ucI = 0; ucI < ucX; ucI++)
+  43              		.loc 1 8 5 view .LVU4
+   6:Core/Src/rfid.c **** 	unsigned short int  uiCrcValue = PRESET_VALUE;
+  44              		.loc 1 6 22 is_stmt 0 view .LVU5
+  45 0004 4FF6FF70 		movw	r0, #65535
+  46              	.LVL2:
+  47              		.loc 1 8 13 view .LVU6
+  48 0008 4FF0000C 		mov	ip, #0
+  49              		.loc 1 8 5 view .LVU7
+ARM GAS  /tmp/ccJBYbcP.s 			page 2
+
+
+  50 000c 10E0     		b	.L2
+  51              	.LVL3:
+  52              	.L4:
+   9:Core/Src/rfid.c **** 	   {
+  10:Core/Src/rfid.c **** 		   uiCrcValue = uiCrcValue ^ *(pucY + ucI);
+  11:Core/Src/rfid.c **** 	  	   for(ucJ = 0; ucJ < 8; ucJ++)
+  12:Core/Src/rfid.c **** 	   	  {
+  13:Core/Src/rfid.c **** 		 	if(uiCrcValue & 0x0001)
+  14:Core/Src/rfid.c **** 		   	{
+  15:Core/Src/rfid.c **** 		    	uiCrcValue = (uiCrcValue >> 1) ^ POLYNOMIAL;
+  16:Core/Src/rfid.c **** 		   	}
+  17:Core/Src/rfid.c **** 		 	else
+  18:Core/Src/rfid.c **** 		   	{
+  19:Core/Src/rfid.c **** 		    	uiCrcValue = (uiCrcValue >> 1);
+  53              		.loc 1 19 8 is_stmt 1 view .LVU8
+  54              		.loc 1 19 19 is_stmt 0 view .LVU9
+  55 000e 4008     		lsrs	r0, r0, #1
+  56              	.LVL4:
+  57              	.L5:
+  11:Core/Src/rfid.c **** 	   	  {
+  58              		.loc 1 11 30 is_stmt 1 discriminator 2 view .LVU10
+  11:Core/Src/rfid.c **** 	   	  {
+  59              		.loc 1 11 33 is_stmt 0 discriminator 2 view .LVU11
+  60 0010 0133     		adds	r3, r3, #1
+  61              	.LVL5:
+  11:Core/Src/rfid.c **** 	   	  {
+  62              		.loc 1 11 33 discriminator 2 view .LVU12
+  63 0012 DBB2     		uxtb	r3, r3
+  64              	.LVL6:
+  65              	.L3:
+  11:Core/Src/rfid.c **** 	   	  {
+  66              		.loc 1 11 21 is_stmt 1 discriminator 1 view .LVU13
+  11:Core/Src/rfid.c **** 	   	  {
+  67              		.loc 1 11 8 is_stmt 0 discriminator 1 view .LVU14
+  68 0014 072B     		cmp	r3, #7
+  69 0016 07D8     		bhi	.L9
+  13:Core/Src/rfid.c **** 		   	{
+  70              		.loc 1 13 5 is_stmt 1 view .LVU15
+  13:Core/Src/rfid.c **** 		   	{
+  71              		.loc 1 13 7 is_stmt 0 view .LVU16
+  72 0018 10F0010F 		tst	r0, #1
+  73 001c F7D0     		beq	.L4
+  15:Core/Src/rfid.c **** 		   	}
+  74              		.loc 1 15 8 is_stmt 1 view .LVU17
+  15:Core/Src/rfid.c **** 		   	}
+  75              		.loc 1 15 19 is_stmt 0 view .LVU18
+  76 001e 48F20842 		movw	r2, #33800
+  77 0022 82EA5000 		eor	r0, r2, r0, lsr #1
+  78              	.LVL7:
+  15:Core/Src/rfid.c **** 		   	}
+  79              		.loc 1 15 19 view .LVU19
+  80 0026 F3E7     		b	.L5
+  81              	.L9:
+   8:Core/Src/rfid.c **** 	   {
+  82              		.loc 1 8 29 is_stmt 1 discriminator 2 view .LVU20
+   8:Core/Src/rfid.c **** 	   {
+  83              		.loc 1 8 32 is_stmt 0 discriminator 2 view .LVU21
+ARM GAS  /tmp/ccJBYbcP.s 			page 3
+
+
+  84 0028 0CF1010C 		add	ip, ip, #1
+  85              	.LVL8:
+   8:Core/Src/rfid.c **** 	   {
+  86              		.loc 1 8 32 discriminator 2 view .LVU22
+  87 002c 5FFA8CFC 		uxtb	ip, ip
+  88              	.LVL9:
+  89              	.L2:
+   8:Core/Src/rfid.c **** 	   {
+  90              		.loc 1 8 18 is_stmt 1 discriminator 1 view .LVU23
+   8:Core/Src/rfid.c **** 	   {
+  91              		.loc 1 8 5 is_stmt 0 discriminator 1 view .LVU24
+  92 0030 8C45     		cmp	ip, r1
+  93 0032 04D2     		bcs	.L10
+  10:Core/Src/rfid.c **** 	  	   for(ucJ = 0; ucJ < 8; ucJ++)
+  94              		.loc 1 10 6 is_stmt 1 view .LVU25
+  10:Core/Src/rfid.c **** 	  	   for(ucJ = 0; ucJ < 8; ucJ++)
+  95              		.loc 1 10 32 is_stmt 0 view .LVU26
+  96 0034 1EF80C30 		ldrb	r3, [lr, ip]	@ zero_extendqisi2
+  10:Core/Src/rfid.c **** 	  	   for(ucJ = 0; ucJ < 8; ucJ++)
+  97              		.loc 1 10 17 view .LVU27
+  98 0038 5840     		eors	r0, r0, r3
+  99              	.LVL10:
+  11:Core/Src/rfid.c **** 	   	  {
+ 100              		.loc 1 11 8 is_stmt 1 view .LVU28
+  11:Core/Src/rfid.c **** 	   	  {
+ 101              		.loc 1 11 16 is_stmt 0 view .LVU29
+ 102 003a 0023     		movs	r3, #0
+  11:Core/Src/rfid.c **** 	   	  {
+ 103              		.loc 1 11 8 view .LVU30
+ 104 003c EAE7     		b	.L3
+ 105              	.LVL11:
+ 106              	.L10:
+  20:Core/Src/rfid.c **** 		   	}
+  21:Core/Src/rfid.c **** 		}
+  22:Core/Src/rfid.c ****  	}
+  23:Core/Src/rfid.c ****     return uiCrcValue;
+ 107              		.loc 1 23 5 is_stmt 1 view .LVU31
+  24:Core/Src/rfid.c **** }
+ 108              		.loc 1 24 1 is_stmt 0 view .LVU32
+ 109 003e 5DF804FB 		ldr	pc, [sp], #4
+ 110              		.cfi_endproc
+ 111              	.LFE130:
+ 113              		.section	.text.isCRCValid,"ax",%progbits
+ 114              		.align	1
+ 115              		.global	isCRCValid
+ 116              		.syntax unified
+ 117              		.thumb
+ 118              		.thumb_func
+ 119              		.fpu fpv4-sp-d16
+ 121              	isCRCValid:
+ 122              	.LVL12:
+ 123              	.LFB131:
+  25:Core/Src/rfid.c **** 
+  26:Core/Src/rfid.c **** 
+  27:Core/Src/rfid.c **** bool isCRCValid( uint8_t const *data){
+ 124              		.loc 1 27 38 is_stmt 1 view -0
+ 125              		.cfi_startproc
+ARM GAS  /tmp/ccJBYbcP.s 			page 4
+
+
+ 126              		@ args = 0, pretend = 0, frame = 0
+ 127              		@ frame_needed = 0, uses_anonymous_args = 0
+ 128              		.loc 1 27 38 is_stmt 0 view .LVU34
+ 129 0000 38B5     		push	{r3, r4, r5, lr}
+ 130              	.LCFI1:
+ 131              		.cfi_def_cfa_offset 16
+ 132              		.cfi_offset 3, -16
+ 133              		.cfi_offset 4, -12
+ 134              		.cfi_offset 5, -8
+ 135              		.cfi_offset 14, -4
+ 136 0002 0446     		mov	r4, r0
+  28:Core/Src/rfid.c ****     int data_length = data[0] + 1;
+ 137              		.loc 1 28 5 is_stmt 1 view .LVU35
+ 138              		.loc 1 28 27 is_stmt 0 view .LVU36
+ 139 0004 0578     		ldrb	r5, [r0]	@ zero_extendqisi2
+ 140              	.LVL13:
+  29:Core/Src/rfid.c ****     int crc = uiCrc16Cal(data, data_length - 2);
+ 141              		.loc 1 29 5 is_stmt 1 view .LVU37
+ 142              		.loc 1 29 15 is_stmt 0 view .LVU38
+ 143 0006 691E     		subs	r1, r5, #1
+ 144 0008 C9B2     		uxtb	r1, r1
+ 145 000a FFF7FEFF 		bl	uiCrc16Cal
+ 146              	.LVL14:
+  30:Core/Src/rfid.c ****     if ((data[data_length - 2] == (crc & 0xff)) && (data[data_length - 1] == (crc >> 8)))
+ 147              		.loc 1 30 5 is_stmt 1 view .LVU39
+ 148              		.loc 1 30 14 is_stmt 0 view .LVU40
+ 149 000e 6319     		adds	r3, r4, r5
+ 150 0010 13F8012C 		ldrb	r2, [r3, #-1]	@ zero_extendqisi2
+ 151              		.loc 1 30 40 view .LVU41
+ 152 0014 C3B2     		uxtb	r3, r0
+ 153              		.loc 1 30 8 view .LVU42
+ 154 0016 9A42     		cmp	r2, r3
+ 155 0018 01D0     		beq	.L16
+  31:Core/Src/rfid.c ****         return 1;
+  32:Core/Src/rfid.c ****     return 0;
+ 156              		.loc 1 32 12 view .LVU43
+ 157 001a 0020     		movs	r0, #0
+ 158              	.LVL15:
+ 159              	.L12:
+  33:Core/Src/rfid.c **** }
+ 160              		.loc 1 33 1 view .LVU44
+ 161 001c 38BD     		pop	{r3, r4, r5, pc}
+ 162              	.LVL16:
+ 163              	.L16:
+  30:Core/Src/rfid.c ****     if ((data[data_length - 2] == (crc & 0xff)) && (data[data_length - 1] == (crc >> 8)))
+ 164              		.loc 1 30 57 discriminator 1 view .LVU45
+ 165 001e 635D     		ldrb	r3, [r4, r5]	@ zero_extendqisi2
+  30:Core/Src/rfid.c ****     if ((data[data_length - 2] == (crc & 0xff)) && (data[data_length - 1] == (crc >> 8)))
+ 166              		.loc 1 30 49 discriminator 1 view .LVU46
+ 167 0020 B3EB202F 		cmp	r3, r0, asr #8
+ 168 0024 01D0     		beq	.L14
+  32:Core/Src/rfid.c **** }
+ 169              		.loc 1 32 12 view .LVU47
+ 170 0026 0020     		movs	r0, #0
+ 171              	.LVL17:
+  32:Core/Src/rfid.c **** }
+ 172              		.loc 1 32 12 view .LVU48
+ARM GAS  /tmp/ccJBYbcP.s 			page 5
+
+
+ 173 0028 F8E7     		b	.L12
+ 174              	.LVL18:
+ 175              	.L14:
+  31:Core/Src/rfid.c ****         return 1;
+ 176              		.loc 1 31 16 view .LVU49
+ 177 002a 0120     		movs	r0, #1
+ 178              	.LVL19:
+  31:Core/Src/rfid.c ****         return 1;
+ 179              		.loc 1 31 16 view .LVU50
+ 180 002c F6E7     		b	.L12
+ 181              		.cfi_endproc
+ 182              	.LFE131:
+ 184              		.section	.text.addCRC16,"ax",%progbits
+ 185              		.align	1
+ 186              		.global	addCRC16
+ 187              		.syntax unified
+ 188              		.thumb
+ 189              		.thumb_func
+ 190              		.fpu fpv4-sp-d16
+ 192              	addCRC16:
+ 193              	.LVL20:
+ 194              	.LFB132:
+  34:Core/Src/rfid.c **** 
+  35:Core/Src/rfid.c **** 
+  36:Core/Src/rfid.c **** void addCRC16(uint8_t *buf){
+ 195              		.loc 1 36 28 is_stmt 1 view -0
+ 196              		.cfi_startproc
+ 197              		@ args = 0, pretend = 0, frame = 0
+ 198              		@ frame_needed = 0, uses_anonymous_args = 0
+ 199              		.loc 1 36 28 is_stmt 0 view .LVU52
+ 200 0000 70B5     		push	{r4, r5, r6, lr}
+ 201              	.LCFI2:
+ 202              		.cfi_def_cfa_offset 16
+ 203              		.cfi_offset 4, -16
+ 204              		.cfi_offset 5, -12
+ 205              		.cfi_offset 6, -8
+ 206              		.cfi_offset 14, -4
+ 207 0002 0446     		mov	r4, r0
+  37:Core/Src/rfid.c ****     int data_length = buf[0] + 1;
+ 208              		.loc 1 37 5 is_stmt 1 view .LVU53
+ 209              		.loc 1 37 26 is_stmt 0 view .LVU54
+ 210 0004 0578     		ldrb	r5, [r0]	@ zero_extendqisi2
+ 211              	.LVL21:
+  38:Core/Src/rfid.c ****     int crc = uiCrc16Cal(buf, data_length - 2);
+ 212              		.loc 1 38 5 is_stmt 1 view .LVU55
+ 213              		.loc 1 38 15 is_stmt 0 view .LVU56
+ 214 0006 6E1E     		subs	r6, r5, #1
+ 215 0008 F1B2     		uxtb	r1, r6
+ 216 000a FFF7FEFF 		bl	uiCrc16Cal
+ 217              	.LVL22:
+  39:Core/Src/rfid.c ****     buf[data_length - 2] = (crc & 0xff);
+ 218              		.loc 1 39 5 is_stmt 1 view .LVU57
+ 219              		.loc 1 39 26 is_stmt 0 view .LVU58
+ 220 000e A055     		strb	r0, [r4, r6]
+  40:Core/Src/rfid.c ****     buf[data_length - 1] = (crc >> 8);
+ 221              		.loc 1 40 5 is_stmt 1 view .LVU59
+ 222              		.loc 1 40 33 is_stmt 0 view .LVU60
+ARM GAS  /tmp/ccJBYbcP.s 			page 6
+
+
+ 223 0010 0012     		asrs	r0, r0, #8
+ 224              	.LVL23:
+ 225              		.loc 1 40 26 view .LVU61
+ 226 0012 6055     		strb	r0, [r4, r5]
+  41:Core/Src/rfid.c **** }
+ 227              		.loc 1 41 1 view .LVU62
+ 228 0014 70BD     		pop	{r4, r5, r6, pc}
+ 229              		.loc 1 41 1 view .LVU63
+ 230              		.cfi_endproc
+ 231              	.LFE132:
+ 233              		.section	.text.RFIDReadTag,"ax",%progbits
+ 234              		.align	1
+ 235              		.global	RFIDReadTag
+ 236              		.syntax unified
+ 237              		.thumb
+ 238              		.thumb_func
+ 239              		.fpu fpv4-sp-d16
+ 241              	RFIDReadTag:
+ 242              	.LVL24:
+ 243              	.LFB133:
+  42:Core/Src/rfid.c **** 
+  43:Core/Src/rfid.c **** 
+  44:Core/Src/rfid.c **** bool RFIDReadTag(UART_HandleTypeDef *huart, struct TagData *buf){
+ 244              		.loc 1 44 65 is_stmt 1 view -0
+ 245              		.cfi_startproc
+ 246              		@ args = 0, pretend = 0, frame = 8
+ 247              		@ frame_needed = 0, uses_anonymous_args = 0
+ 248              		.loc 1 44 65 is_stmt 0 view .LVU65
+ 249 0000 30B5     		push	{r4, r5, lr}
+ 250              	.LCFI3:
+ 251              		.cfi_def_cfa_offset 12
+ 252              		.cfi_offset 4, -12
+ 253              		.cfi_offset 5, -8
+ 254              		.cfi_offset 14, -4
+ 255 0002 83B0     		sub	sp, sp, #12
+ 256              	.LCFI4:
+ 257              		.cfi_def_cfa_offset 24
+ 258 0004 0546     		mov	r5, r0
+ 259 0006 0C46     		mov	r4, r1
+  45:Core/Src/rfid.c ****     uint8_t cmd[5] = {0x04, RFID_ADDRESS, G2_SINGLE_TAG_INVENTORY};
+ 260              		.loc 1 45 5 is_stmt 1 view .LVU66
+ 261              		.loc 1 45 13 is_stmt 0 view .LVU67
+ 262 0008 194B     		ldr	r3, .L27
+ 263 000a 0093     		str	r3, [sp]
+ 264 000c 0023     		movs	r3, #0
+ 265 000e 8DF80430 		strb	r3, [sp, #4]
+  46:Core/Src/rfid.c ****     addCRC16(cmd);
+ 266              		.loc 1 46 5 is_stmt 1 view .LVU68
+ 267 0012 6846     		mov	r0, sp
+ 268              	.LVL25:
+ 269              		.loc 1 46 5 is_stmt 0 view .LVU69
+ 270 0014 FFF7FEFF 		bl	addCRC16
+ 271              	.LVL26:
+  47:Core/Src/rfid.c ****     HAL_UART_Transmit(huart, cmd, 5, 2000);
+ 272              		.loc 1 47 5 is_stmt 1 view .LVU70
+ 273 0018 4FF4FA63 		mov	r3, #2000
+ 274 001c 0522     		movs	r2, #5
+ARM GAS  /tmp/ccJBYbcP.s 			page 7
+
+
+ 275 001e 6946     		mov	r1, sp
+ 276 0020 2846     		mov	r0, r5
+ 277 0022 FFF7FEFF 		bl	HAL_UART_Transmit
+ 278              	.LVL27:
+  48:Core/Src/rfid.c ****     HAL_UART_Receive(huart, buf->id , 50, 2000);
+ 279              		.loc 1 48 5 view .LVU71
+ 280 0026 4FF4FA63 		mov	r3, #2000
+ 281 002a 3222     		movs	r2, #50
+ 282 002c 2146     		mov	r1, r4
+ 283 002e 2846     		mov	r0, r5
+ 284 0030 FFF7FEFF 		bl	HAL_UART_Receive
+ 285              	.LVL28:
+  49:Core/Src/rfid.c ****     
+  50:Core/Src/rfid.c ****     if (buf->id[2] != G2_SINGLE_TAG_INVENTORY ){
+ 286              		.loc 1 50 5 view .LVU72
+ 287              		.loc 1 50 16 is_stmt 0 view .LVU73
+ 288 0034 A378     		ldrb	r3, [r4, #2]	@ zero_extendqisi2
+ 289              		.loc 1 50 8 view .LVU74
+ 290 0036 0F2B     		cmp	r3, #15
+ 291 0038 16D1     		bne	.L24
+  51:Core/Src/rfid.c ****         return false;
+  52:Core/Src/rfid.c ****     } else {
+  53:Core/Src/rfid.c ****         if (isCRCValid(buf) && buf->id[5] == 1){
+ 292              		.loc 1 53 9 is_stmt 1 view .LVU75
+ 293              		.loc 1 53 13 is_stmt 0 view .LVU76
+ 294 003a 2046     		mov	r0, r4
+ 295 003c FFF7FEFF 		bl	isCRCValid
+ 296              	.LVL29:
+ 297              		.loc 1 53 12 view .LVU77
+ 298 0040 10B1     		cbz	r0, .L21
+ 299              		.loc 1 53 39 discriminator 1 view .LVU78
+ 300 0042 6379     		ldrb	r3, [r4, #5]	@ zero_extendqisi2
+ 301              		.loc 1 53 29 discriminator 1 view .LVU79
+ 302 0044 012B     		cmp	r3, #1
+ 303 0046 03D0     		beq	.L26
+ 304              	.L21:
+  54:Core/Src/rfid.c ****             buf->length = buf->id[6];
+  55:Core/Src/rfid.c ****             for(int i = 0; i < buf->length; ++i){
+  56:Core/Src/rfid.c ****                 buf->id[i] = buf->id[7 + i];
+  57:Core/Src/rfid.c ****             }
+  58:Core/Src/rfid.c ****             return true;
+  59:Core/Src/rfid.c ****         } else {
+  60:Core/Src/rfid.c ****             buf->id[0] = 0xf2;
+ 305              		.loc 1 60 13 is_stmt 1 view .LVU80
+ 306              		.loc 1 60 24 is_stmt 0 view .LVU81
+ 307 0048 F223     		movs	r3, #242
+ 308 004a 2370     		strb	r3, [r4]
+  61:Core/Src/rfid.c ****             return false;
+ 309              		.loc 1 61 13 is_stmt 1 view .LVU82
+ 310              		.loc 1 61 20 is_stmt 0 view .LVU83
+ 311 004c 0020     		movs	r0, #0
+ 312 004e 0CE0     		b	.L20
+ 313              	.L26:
+  54:Core/Src/rfid.c ****             buf->length = buf->id[6];
+ 314              		.loc 1 54 13 is_stmt 1 view .LVU84
+  54:Core/Src/rfid.c ****             buf->length = buf->id[6];
+ 315              		.loc 1 54 34 is_stmt 0 view .LVU85
+ARM GAS  /tmp/ccJBYbcP.s 			page 8
+
+
+ 316 0050 A179     		ldrb	r1, [r4, #6]	@ zero_extendqisi2
+  54:Core/Src/rfid.c ****             buf->length = buf->id[6];
+ 317              		.loc 1 54 25 view .LVU86
+ 318 0052 84F83210 		strb	r1, [r4, #50]
+  55:Core/Src/rfid.c ****                 buf->id[i] = buf->id[7 + i];
+ 319              		.loc 1 55 13 is_stmt 1 view .LVU87
+ 320              	.LBB2:
+  55:Core/Src/rfid.c ****                 buf->id[i] = buf->id[7 + i];
+ 321              		.loc 1 55 17 view .LVU88
+ 322              	.LVL30:
+  55:Core/Src/rfid.c ****                 buf->id[i] = buf->id[7 + i];
+ 323              		.loc 1 55 21 is_stmt 0 view .LVU89
+ 324 0056 0023     		movs	r3, #0
+  55:Core/Src/rfid.c ****                 buf->id[i] = buf->id[7 + i];
+ 325              		.loc 1 55 13 view .LVU90
+ 326 0058 03E0     		b	.L22
+ 327              	.LVL31:
+ 328              	.L23:
+  56:Core/Src/rfid.c ****             }
+ 329              		.loc 1 56 17 is_stmt 1 discriminator 3 view .LVU91
+  56:Core/Src/rfid.c ****             }
+ 330              		.loc 1 56 40 is_stmt 0 discriminator 3 view .LVU92
+ 331 005a DA1D     		adds	r2, r3, #7
+  56:Core/Src/rfid.c ****             }
+ 332              		.loc 1 56 37 discriminator 3 view .LVU93
+ 333 005c A25C     		ldrb	r2, [r4, r2]	@ zero_extendqisi2
+  56:Core/Src/rfid.c ****             }
+ 334              		.loc 1 56 28 discriminator 3 view .LVU94
+ 335 005e E254     		strb	r2, [r4, r3]
+  55:Core/Src/rfid.c ****                 buf->id[i] = buf->id[7 + i];
+ 336              		.loc 1 55 45 is_stmt 1 discriminator 3 view .LVU95
+ 337 0060 0133     		adds	r3, r3, #1
+ 338              	.LVL32:
+ 339              	.L22:
+  55:Core/Src/rfid.c ****                 buf->id[i] = buf->id[7 + i];
+ 340              		.loc 1 55 28 discriminator 1 view .LVU96
+  55:Core/Src/rfid.c ****                 buf->id[i] = buf->id[7 + i];
+ 341              		.loc 1 55 13 is_stmt 0 discriminator 1 view .LVU97
+ 342 0062 9942     		cmp	r1, r3
+ 343 0064 F9DC     		bgt	.L23
+ 344 0066 00E0     		b	.L20
+ 345              	.LVL33:
+ 346              	.L24:
+  55:Core/Src/rfid.c ****                 buf->id[i] = buf->id[7 + i];
+ 347              		.loc 1 55 13 discriminator 1 view .LVU98
+ 348              	.LBE2:
+  51:Core/Src/rfid.c ****     } else {
+ 349              		.loc 1 51 16 view .LVU99
+ 350 0068 0020     		movs	r0, #0
+ 351              	.L20:
+  62:Core/Src/rfid.c ****         }
+  63:Core/Src/rfid.c ****     }
+  64:Core/Src/rfid.c ****     buf->id[0] = 0xf3;
+  65:Core/Src/rfid.c ****     return false;
+  66:Core/Src/rfid.c **** } 
+ 352              		.loc 1 66 1 view .LVU100
+ 353 006a 03B0     		add	sp, sp, #12
+ARM GAS  /tmp/ccJBYbcP.s 			page 9
+
+
+ 354              	.LCFI5:
+ 355              		.cfi_def_cfa_offset 12
+ 356              		@ sp needed
+ 357 006c 30BD     		pop	{r4, r5, pc}
+ 358              	.LVL34:
+ 359              	.L28:
+ 360              		.loc 1 66 1 view .LVU101
+ 361 006e 00BF     		.align	2
+ 362              	.L27:
+ 363 0070 04FF0F00 		.word	1048324
+ 364              		.cfi_endproc
+ 365              	.LFE133:
+ 367              		.section	.text.resetTagData,"ax",%progbits
+ 368              		.align	1
+ 369              		.global	resetTagData
+ 370              		.syntax unified
+ 371              		.thumb
+ 372              		.thumb_func
+ 373              		.fpu fpv4-sp-d16
+ 375              	resetTagData:
+ 376              	.LVL35:
+ 377              	.LFB134:
+  67:Core/Src/rfid.c **** 
+  68:Core/Src/rfid.c **** 
+  69:Core/Src/rfid.c **** void resetTagData(struct TagData *tag){
+ 378              		.loc 1 69 39 is_stmt 1 view -0
+ 379              		.cfi_startproc
+ 380              		@ args = 0, pretend = 0, frame = 0
+ 381              		@ frame_needed = 0, uses_anonymous_args = 0
+ 382              		@ link register save eliminated.
+  70:Core/Src/rfid.c ****     for(int i = 0; i < 50; i++){
+ 383              		.loc 1 70 5 view .LVU103
+ 384              	.LBB3:
+ 385              		.loc 1 70 9 view .LVU104
+ 386              		.loc 1 70 13 is_stmt 0 view .LVU105
+ 387 0000 0023     		movs	r3, #0
+ 388              		.loc 1 70 5 view .LVU106
+ 389 0002 02E0     		b	.L30
+ 390              	.LVL36:
+ 391              	.L31:
+  71:Core/Src/rfid.c ****         tag->id[i] = 0;
+ 392              		.loc 1 71 9 is_stmt 1 discriminator 3 view .LVU107
+ 393              		.loc 1 71 20 is_stmt 0 discriminator 3 view .LVU108
+ 394 0004 0022     		movs	r2, #0
+ 395 0006 C254     		strb	r2, [r0, r3]
+  70:Core/Src/rfid.c ****     for(int i = 0; i < 50; i++){
+ 396              		.loc 1 70 28 is_stmt 1 discriminator 3 view .LVU109
+  70:Core/Src/rfid.c ****     for(int i = 0; i < 50; i++){
+ 397              		.loc 1 70 29 is_stmt 0 discriminator 3 view .LVU110
+ 398 0008 0133     		adds	r3, r3, #1
+ 399              	.LVL37:
+ 400              	.L30:
+  70:Core/Src/rfid.c ****     for(int i = 0; i < 50; i++){
+ 401              		.loc 1 70 20 is_stmt 1 discriminator 1 view .LVU111
+  70:Core/Src/rfid.c ****     for(int i = 0; i < 50; i++){
+ 402              		.loc 1 70 5 is_stmt 0 discriminator 1 view .LVU112
+ 403 000a 312B     		cmp	r3, #49
+ARM GAS  /tmp/ccJBYbcP.s 			page 10
+
+
+ 404 000c FADD     		ble	.L31
+ 405              	.LBE3:
+  72:Core/Src/rfid.c ****     }
+  73:Core/Src/rfid.c ****     tag->length = 0;
+ 406              		.loc 1 73 5 is_stmt 1 view .LVU113
+ 407              		.loc 1 73 17 is_stmt 0 view .LVU114
+ 408 000e 0023     		movs	r3, #0
+ 409              	.LVL38:
+ 410              		.loc 1 73 17 view .LVU115
+ 411 0010 80F83230 		strb	r3, [r0, #50]
+  74:Core/Src/rfid.c **** }...
+ 412              		.loc 1 74 1 view .LVU116
+ 413 0014 7047     		bx	lr
+ 414              		.cfi_endproc
+ 415              	.LFE134:
+ 417              		.text
+ 418              	.Letext0:
+ 419              		.file 2 "/usr/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h"
+ 420              		.file 3 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
+ 421              		.file 4 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 422              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 423              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 424              		.file 7 "Core/Inc/rfid.h"
+ARM GAS  /tmp/ccJBYbcP.s 			page 11
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 rfid.c
+     /tmp/ccJBYbcP.s:18     .text.uiCrc16Cal:0000000000000000 $t
+     /tmp/ccJBYbcP.s:26     .text.uiCrc16Cal:0000000000000000 uiCrc16Cal
+     /tmp/ccJBYbcP.s:114    .text.isCRCValid:0000000000000000 $t
+     /tmp/ccJBYbcP.s:121    .text.isCRCValid:0000000000000000 isCRCValid
+     /tmp/ccJBYbcP.s:185    .text.addCRC16:0000000000000000 $t
+     /tmp/ccJBYbcP.s:192    .text.addCRC16:0000000000000000 addCRC16
+     /tmp/ccJBYbcP.s:234    .text.RFIDReadTag:0000000000000000 $t
+     /tmp/ccJBYbcP.s:241    .text.RFIDReadTag:0000000000000000 RFIDReadTag
+     /tmp/ccJBYbcP.s:363    .text.RFIDReadTag:0000000000000070 $d
+     /tmp/ccJBYbcP.s:368    .text.resetTagData:0000000000000000 $t
+     /tmp/ccJBYbcP.s:375    .text.resetTagData:0000000000000000 resetTagData
+
+UNDEFINED SYMBOLS
+HAL_UART_Transmit
+HAL_UART_Receive
