@@ -1,0 +1,13 @@
+>>> cc
+
+./../Core/Src/rfid.c:53:24: warning: incompatible pointer types passing 'struct TagData *' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') [-Wincompatible-pointer-types]
+        if (isCRCValid(buf) && buf->id[5] == 1){
+                       ^~~
+./../Core/Src/rfid.c:27:33: note: passing argument to parameter 'data' here
+bool isCRCValid( uint8_t const *data){
+                                ^
+1 warning generated.
+
+>>> ld
+
+Program Size: Code=12778 RO-data=450 RW-data=8 ZI-data=16928  
