@@ -1,0 +1,30 @@
+--cpu=Cortex-M4.fp --library_type=microlib --lto --scatter "c:/Users/kvenecusghost/Documents/Velvet/Software/velvet_app_stm/MDK-ARM/build/velvet_app_stm/velvet_app_stm.sct" --diag_suppress=L6329 --strict --summary_stderr --info summarysizes --map --xref --callgraph --symbols --info sizes --info totals --info unused --info veneers
+--list ./build/velvet_app_stm/velvet_app_stm.map
+./build/velvet_app_stm/__/Core/Src/adc.o
+./build/velvet_app_stm/__/Core/Src/main.o
+./build/velvet_app_stm/__/Core/Src/rfid.o
+./build/velvet_app_stm/__/Core/Src/stm32f4xx_hal_msp.o
+./build/velvet_app_stm/__/Core/Src/stm32f4xx_it.o
+./build/velvet_app_stm/__/Core/Src/system_stm32f4xx.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_iwdg.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sd.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+./build/velvet_app_stm/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_sdmmc.o
+./build/velvet_app_stm/startup_stm32f407xx.o -o ./build/velvet_app_stm/velvet_app_stm.axf

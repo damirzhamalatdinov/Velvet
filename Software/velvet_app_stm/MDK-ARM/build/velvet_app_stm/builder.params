@@ -1,0 +1,114 @@
+{
+    "name": "velvet_app_stm",
+    "target": "velvet_app_stm",
+    "toolchain": "AC6",
+    "toolchainLocation": "C:\\Keil_v5\\ARM\\ARMCLANG",
+    "toolchainCfgFile": "..\\cfg\\arm.v6.model.json",
+    "buildMode": "normal|multhread",
+    "showRepathOnLog": true,
+    "threadNum": 4,
+    "rootDir": "c:\\Users\\kvenecusghost\\Documents\\Velvet\\Software\\velvet_app_stm\\MDK-ARM",
+    "dumpPath": "build\\velvet_app_stm",
+    "outDir": "build\\velvet_app_stm",
+    "ram": 20480,
+    "rom": 32768,
+    "incDirs": [
+        "../Core/Inc",
+        "../Drivers/STM32F4xx_HAL_Driver/Inc",
+        "../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+        "../Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+        "../Drivers/CMSIS/Include",
+        ".cmsis/include",
+        "RTE/_velvet_app_stm",
+        ".eide/deps"
+    ],
+    "libDirs": [],
+    "defines": [
+        "USE_HAL_DRIVER",
+        "STM32F407xx",
+        "USER_VECT_TAB_ADDRESS"
+    ],
+    "sourceList": [
+        "../Core/Src/adc.c",
+        "../Core/Src/main.c",
+        "../Core/Src/rfid.c",
+        "../Core/Src/stm32f4xx_hal_msp.c",
+        "../Core/Src/stm32f4xx_it.c",
+        "../Core/Src/system_stm32f4xx.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_iwdg.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sd.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c",
+        "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_sdmmc.c",
+        "startup_stm32f407xx.s"
+    ],
+    "sourceParams": {},
+    "sourceParamsMtime": 1673947658613.5234,
+    "options": {
+        "version": 3,
+        "beforeBuildTasks": [],
+        "afterBuildTasks": [],
+        "global": {
+            "use-microLIB": true,
+            "output-debug-info": "enable",
+            "microcontroller-cpu": "cortex-m4-sp",
+            "microcontroller-fpu": "cortex-m4-sp",
+            "microcontroller-float": "cortex-m4-sp",
+            "target": "cortex-m4-sp"
+        },
+        "c/cpp-compiler": {
+            "optimization": "level-0",
+            "language-c": "c99",
+            "language-cpp": "c++11",
+            "link-time-optimization": true
+        },
+        "asm-compiler": {
+            "$use": "asm-auto"
+        },
+        "linker": {
+            "output-format": "elf",
+            "misc-controls": "--diag_suppress=L6329",
+            "link-time-optimization": true,
+            "link-scatter": [
+                "\"c:/Users/kvenecusghost/Documents/Velvet/Software/velvet_app_stm/MDK-ARM/build/velvet_app_stm/velvet_app_stm.sct\""
+            ]
+        }
+    },
+    "env": {
+        "workspaceFolder": "c:\\Users\\kvenecusghost\\Documents\\Velvet\\Software\\velvet_app_stm\\MDK-ARM",
+        "workspaceFolderBasename": "MDK-ARM",
+        "OutDir": "c:\\Users\\kvenecusghost\\Documents\\Velvet\\Software\\velvet_app_stm\\MDK-ARM\\build\\velvet_app_stm",
+        "OutDirRoot": "build",
+        "OutDirBase": "build\\velvet_app_stm",
+        "ProjectName": "velvet_app_stm",
+        "ConfigName": "velvet_app_stm",
+        "ProjectRoot": "c:\\Users\\kvenecusghost\\Documents\\Velvet\\Software\\velvet_app_stm\\MDK-ARM",
+        "ExecutableName": "c:\\Users\\kvenecusghost\\Documents\\Velvet\\Software\\velvet_app_stm\\MDK-ARM\\build\\velvet_app_stm\\velvet_app_stm",
+        "ToolchainRoot": "C:\\Keil_v5\\ARM\\ARMCLANG"
+    },
+    "sha": {
+        "c/cpp-defines": "6068f87fbf294b1ac49be7d6f4cd93ae",
+        "beforeBuildTasks": "d751713988987e9331980363e24189ce",
+        "afterBuildTasks": "d751713988987e9331980363e24189ce",
+        "global": "3ae75cac734e7a166338bea4b35ae2e0",
+        "c/cpp-compiler": "55e5e1432c969c9ed826dc02f1423eb1",
+        "asm-compiler": "f16bc066fd83f6b0cf6cd2b7eea65136",
+        "linker": "08d29f9bacd2b2d68c29a171b6317ae7"
+    }
+}
