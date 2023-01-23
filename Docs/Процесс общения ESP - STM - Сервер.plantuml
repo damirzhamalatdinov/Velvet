@@ -1,0 +1,73 @@
+@startuml Процесс обновления ПО
+skinparam maxMessageSize 100
+
+actor User as user 
+participant Server as updserv 
+participant ESP as esp 
+participant STM32 as stm
+
+alt can go in parallel
+    esp -> esp: Power Up
+else
+    stm -> stm: Power Up
+else
+    user -> updserv: Upload new FW (FW.hex, version)
+    user -> updserv: Update FW (velvet_id, version)
+    updserv -> updserv: Calculate CRC (FW.hex)
+end
+
+stm -> esp: Send CMD
+
+alt Send Weight CMD 
+    esp <- stm: Transmit {cow_id; timestamp[N]; weight[N]}
+    
+    updserv <- esp: HTTP POST {velvet_id; cow_id; timestamp[N]; weight[N]} 
+    updserv -> esp: HTTP Response
+    esp -> stm: Response 
+
+    alt Response is Err || Timeout
+        esp -> stm: Transmit over WiFi Error
+        stm -> stm: Transmit Data over Lora
+    end
+end
+
+group Check FW CMD
+    esp -> updserv: HTTP GET FW 
+    updserv -> esp: HTTP Response version || Err
+
+    alt Response == Err || Timeout
+        esp -> stm: Response Error
+    end
+
+    esp -> esp: Check in Memory Version 
+
+    alt Version != In Memory Version
+        loop Response is OK {FW.hex + CRC}
+            esp -> updserv: HTTP GET next FW part
+            updserv -> esp: HTTP Response next FW part
+            esp -> esp: Store FW part to Flash (.hex)
+        end
+        esp -> esp: Check CRC
+        esp -> stm: Restart STM
+        stm -> stm: Jump to Bootloader
+    else Version == In Memory Version
+        esp -> stm: Response No Update
+    end
+end 
+
+group Bootloader Ready CMD {stm_ver}
+    alt stm_ver != esp_ver
+        esp -> stm: Size of FW.hex 
+
+        loop while Size of FW >= 0
+            esp <- stm: Ready to Receive data
+            esp -> stm: Transmit data[STM32_FLASH_PAGE_SIZE]
+            stm -> stm: Erase next page
+            stm -> stm: Store data to Flash
+            stm -> stm: Size of FW.hex - STM32_FLASH_PAGE_SIZE
+        end 
+    end
+    stm -> stm: Jump to Application
+end
+
+@enduml
