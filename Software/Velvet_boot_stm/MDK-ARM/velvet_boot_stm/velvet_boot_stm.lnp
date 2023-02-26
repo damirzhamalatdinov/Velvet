@@ -1,0 +1,28 @@
+--cpu=Cortex-M4.fp.sp
+"velvet_boot_stm\startup_stm32f407xx.o"
+"velvet_boot_stm\main.o"
+"velvet_boot_stm\stm32f4xx_it.o"
+"velvet_boot_stm\stm32f4xx_hal_msp.o"
+"velvet_boot_stm\firmware.o"
+"velvet_boot_stm\stm32f4xx_hal_iwdg.o"
+"velvet_boot_stm\stm32f4xx_hal_rcc.o"
+"velvet_boot_stm\stm32f4xx_hal_rcc_ex.o"
+"velvet_boot_stm\stm32f4xx_hal_flash.o"
+"velvet_boot_stm\stm32f4xx_hal_flash_ex.o"
+"velvet_boot_stm\stm32f4xx_hal_flash_ramfunc.o"
+"velvet_boot_stm\stm32f4xx_hal_gpio.o"
+"velvet_boot_stm\stm32f4xx_hal_dma_ex.o"
+"velvet_boot_stm\stm32f4xx_hal_dma.o"
+"velvet_boot_stm\stm32f4xx_hal_pwr.o"
+"velvet_boot_stm\stm32f4xx_hal_pwr_ex.o"
+"velvet_boot_stm\stm32f4xx_hal_cortex.o"
+"velvet_boot_stm\stm32f4xx_hal.o"
+"velvet_boot_stm\stm32f4xx_hal_exti.o"
+"velvet_boot_stm\stm32f4xx_hal_tim.o"
+"velvet_boot_stm\stm32f4xx_hal_tim_ex.o"
+"velvet_boot_stm\stm32f4xx_hal_uart.o"
+"velvet_boot_stm\system_stm32f4xx.o"
+--strict --scatter "velvet_boot_stm\velvet_boot_stm.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "velvet_boot_stm.map" -o velvet_boot_stm\velvet_boot_stm.axf

@@ -1,6 +1,6 @@
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __WIFI_H__
-#define __WIFI_H__
+#ifndef __FIRMWARE_H__
+#define __FIRMWARE_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,11 +10,12 @@ extern "C" {
 #include "stdbool.h"
 #include "const.h"
 
-bool isUpdate(UART_HandleTypeDef *huart);
+bool isUpdateReady(void);
 bool updateFw(UART_HandleTypeDef *huart);
+void updateFirmware(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __WIFI_H__ */
+#endif /* __FIRMWARE_H__ */
