@@ -94,10 +94,7 @@ int main(void)
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
 	__HAL_DBGMCU_FREEZE_IWDG();
-	updateFirmware();
-  /*if(isUpdate(&huart4)){
-    bool updateBool = updateFw(&huart4);
-  }*/
+	updateFirmware();  
   GoToApplication();
   /* USER CODE END 2 */
 

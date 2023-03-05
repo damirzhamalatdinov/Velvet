@@ -10,8 +10,6 @@ extern "C" {
 #include "stdbool.h"
 #include "const.h"
 
-bool isUpdateReady(void);
-bool updateFw(UART_HandleTypeDef *huart);
 void updateFirmware(void);
 
 #ifdef __cplusplus
