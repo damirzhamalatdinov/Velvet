@@ -1,0 +1,9 @@
+DRC Rules Export File for PCB: D:\HighClassSystems\Projects\KazATU\Velvet\Hardware\Velvet ADC\Velvet ADC module.PcbDoc
+RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0
+RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion|Scope=Board|Minimum=2.95
+RuleKind=Width|RuleName=Width|Scope=Board|Minimum=4.92
+RuleKind=Clearance|RuleName=Clearance|Scope=Board|Minimum=11.81
+RuleKind=Clearance|RuleName=Clearance_Bottom|Scope=Board|Minimum=7.87
+RuleKind=Clearance|RuleName=Clearance_Polygon|Scope=Board|Minimum=11.81
+RuleKind=Clearance|RuleName=Clearance_MultiLayerPad|Scope=Board|Minimum=9.84
+RuleKind=Clearance|RuleName=Clearance_Polygon_HV|Scope=Board|Minimum=0.00

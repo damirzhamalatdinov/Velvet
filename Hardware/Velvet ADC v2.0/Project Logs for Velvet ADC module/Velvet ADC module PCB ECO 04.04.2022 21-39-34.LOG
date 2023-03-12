@@ -1,0 +1,7 @@
+Added Component: Designator=X10(CON: PADS 1x1mm)
+Add component (AddParameter): Name = "ComponentKind"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "HelpURL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Model"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=AVDD Pin=X10-1
+Added Member To Class: ClassName=Схема модуля АЦП Member=Component X10

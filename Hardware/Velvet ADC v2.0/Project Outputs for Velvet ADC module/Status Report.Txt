@@ -1,0 +1,21 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of Project [Velvet ADC module.PrjPcb]
+   Generated File[Velvet ADC module.GTO]
+   Generated File[Velvet ADC module.GTP]
+   Generated File[Velvet ADC module.GTS]
+   Generated File[Velvet ADC module.GTL]
+   Generated File[Velvet ADC module.GBL]
+   Generated File[Velvet ADC module.GBS]
+   Generated File[Velvet ADC module.GBP]
+   Generated File[Velvet ADC module.GBO]
+   Generated File[Velvet ADC module.GKO]
+   Generated File[Velvet ADC module.RUL]
+   Generated File[Velvet ADC module.EXTREP]
+   Generated File[Velvet ADC module.REP]
+
+
+Files Generated   : 12
+Documents Printed : 0
+
+Finished Output Generation At 20:40:16 On 02.10.2022
