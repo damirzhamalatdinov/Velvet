@@ -5,6 +5,7 @@ actor User as user
 participant Server as updserv 
 participant ESP as esp 
 participant STM32 as stm
+participant "Velvet ADC" as vadc
 
 alt can go in parallel
     esp -> esp: Power Up
@@ -16,10 +17,11 @@ else
     updserv -> updserv: Calculate CRC (FW.hex)
 end
 
-stm -> esp: Send CMD
 
-alt Send Weight CMD 
-    esp <- stm: Transmit {cow_id; timestamp[N]; weight[N]}
+alt Send Weight CMD
+    stm -> esp: Weight Transmit pre CMD
+    esp -> stm: Weight Transmit pre RSP 
+    esp <- stm: Send Weight {cow_id; timestamp[N]; weight[N]}
     
     updserv <- esp: HTTP POST {velvet_id; cow_id; timestamp[N]; weight[N]} 
     updserv -> esp: HTTP Response
@@ -31,12 +33,13 @@ alt Send Weight CMD
     end
 end
 
-group Check FW CMD
+group Check FW CMD [Every 60s]
+    stm -> esp: Check FW CMD [0x01, Version0, Version1]
     esp -> updserv: HTTP GET FW 
     updserv -> esp: HTTP Response version || Err
 
     alt Response == Err || Timeout
-        esp -> stm: Response Error
+        esp -> stm: Connection Error [0x01, 0x02]
     end
 
     esp -> esp: Check in Memory Version 
@@ -48,14 +51,15 @@ group Check FW CMD
             esp -> esp: Store FW part to Flash (.hex)
         end
         esp -> esp: Check CRC
-        esp -> stm: Restart STM
+        esp -> stm: Restart STM [0x01, 0x01]
         stm -> stm: Jump to Bootloader
     else Version == In Memory Version
-        esp -> stm: Response No Update
+        esp -> stm: No Update [0x1, 0x03]
     end
 end 
 
 group Bootloader Ready CMD {stm_ver}
+    stm->esp: Bootloader Ready CMD [0x02]
     alt stm_ver != esp_ver
         esp -> stm: Size of FW.hex 
 
@@ -69,5 +73,34 @@ group Bootloader Ready CMD {stm_ver}
     end
     stm -> stm: Jump to Application
 end
+
+group Timestamp synchonization [every 15min]
+    stm->esp: Get Timestamp CMD
+    esp->NTP**: NTP request
+    NTP->esp: NTP response
+    alt 
+        esp->stm: Get Timestamp RSP OK
+    else 
+        esp->stm: Get Timestamp RSP Error
+    end
+end 
+
+group Measure Weight
+    loop While No Tag ID
+        stm->RFID**: Read Tag 
+        RFID->stm: Tag ID
+        alt Special Tag ID
+            stm->stm: Read weight
+            stm->stm: Store threshold
+        end 
+    end 
+
+    loop 120 times
+        stm->vadc**: Read weight
+        stm->stm: Write to buffer
+    end 
+    ref over stm: Send Weight 
+
+end 
 
 @enduml

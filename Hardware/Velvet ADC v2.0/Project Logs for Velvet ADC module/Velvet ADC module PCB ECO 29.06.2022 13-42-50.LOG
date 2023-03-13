@@ -1,0 +1,40 @@
+Change Component Comment : Designator=R1 Old Comment= New Comment=50R
+Change Component Comment : Designator=R2 Old Comment= New Comment=50R
+Change Component Comment : Designator=R4 Old Comment= New Comment=50R
+Change Component Comment : Designator=R6 Old Comment= New Comment=50R
+Change Component Description : Designator=R1 Old Description= New Description=50 Ohms 0.5W, 1/2W PC Pins Through Hole Trimmer Potentiometer Cermet 25.0 Turn Top Adjustment
+Change Component Description : Designator=R2 Old Description= New Description=50 Ohms 0.5W, 1/2W PC Pins Through Hole Trimmer Potentiometer Cermet 25.0 Turn Top Adjustment
+Change Component Description : Designator=R4 Old Description= New Description=50 Ohms 0.5W, 1/2W PC Pins Through Hole Trimmer Potentiometer Cermet 25.0 Turn Top Adjustment
+Change Component Description : Designator=R6 Old Description= New Description=50 Ohms 0.5W, 1/2W PC Pins Through Hole Trimmer Potentiometer Cermet 25.0 Turn Top Adjustment
+Change component parameters: Designator = "R1" ("R1"); Footprint = "RES: 3296W"; UniqueID = "\VVSJFFDC" ("\VVSJFFDC")
+Change component parameters (AddParameter): Name = "ComponentKind"; Value = "3296W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "HelpURL"; Value = "https://www.digikey.com/en/products/detail/bourns-inc/3296W-1-500LF/1088056?s=N4IgjCBcpgnAHLKoDGUBmBDANgZwKYA0IA9lANogAMIAugL7EBMV8ArMiGpFnkaRRBsqAAgDyACwC2uOsQAOAFyggAqgDsAlorHoAsvky4ArgCd8IRiAC0TTt0Wnj-MpEocGVu25ABmJrAAbADqciCBnJoAJirWYFR2CsqQICDEigCe8hYpUbho9PRAA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "Bourns Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Model"; Value = "3296W-1-500LF"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier 1"; Value = "RSComponents"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier Part Number 1"; Value = "5219776"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "50R"; VariantName = "[No Variations]"
+Change component parameters: Designator = "R2" ("R2"); Footprint = "RES: 3296W"; UniqueID = "\MVNUFVEV" ("\MVNUFVEV")
+Change component parameters (AddParameter): Name = "ComponentKind"; Value = "3296W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "HelpURL"; Value = "https://www.digikey.com/en/products/detail/bourns-inc/3296W-1-500LF/1088056?s=N4IgjCBcpgnAHLKoDGUBmBDANgZwKYA0IA9lANogAMIAugL7EBMV8ArMiGpFnkaRRBsqAAgDyACwC2uOsQAOAFyggAqgDsAlorHoAsvky4ArgCd8IRiAC0TTt0Wnj-MpEocGVu25ABmJrAAbADqciCBnJoAJirWYFR2CsqQICDEigCe8hYpUbho9PRAA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "Bourns Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Model"; Value = "3296W-1-500LF"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier 1"; Value = "RSComponents"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier Part Number 1"; Value = "5219776"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "50R"; VariantName = "[No Variations]"
+Change component parameters: Designator = "R4" ("R4"); Footprint = "RES: 3296W"; UniqueID = "\PVYHZDWO" ("\PVYHZDWO")
+Change component parameters (AddParameter): Name = "ComponentKind"; Value = "3296W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "HelpURL"; Value = "https://www.digikey.com/en/products/detail/bourns-inc/3296W-1-500LF/1088056?s=N4IgjCBcpgnAHLKoDGUBmBDANgZwKYA0IA9lANogAMIAugL7EBMV8ArMiGpFnkaRRBsqAAgDyACwC2uOsQAOAFyggAqgDsAlorHoAsvky4ArgCd8IRiAC0TTt0Wnj-MpEocGVu25ABmJrAAbADqciCBnJoAJirWYFR2CsqQICDEigCe8hYpUbho9PRAA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "Bourns Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Model"; Value = "3296W-1-500LF"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier 1"; Value = "RSComponents"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier Part Number 1"; Value = "5219776"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "50R"; VariantName = "[No Variations]"
+Change component parameters: Designator = "R6" ("R6"); Footprint = "RES: 3296W"; UniqueID = "\WWYXISRH" ("\WWYXISRH")
+Change component parameters (AddParameter): Name = "ComponentKind"; Value = "3296W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "HelpURL"; Value = "https://www.digikey.com/en/products/detail/bourns-inc/3296W-1-500LF/1088056?s=N4IgjCBcpgnAHLKoDGUBmBDANgZwKYA0IA9lANogAMIAugL7EBMV8ArMiGpFnkaRRBsqAAgDyACwC2uOsQAOAFyggAqgDsAlorHoAsvky4ArgCd8IRiAC0TTt0Wnj-MpEocGVu25ABmJrAAbADqciCBnJoAJirWYFR2CsqQICDEigCe8hYpUbho9PRAA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "Bourns Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Model"; Value = "3296W-1-500LF"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier 1"; Value = "RSComponents"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier Part Number 1"; Value = "5219776"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "50R"; VariantName = "[No Variations]"

@@ -22,3 +22,17 @@ Software/velvet_bootloader/USB_DEVICE/
 # Docs
 *.bkp
 
+# VS Code Settings
+.vscode/
+
+.config
+*.o
+*.pyc
+
+.cache/
+
+Software/Velvet_esp-idf/test
+Software/Velvet_esp-idf/build
+Software/Velvet_esp-idf/sdkconfig.old
+
+Software/Velvet_esp-idf/cmake-build-debug
