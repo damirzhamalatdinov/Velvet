@@ -33,18 +33,16 @@ alt Send Weight CMD
     end
 end
 
-group Check FW CMD [Every 60s]
-    stm -> esp: Check FW CMD [0x01, Version0, Version1]
+group Check FW CMD [Every 300s]
+    stm -> esp: Check FW CMD [0x01, Major, Minor, Patch]
     esp -> updserv: HTTP GET FW 
-    updserv -> esp: HTTP Response version || Err
+    updserv -> esp: HTTP Response {Major, Minor, Patch} || Err
 
     alt Response == Err || Timeout
         esp -> stm: Connection Error [0x01, 0x02]
     end
 
-    esp -> esp: Check in Memory Version 
-
-    alt Version != In Memory Version
+    alt STM Version != Server Version
         loop Response is OK {FW.hex + CRC}
             esp -> updserv: HTTP GET next FW part
             updserv -> esp: HTTP Response next FW part
@@ -53,7 +51,7 @@ group Check FW CMD [Every 60s]
         esp -> esp: Check CRC
         esp -> stm: Restart STM [0x01, 0x01]
         stm -> stm: Jump to Bootloader
-    else Version == In Memory Version
+    else STM Version == Server Version
         esp -> stm: No Update [0x1, 0x03]
     end
 end 
@@ -102,5 +100,11 @@ group Measure Weight
     ref over stm: Send Weight 
 
 end 
+
+group Set critical 
+    stm->esp: Set Serial [xxxxxxx]
+    esp->stm: OK
+end
+
 
 @enduml
