@@ -35,25 +35,22 @@ end
 
 group Check FW CMD [Every 300s]
     stm -> esp: Check FW CMD [0x01, Major, Minor, Patch]
-    esp -> updserv: HTTP GET FW 
-    updserv -> esp: HTTP Response {Major, Minor, Patch} || Err
-
-    alt Response == Err || Timeout
-        esp -> stm: Connection Error [0x01, 0x02]
-    end
-
-    alt STM Version != Server Version
-        loop Response is OK {FW.hex + CRC}
-            esp -> updserv: HTTP GET next FW part
-            updserv -> esp: HTTP Response next FW part
-            esp -> esp: Store FW part to Flash (.hex)
-        end
+    esp -> updserv: HTTP GET FW {Major, Minor, Patch}
+    alt Device FW version != Server FW version
+        updserv -> esp: HTTP Response 200 {Major, Minor, Patch, CRC, FW} 
+        esp -> esp: Store FW part to Flash (.hex)
         esp -> esp: Check CRC
         esp -> stm: Restart STM [0x01, 0x01]
         stm -> stm: Jump to Bootloader
-    else STM Version == Server Version
-        esp -> stm: No Update [0x1, 0x03]
+    else 
+        alt Response 409
+            updserv -> esp: HTTP Response Error
+            esp -> stm: Server Error
+        else Timeout
+            esp -> stm: Timeout
+        end 
     end
+
 end 
 
 group Bootloader Ready CMD {stm_ver}
