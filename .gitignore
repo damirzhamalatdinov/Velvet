@@ -36,3 +36,5 @@ Software/Velvet_esp-idf/build
 Software/Velvet_esp-idf/sdkconfig.old
 
 Software/Velvet_esp-idf/cmake-build-debug
+
+.$*
