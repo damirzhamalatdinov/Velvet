@@ -39,7 +39,6 @@ ESP32_STM_UART::ESP32_STM_UART(HardwareSerial &serial, uint32_t baudRate)
  * 
  * @return Возвращает true, если подключение к Wi-Fi успешно установлено, иначе false.
  */
-
 bool ESP32_STM_UART::check_wifi(){
     uint8_t retries = 5;
     while (WiFi.status() != WL_CONNECTED && retries > 0) {
@@ -79,7 +78,6 @@ bool ESP32_STM_UART::check_wifi(){
  * * {0x06, 4B ts – unix epoch, 0x00, 0x00, 0x00} - ответ на команду GET_TIMESTAMP_CMD, содержит запрошенную метку времени в формате unix timestamp.
  * * {0x06, 0x02, 0X00, 0x00, 0x00, 0x00, 0x00, 0x00} - ответ на команду GET_TIMESTAMP_CMD, сообщает об ошибке при запросе метки времени.
 */
-
 void ESP32_STM_UART::processIncomingMessage() {
     if (!_serial.available()) {
         return;
@@ -130,7 +128,6 @@ void ESP32_STM_UART::processIncomingMessage() {
  * @param version0 Младший байт версии прошивки, переданный из STM32.
  * @param version1 Старший байт версии прошивки, переданный из STM32.
  */
-
 void ESP32_STM_UART::checkFirmware(uint8_t version0, uint8_t version1) {
     bool wi_fi = check_wifi();
     if (!wi_fi){

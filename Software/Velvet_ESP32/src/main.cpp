@@ -53,7 +53,6 @@ ESP32_STM_UART stmUart(Serial2, uartBaudRate);
 /**
  * @brief Настраивает начальные параметры, такие как последовательный порт и подключение Wi-Fi.
  */
-
 void setup() {
     Serial.begin(uartBaudRate);
     
@@ -74,7 +73,6 @@ void setup() {
 /**
  * @brief Основной цикл программы, обрабатывает входящие сообщения через stmUart.
  */
-
 void loop() {
     stmUart.processIncomingMessage();
 }

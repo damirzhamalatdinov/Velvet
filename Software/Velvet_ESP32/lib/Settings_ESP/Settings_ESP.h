@@ -2,7 +2,6 @@
  * @file Settings_ESP.h
  * @brief Файл содержит внешние объявления функции отладки, SSID и пароля Wi-Fi.
  */
-
 #ifndef Settings_ESP_h
 #define Settings_ESP_h
 
@@ -11,7 +10,6 @@
 /**
  * @brief SSID Wi-Fi сети, к которой должен подключаться ESP32.
  */
-
 extern const char* ssid;
 /**
  * @brief Пароль Wi-Fi сети, к которой должен подключаться ESP32.
@@ -47,6 +45,5 @@ void print_debug(bool flag, const T& variable) {
     Serial.println(variable);
   }
 }
-
 
 #endif
