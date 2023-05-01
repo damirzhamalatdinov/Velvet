@@ -22,7 +22,6 @@
  * * отправка метки времени в формате unix timestamp;
  * * передача данных прошивки на STM.
 */
-
 class ESP32_STM_UART {
   public:
 /**
@@ -73,6 +72,7 @@ private:
  * @param result Результат выполнения команды.
 */
   void sendWeightRsp(uint8_t result);
+  
 /**
  * @brief Отправляет ответ с меткой времени.
  * Эта функция отправляет ответ STM32 с меткой времени в формате unix timestamp и указанным результатом.
@@ -80,6 +80,7 @@ private:
  * @param result Результат выполнения команды.
 */
   void sendTimestampRsp(uint32_t timestamp, uint8_t result);
+  
 /**
 
  * @brief Отправляет команду на подготовку передачи весовых данных.
