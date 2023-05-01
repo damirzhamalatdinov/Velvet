@@ -72,7 +72,6 @@ private:
  * Эта функция отправляет ответ на команду отправки весовых данных. Принимает результат выполнения команды.
  * @param result Результат выполнения команды.
 */
-
   void sendWeightRsp(uint8_t result);
 /**
  * @brief Отправляет ответ с меткой времени.
@@ -80,30 +79,29 @@ private:
  * @param timestamp Метка времени в формате unix timestamp.
  * @param result Результат выполнения команды.
 */
-
   void sendTimestampRsp(uint32_t timestamp, uint8_t result);
 /**
 
  * @brief Отправляет команду на подготовку передачи весовых данных.
  * Эта функция отправляет команду STM32 на подготовку передачи весовых данных.
 */
-
   void sendWeightCmdTransmitPrepare();
+  
 /**
  * @brief Отправляет прошивку на STM32.
  * Эта функция отправляет прошивку на STM32.
  * @param firmwareData Данные прошивки.
  * @param firmwareSize Размер прошивки.
 */
-
   void sendFirmwareToSTM(const uint8_t *firmwareData, size_t firmwareSize);
+  
 /**
  * @brief Отправляет ответ на команду CHECK_FW_CMD.
  * Эта функция отправляет ответ STM32 на команду CHECK_FW_CMD с указанным результатом.
  * @param result Результат выполнения команды.
 */
-
   void sendCheckFwRsp(uint8_t result);
+  
 /**
  * @brief Функция вычисления контрольной суммы CRC32
  * Функция вычисляет контрольную сумму CRC32 для переданного скачанного файла с сервера.
