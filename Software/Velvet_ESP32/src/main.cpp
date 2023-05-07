@@ -1,7 +1,7 @@
 
 /**
- * @mainpage ESP32_STM_UART
- * @brief Проект ESP32_STM_UART предназначен для реализации протокола общения между микроконтроллерами ESP32 и STM32
+ * @mainpage Velvet_ESP32
+ * @brief Проект Velvet_ESP32 предназначен для реализации протокола общения между микроконтроллерами ESP32 и STM32
  * с использованием интерфейса UART. Проект содержит файлы ESP32_STM_UART.h и Settings_ESP.h.
  * @section structure Структура проекта
  * * main.cpp
@@ -37,7 +37,7 @@
 
 const char* ssid = "SSID";
 const char* password = "PASSWORD";
-bool debug_flag = false;
+bool debug_flag = true;
 
 //HardwareSerial Serial2(2);
 uint32_t uartBaudRate = 115200; 

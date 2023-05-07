@@ -47,6 +47,7 @@ private:
   uint32_t _baudRate; ///< Скорость передачи данных в бодах.
   uint8_t* _firmwareData; ///< Указатель на буфер данных прошивки.
   size_t _firmwareSize; ///< Размер данных прошивки.
+  #define VERSION_SIZE 8
 
 /**
  * @brief Отправляет данные на сервер.
@@ -72,7 +73,7 @@ private:
  * @param result Результат выполнения команды.
 */
   void sendWeightRsp(uint8_t result);
-  
+
 /**
  * @brief Отправляет ответ с меткой времени.
  * Эта функция отправляет ответ STM32 с меткой времени в формате unix timestamp и указанным результатом.
@@ -82,7 +83,6 @@ private:
   void sendTimestampRsp(uint32_t timestamp, uint8_t result);
   
 /**
-
  * @brief Отправляет команду на подготовку передачи весовых данных.
  * Эта функция отправляет команду STM32 на подготовку передачи весовых данных.
 */
@@ -102,15 +102,6 @@ private:
  * @param result Результат выполнения команды.
 */
   void sendCheckFwRsp(uint8_t result);
-  
-/**
- * @brief Функция вычисления контрольной суммы CRC32
- * Функция вычисляет контрольную сумму CRC32 для переданного скачанного файла с сервера.
- * @param data Указатель на буфер данных для вычисления CRC32
- * @param dataSize Размер буфера данных
- * @return Строка, содержащая вычисленную CRC32 в шестнадцатеричном формате.
-*/
-  String calculateCRC32(uint8_t *data, uint32_t dataSize);
 
 /**
  * @brief Функция получения текущего времени в формате Unix timestamp

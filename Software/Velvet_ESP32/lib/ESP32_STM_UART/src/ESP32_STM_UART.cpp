@@ -80,30 +80,36 @@ bool ESP32_STM_UART::check_wifi(){
 */
 void ESP32_STM_UART::processIncomingMessage() {
     if (!_serial.available()) {
+        print_debug(debug_flag, String("No CMD"));
         return;
     }
-    
-    uint8_t cmd = _serial.read();
-    
+    std::vector<uint8_t> receivedBytes; // Чтение доступных байтов из буфера и сохранение их в векторе
+    while (_serial.available()) {
+        receivedBytes.push_back(_serial.read());
+    }
+    if (receivedBytes.empty()) {    // Проверка длины сообщения, если пустое выходим
+        print_debug(debug_flag, String("No CMD"));
+        return;
+    }
+    uint8_t cmd = receivedBytes[0]; // Использование первого байта сообщения в качестве команды
+    print_debug(debug_flag, String("Received command: 0x") + String(cmd, HEX));
+
     switch (cmd) {
         case CHECK_FW_CMD: {
-            // Обработка CHECK_FW_CMD
-            uint8_t version0 = _serial.read();
-            uint8_t version1 = _serial.read();
-            checkFirmware(version0,version1);
+            uint8_t version0 = receivedBytes[1];
+            uint8_t version1 = receivedBytes[2];
+            checkFirmware(version0, version1);
             break;
         }
-        case BOOTLOADER_READY_CMD:{
+        case BOOTLOADER_READY_CMD: {
             sendFirmwareToSTM(_firmwareData, _firmwareSize);
             break;
         }
         case SEND_WEIGHT_CMD_TRANSMIT_PREPARE: {
-            // Обработка SEND_WEIGHT_CMD_TRANSMIT_PREPARE
             sendWeightCmdTransmitPrepare();
             break;
         }
         case GET_TIMESTAMP_CMD: {
-            // Обработка GET_TIMESTAMP_CMD
             uint32_t timestamp = getUnixTimestamp();           
             if (timestamp != 0) {
                 sendTimestampRsp(timestamp, 0x00);
@@ -111,8 +117,10 @@ void ESP32_STM_UART::processIncomingMessage() {
                 sendTimestampRsp(0, 0x02);
             }
             break;
+        default: {
+            print_debug(debug_flag, String("Unknown or unsupported command: 0x") + String(cmd, HEX));
+            break;
         }
-       
     }
 }
 
@@ -129,17 +137,14 @@ void ESP32_STM_UART::processIncomingMessage() {
  * @param version1 Старший байт версии прошивки, переданный из STM32.
  */
 void ESP32_STM_UART::checkFirmware(uint8_t version0, uint8_t version1) {
-    bool wi_fi = check_wifi();
-    if (!wi_fi){
+    if (!check_wifi()){
         sendCheckFwRsp(0x02);
         return;
     }
-    char version_str[8];
-    sprintf(version_str, "%d.%d", version0, version1);
+    char version_str[VERSION_SIZE];
+    sprintf(version_str, VERSION_SIZE, "%d.%d", version0, version1);
     String version = String(version_str);
-
-    //String version = String(version0) + "." + String(version1);
-    String serialNumber = "MAX_TEST_ESP32"; // Заменить на реальный серийный номер
+    String serialNumber = String(ESP.getChipRevision());
     // Получение обновления прошивки с сервера
     WiFiClientSecure wifiClient;
     HTTPClient http;
@@ -148,6 +153,7 @@ void ESP32_STM_UART::checkFirmware(uint8_t version0, uint8_t version1) {
     http.begin(wifiClient, url);
     http.addHeader("Content-Type", "application/json; charset=utf-8");
     int httpResponseCode = http.POST(postData);
+    print_debug(debug_flag, String("Status_code: " + String(httpResponseCode)));
     if (httpResponseCode != 200) {
         sendCheckFwRsp(0x03);
         return;
@@ -170,31 +176,29 @@ void ESP32_STM_UART::checkFirmware(uint8_t version0, uint8_t version1) {
             int readLen = stream->readBytes(buffer, ((len > sizeof(buffer)) ? sizeof(buffer) : len));
             memcpy(firmwareData + firmwareDataIndex, buffer, readLen);
             firmwareDataIndex += readLen;
-
             crc = crc32(crc, buffer, readLen);
-
             if (contentLength != -1) {
                 contentLength -= readLen;
             }
         }
         delay(10);
     }
-
+    print_debug(debug_flag, String("Firmware downloaded. Size:" + String(firmwareSize)));
     // Преобразование контрольной суммы в строку
     char crcBuffer[9];
     sprintf(crcBuffer, "%08x", crc);
     String calculatedCRC = String(crcBuffer);
     // Завершение работы с HTTP клиентом
     http.end();
-
     if (calculatedCRC.equalsIgnoreCase(fileCRC)) {
         sendCheckFwRsp(0x01);
         _firmwareData = firmwareData;
         _firmwareSize = firmwareSize;
+        print_debug(debug_flag, String("Everything OK"));
     } else {
         sendCheckFwRsp(0x02);
+        print_debug(debug_flag, String("Error: Wrong CRC"));
     }
-
     // Освобождение памяти, выделенной для массива firmwareData
     delete[] firmwareData;
     firmwareSize = 0;
@@ -212,23 +216,6 @@ void ESP32_STM_UART::checkFirmware(uint8_t version0, uint8_t version1) {
 void ESP32_STM_UART::sendCheckFwRsp(uint8_t result) {
   uint8_t response[8] = {0x01, result, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
   _serial.write(response, sizeof(response));
-}
-
-/**
- * @brief Вычисляет контрольную сумму CRC32 для данных.
- * 
- * Функция вычисляет контрольную сумму CRC32 для переданного массива данных размером dataSize.
- *
- * @param data Указатель на массив данных для вычисления CRC32.
- * @param dataSize Размер массива данных.
- * @return Строка, содержащая вычисленную CRC32 в шестнадцатеричном формате.
- */
-String ESP32_STM_UART::calculateCRC32(uint8_t *data, uint32_t dataSize) {
-  uint32_t crc = crc32(0L, Z_NULL, 0); // Инициализация CRC32
-  crc = crc32(crc, reinterpret_cast<const Bytef *>(data), dataSize);
-  char crcBuffer[9];
-  sprintf(crcBuffer, "%08x", crc);
-  return String(crcBuffer);
 }
 
 //Функции ниже определены для сбора проекта без ошибок.
