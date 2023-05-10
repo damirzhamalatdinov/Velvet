@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=DI2_LED Pin=TP8io-1
+Removed Pin From Net: NetName=DI1_LED Pin=TP10io-1
+Removed Pin From Net: NetName=DI0_LED Pin=TP12io-1
+Removed Pin From Net: NetName=NRST Pin=TP20mc-1
+Removed Pin From Net: NetName=SWCLK Pin=TP22mc-1
+Removed Pin From Net: NetName=SWDIO Pin=TP24mc-1
+Removed Pin From Net: NetName=SWO Pin=TP26mc-1
+Removed Member From Class: ClassName=Схема дискретных входов и выходов Member=TP8io
+Removed Member From Class: ClassName=Схема дискретных входов и выходов Member=TP10io
+Removed Member From Class: ClassName=Схема дискретных входов и выходов Member=TP12io
+Removed Member From Class: ClassName=Схема МК и датчиков Velvet Controller Member=TP20mc
+Removed Member From Class: ClassName=Схема МК и датчиков Velvet Controller Member=TP22mc
+Removed Member From Class: ClassName=Схема МК и датчиков Velvet Controller Member=TP24mc
+Removed Member From Class: ClassName=Схема МК и датчиков Velvet Controller Member=TP26mc

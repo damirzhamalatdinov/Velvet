@@ -1,0 +1,12 @@
+Removed Pin From Net: NetName=SDIO_CMD Pin=TP3mc-1
+Removed Pin From Net: NetName=SDIO_D0 Pin=TP18mc-1
+Removed Pin From Net: NetName=SDIO_D1 Pin=TP19mc-1
+Removed Pin From Net: NetName=SDIO_D2 Pin=TP21mc-1
+Removed Pin From Net: NetName=SDIO_D3 Pin=TP23mc-1
+Removed Pin From Net: NetName=SDIO_CLK Pin=TP25mc-1
+Removed Member From Class: ClassName=Схема МК и датчиков Velvet Controller Member=TP3mc
+Removed Member From Class: ClassName=Схема МК и датчиков Velvet Controller Member=TP18mc
+Removed Member From Class: ClassName=Схема МК и датчиков Velvet Controller Member=TP19mc
+Removed Member From Class: ClassName=Схема МК и датчиков Velvet Controller Member=TP21mc
+Removed Member From Class: ClassName=Схема МК и датчиков Velvet Controller Member=TP23mc
+Removed Member From Class: ClassName=Схема МК и датчиков Velvet Controller Member=TP25mc
