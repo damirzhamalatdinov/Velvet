@@ -6,6 +6,8 @@ Hardware/Velvet Controller/__Previews
 Hardware/Velvet ADC/History
 Hardware/Velvet ADC/__Previews
 
+*.~*
+
 # Software folder
 Software/velvet_wifi/.pio/
 Software/velvet_wifi/.vscode/
@@ -21,6 +23,8 @@ Software/velvet_bootloader/Middlewares/
 Software/velvet_bootloader/USB_DEVICE/
 # Docs
 *.bkp
+~$*
+~*.tmp
 
 # VS Code Settings
 .vscode/

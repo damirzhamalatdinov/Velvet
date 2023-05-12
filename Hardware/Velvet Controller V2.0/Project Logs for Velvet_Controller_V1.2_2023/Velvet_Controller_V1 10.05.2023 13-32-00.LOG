@@ -1,0 +1,8 @@
+Removed Pin From Net: NetName=LORA_LINK Pin=TP3lr-1
+Removed Pin From Net: NetName=SWDIO_LoRa Pin=TP4lr-1
+Removed Pin From Net: NetName=SWCLK_LoRA Pin=TP5lr-1
+Removed Pin From Net: NetName=NRST_LoRa Pin=TP6lr-1
+Removed Member From Class: ClassName=Ñץולא LoRa ט RFID Velvet Controller Member=TP3lr
+Removed Member From Class: ClassName=Ñץולא LoRa ט RFID Velvet Controller Member=TP4lr
+Removed Member From Class: ClassName=Ñץולא LoRa ט RFID Velvet Controller Member=TP5lr
+Removed Member From Class: ClassName=Ñץולא LoRa ט RFID Velvet Controller Member=TP6lr
