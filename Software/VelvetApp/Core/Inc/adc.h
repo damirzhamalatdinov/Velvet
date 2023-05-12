@@ -16,6 +16,7 @@ extern "C" {
 
 void readWeightTask(void *argument);
 uint8_t getAdcState(void);
+void setAdcState(uint8_t state);
 float getWeightValByIndex (uint8_t index);
 
 #ifdef __cplusplus

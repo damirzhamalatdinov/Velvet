@@ -40,8 +40,7 @@ void readWeightTask(void *argument)
 			for(weightIndex=0;weightIndex<60;weightIndex++){
 				osDelay(20);	//mytest add time management
 				weightBuffer[weightIndex] = hx711_weight(&loadcell, 10);			
-			}		
-			adcState = ADC_FREE;
+			}					
 			espmsg = WeightBufferReady;
 			osMessageQueuePut(espSendQueueHandle, &espmsg, 0, 0);							
 		}		
@@ -50,6 +49,10 @@ void readWeightTask(void *argument)
 
 uint8_t getAdcState(void){
 	return adcState;
+}
+
+void setAdcState(uint8_t state){
+	adcState = state;
 }
 
 float getWeightValByIndex (uint8_t index){
