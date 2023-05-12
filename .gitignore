@@ -42,3 +42,6 @@ Software/Velvet_esp-idf/sdkconfig.old
 Software/Velvet_esp-idf/cmake-build-debug
 
 .$*
+
+# VelvetApp
+Software/Velvet/MDK-ARM/VelvetApp/
