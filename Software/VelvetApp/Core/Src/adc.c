@@ -8,16 +8,18 @@
 //#include "stm32f4xx_hal.h"
 //#include "main.h"
 #include "app.h"
+#include "esp.h"
 
 extern osSemaphoreId_t readWeightSemHandle;
-extern osSemaphoreId_t sendMsgSemHandle;
+extern osMessageQueueId_t espSendQueueHandle;
+static EspMsg_t espmsg;
 
 hx711_t loadcell;
 float weightBuffer[60];
 uint8_t weightIndex = 0;
 uint8_t startConversion = 1;
 uint8_t adcConversionInProcess = 0;
-uint8_t weightBufferReady = 0;
+static uint8_t state = ADC_FREE;
 
 void initADC(void)
 {
@@ -30,7 +32,7 @@ void initADC(void)
 	//hx711_coef_set(&loadcell, hx711_weight(&loadcell, 10)/55);//55 тарированный вес 55 г
 }
 
-void readWeight(void *argument)
+void readWeightTask(void *argument)
 {  
 	initADC();	  
   for(;;)
@@ -38,13 +40,18 @@ void readWeight(void *argument)
 		osSemaphoreAcquire (readWeightSemHandle, MAX_DELAY);
 		if(startConversion) startConversion=0;
 		else {	
-			adcConversionInProcess = 1;
+			state = ADC_BUSY;
 			for(weightIndex=0;weightIndex<60;weightIndex++){
 				osDelay(20);	//mytest add time management
 				weightBuffer[weightIndex] = hx711_weight(&loadcell, 10);			
-			}
-			weightBufferReady = 1;
-			osSemaphoreRelease(sendMsgSemHandle);					
+			}		
+			state = ADC_FREE;
+			espmsg = WeightBufferReady;
+			osMessageQueuePut(espSendQueueHandle, &espmsg, 0, 0);							
 		}		
   }
+}
+
+uint8_t getAdcState(void){
+	return state;
 }

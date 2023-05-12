@@ -47,49 +47,49 @@ TIM_HandleTypeDef htim6;
 
 UART_HandleTypeDef huart4;
 UART_HandleTypeDef huart6;
+DMA_HandleTypeDef hdma_uart4_rx;
+DMA_HandleTypeDef hdma_usart6_rx;
 
-/* Definitions for sendMsgTask */
-osThreadId_t sendMsgTaskHandle;
-const osThreadAttr_t sendMsgTask_attributes = {
-  .name = "sendMsgTask",
+/* Definitions for sendMsg */
+osThreadId_t sendMsgHandle;
+const osThreadAttr_t sendMsg_attributes = {
+  .name = "sendMsg",
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityBelowNormal7,
 };
-/* Definitions for readWeightTask */
-osThreadId_t readWeightTaskHandle;
-const osThreadAttr_t readWeightTask_attributes = {
-  .name = "readWeightTask",
+/* Definitions for readWeight */
+osThreadId_t readWeightHandle;
+const osThreadAttr_t readWeight_attributes = {
+  .name = "readWeight",
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
-/* Definitions for readRfidTask */
-osThreadId_t readRfidTaskHandle;
-const osThreadAttr_t readRfidTask_attributes = {
-  .name = "readRfidTask",
+/* Definitions for readRfid */
+osThreadId_t readRfidHandle;
+const osThreadAttr_t readRfid_attributes = {
+  .name = "readRfid",
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal1,
 };
-/* Definitions for readUartTask */
-osThreadId_t readUartTaskHandle;
-const osThreadAttr_t readUartTask_attributes = {
-  .name = "readUartTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal2,
+/* Definitions for espSendQueue */
+osMessageQueueId_t espSendQueueHandle;
+const osMessageQueueAttr_t espSendQueue_attributes = {
+  .name = "espSendQueue"
 };
-/* Definitions for sendMsgSem */
-osSemaphoreId_t sendMsgSemHandle;
-const osSemaphoreAttr_t sendMsgSem_attributes = {
-  .name = "sendMsgSem"
+/* Definitions for espReceiveQueue */
+osMessageQueueId_t espReceiveQueueHandle;
+const osMessageQueueAttr_t espReceiveQueue_attributes = {
+  .name = "espReceiveQueue"
+};
+/* Definitions for rfidReceiveQueue */
+osMessageQueueId_t rfidReceiveQueueHandle;
+const osMessageQueueAttr_t rfidReceiveQueue_attributes = {
+  .name = "rfidReceiveQueue"
 };
 /* Definitions for readWeightSem */
 osSemaphoreId_t readWeightSemHandle;
 const osSemaphoreAttr_t readWeightSem_attributes = {
   .name = "readWeightSem"
-};
-/* Definitions for readUartSem */
-osSemaphoreId_t readUartSemHandle;
-const osSemaphoreAttr_t readUartSem_attributes = {
-  .name = "readUartSem"
 };
 /* USER CODE BEGIN PV */
 
@@ -98,14 +98,14 @@ const osSemaphoreAttr_t readUartSem_attributes = {
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_IWDG_Init(void);
 static void MX_UART4_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_USART6_UART_Init(void);
-void sendMsgToESP(void *argument);
-extern void readWeight(void *argument);
-extern void readRfid(void *argument);
-extern void readUart(void *argument);
+void sendMsgToESPTask(void *argument);
+extern void readWeightTask(void *argument);
+extern void readRfidTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -152,6 +152,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_IWDG_Init();
   MX_UART4_Init();
   MX_TIM6_Init();
@@ -169,14 +170,8 @@ int main(void)
   /* USER CODE END RTOS_MUTEX */
 
   /* Create the semaphores(s) */
-  /* creation of sendMsgSem */
-  sendMsgSemHandle = osSemaphoreNew(1, 1, &sendMsgSem_attributes);
-
   /* creation of readWeightSem */
   readWeightSemHandle = osSemaphoreNew(1, 1, &readWeightSem_attributes);
-
-  /* creation of readUartSem */
-  readUartSemHandle = osSemaphoreNew(1, 1, &readUartSem_attributes);
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
@@ -186,22 +181,29 @@ int main(void)
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
+  /* Create the queue(s) */
+  /* creation of espSendQueue */
+  espSendQueueHandle = osMessageQueueNew (5, sizeof(uint8_t), &espSendQueue_attributes);
+
+  /* creation of espReceiveQueue */
+  espReceiveQueueHandle = osMessageQueueNew (2, sizeof(uint8_t), &espReceiveQueue_attributes);
+
+  /* creation of rfidReceiveQueue */
+  rfidReceiveQueueHandle = osMessageQueueNew (2, sizeof(uint8_t), &rfidReceiveQueue_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* creation of sendMsgTask */
-  sendMsgTaskHandle = osThreadNew(sendMsgToESP, NULL, &sendMsgTask_attributes);
+  /* creation of sendMsg */
+  sendMsgHandle = osThreadNew(sendMsgToESPTask, NULL, &sendMsg_attributes);
 
-  /* creation of readWeightTask */
-  readWeightTaskHandle = osThreadNew(readWeight, NULL, &readWeightTask_attributes);
+  /* creation of readWeight */
+  readWeightHandle = osThreadNew(readWeightTask, NULL, &readWeight_attributes);
 
-  /* creation of readRfidTask */
-  readRfidTaskHandle = osThreadNew(readRfid, NULL, &readRfidTask_attributes);
-
-  /* creation of readUartTask */
-  readUartTaskHandle = osThreadNew(readUart, NULL, &readUartTask_attributes);
+  /* creation of readRfid */
+  readRfidHandle = osThreadNew(readRfidTask, NULL, &readRfid_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -399,6 +401,26 @@ static void MX_USART6_UART_Init(void)
 }
 
 /**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+  __HAL_RCC_DMA2_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Stream2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream2_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream2_IRQn);
+  /* DMA2_Stream1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream1_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream1_IRQn);
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -443,14 +465,14 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE END 4 */
 
-/* USER CODE BEGIN Header_sendMsgToESP */
+/* USER CODE BEGIN Header_sendMsgToESPTask */
 /**
-  * @brief  Function implementing the sendMsgTask thread.
+  * @brief  Function implementing the sendMsg thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_sendMsgToESP */
-__weak void sendMsgToESP(void *argument)
+/* USER CODE END Header_sendMsgToESPTask */
+__weak void sendMsgToESPTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
   /* Infinite loop */

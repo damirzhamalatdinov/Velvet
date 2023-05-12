@@ -18,8 +18,7 @@ extern "C" {
 #define MAX_DELAY 0xffff
 
 void checkTasksTimeout(void);
-extern uint8_t checkFW;
-extern uint8_t timeSynchronization;
+
 extern volatile uint32_t timestamp;
 
 #ifdef __cplusplus

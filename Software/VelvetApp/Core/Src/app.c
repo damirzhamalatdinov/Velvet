@@ -5,21 +5,25 @@
 
 #include "app.h"
 #include "cmsis_os2.h"
+#include "esp.h"
 
-extern osSemaphoreId_t sendMsgSemHandle;
+extern osMessageQueueId_t espSendQueueHandle;
 
 volatile uint16_t secondsCounter;
-uint8_t checkFW = 0;
-uint8_t timeSynchronization = 0;
 volatile uint32_t timestamp = 0;
+static EspMsg_t espMsg;
 
 void checkTasksTimeout(){
 	secondsCounter++;
 	timestamp++;
-	if(secondsCounter%CHECK_FW_TIMEOUT == 0) checkFW = 1;
+	
 	if(secondsCounter>TIME_SYNCHRO_TIMEOUT){
 		secondsCounter=0;
-		timeSynchronization = 1;
+		espMsg = TimeSynchronization;
+		osMessageQueuePut(espSendQueueHandle, &espMsg, 0, 0);		
+	}	
+	if(secondsCounter%CHECK_FW_TIMEOUT == 0){
+		espMsg = CheckFW;
+		osMessageQueuePut(espSendQueueHandle, &espMsg, 0, 0);
 	}
-	if(checkFW||timeSynchronization) osSemaphoreRelease(sendMsgSemHandle);
 }

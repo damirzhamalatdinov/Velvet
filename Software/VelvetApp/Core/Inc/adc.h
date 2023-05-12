@@ -11,12 +11,13 @@ extern "C" {
 #endif
 #include <stdint.h>
 
-extern uint8_t adcConversionInProcess;
+#define ADC_BUSY 1
+#define ADC_FREE 0
+
 extern float weightBuffer[60];
-extern uint8_t weightBufferReady;
 
-void readWeight(void *argument);
-
+void readWeightTask(void *argument);
+uint8_t getAdcState(void);
 #ifdef __cplusplus
 }
 #endif

@@ -12,21 +12,22 @@
 extern UART_HandleTypeDef huart6;
 extern IWDG_HandleTypeDef hiwdg;
 extern osSemaphoreId_t readWeightSemHandle;
+extern osMessageQueueId_t rfidReceiveQueueHandle;
 
 #define PRESET_VALUE 0xFFFF
 #define POLYNOMIAL  0x8408
+#define ReceiveOK 1
+#define GetReaderInfoCMD 0x21
+#define InventoryG2CMD 0x01
 
-uint8_t outputBuffer[50];
-uint8_t inputBuffer[50];
-const uint8_t getReaderInfoCMD = 0x21;
-const uint8_t inventoryG2CMD = 0x01;
-uint8_t deviceAddress = 0;
-uint8_t currentCmdRFID = 0;
-uint8_t receiveStage = 0;
-uint8_t rfidInitState = RFID_ERROR;
-uint8_t tagsBuffer[5][6];
-uint8_t currentTag[6] = {0};
-
+static uint8_t outputBuffer[50];
+static uint8_t inputBuffer[50];
+static uint8_t receiveStage = 0;
+static uint8_t rfidInitState = RFID_ERROR;
+static uint8_t currentTag[6] = {0};
+static uint8_t deviceAddress = 0;
+static uint8_t currentCmdRFID = 0;
+static uint8_t tagsBuffer[5][6];
 
 uint16_t uiCrc16Calc(uint8_t  *buf, uint8_t length){
 	uint8_t ucI,ucJ;
@@ -57,12 +58,12 @@ void getReaderInfo (uint8_t* buf){
 
 void writeCMDToBuf(uint8_t* buf, uint8_t cmdNum){
 	switch(cmdNum){
-		case getReaderInfoCMD:
+		case GetReaderInfoCMD:
 			buf[0] = 4;
 			buf[1] = 0xff;
 			buf[2] = cmdNum;			
 		break;
-		case inventoryG2CMD:
+		case InventoryG2CMD:
 			buf[0] = 13;
 			buf[1] = deviceAddress;
 			buf[2] = cmdNum;
@@ -83,17 +84,8 @@ void writeCMDToBuf(uint8_t* buf, uint8_t cmdNum){
 
 void sendCmd(uint8_t* buf, uint8_t cmdNum){
 	writeCMDToBuf(buf, cmdNum);
-	HAL_UART_Transmit_IT(&huart6,buf,buf[0]+1);	
-}
-
-void rfidInit(void){
-	HAL_GPIO_WritePin(RFID_EN_GPIO_Port, RFID_EN_Pin, GPIO_PIN_SET);
-	osDelay(2000);
-	sendCmd(outputBuffer, getReaderInfoCMD);
-	//writeCMDToBuf(outputBuffer, getReaderInfoCMD);
-	//->getReaderInfo(outputBuffer);
-	//HAL_UART_Transmit_IT(&huart6,outputBuffer,outputBuffer[0]+1);
-	//receiveStart = 1;
+	HAL_UART_Transmit(&huart6,buf,buf[0]+1,1000);	
+	HAL_UART_Receive_DMA(&huart6,inputBuffer,1);		
 }
 
 int8_t checkBufCRC(uint8_t* buf){
@@ -130,7 +122,7 @@ void readEPCData(uint8_t* buf){
 	}
 	if(buf[5]>0){		
 		if(isTagsEqual(&tagsBuffer[i-1][0], currentTag) == 0){
-			if(adcConversionInProcess==0){
+			if(getAdcState() == ADC_FREE){
 				copyTag(&tagsBuffer[i-1][0], currentTag);
 				osSemaphoreRelease(readWeightSemHandle);
 			}
@@ -142,11 +134,11 @@ void readRfidResponse(uint8_t* buf){
 	if(checkBufCRC(buf) == RFID_OK) {
 		if(currentCmdRFID == buf[2]){
 			switch(buf[2]){
-				case getReaderInfoCMD:
+				case GetReaderInfoCMD:
 					deviceAddress = buf[1];
 					rfidInitState = RFID_OK;
 				break;
-				case inventoryG2CMD:
+				case InventoryG2CMD:
 					if((buf[3] == 1)&&(buf[5] > 0)) readEPCData(buf);
 				break;
 			}
@@ -154,17 +146,32 @@ void readRfidResponse(uint8_t* buf){
 	}	
 }
 
+void rfidInit(void){	
+	HAL_GPIO_WritePin(RFID_EN_GPIO_Port, RFID_EN_Pin, GPIO_PIN_SET);
+	osDelay(2000);
+	sendCmd(outputBuffer, GetReaderInfoCMD);
+	if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 1000) == ReceiveOK){
+		HAL_UART_Receive_DMA(&huart6,inputBuffer+1,inputBuffer[0]);
+		if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 1000) == ReceiveOK)
+			readRfidResponse(inputBuffer);
+	}	
+	//writeCMDToBuf(outputBuffer, getReaderInfoCMD);
+	//->getReaderInfo(outputBuffer);
+	//HAL_UART_Transmit_IT(&huart6,outputBuffer,outputBuffer[0]+1);
+	//receiveStart = 1;
+}
+
 void rfidReInit(void){
 	HAL_GPIO_WritePin(RFID_EN_GPIO_Port, RFID_EN_Pin, GPIO_PIN_RESET);
-	osDelay(1000);
-	receiveStage = 0;
+	osDelay(1000);	
 	rfidInit();
 }
 
-void readRfid(void *argument)
+void readRfidTask(void *argument)
 {
   /* USER CODE BEGIN readRfid */
-	uint8_t initCounter = 0;
+	uint8_t initCounter = 0;	
+	
 	rfidInit();
 	while(rfidInitState != RFID_OK){
 		osDelay(1000);// mytest add time management
@@ -178,9 +185,20 @@ void readRfid(void *argument)
   for(;;)
   {		
     osDelay(1000);
-		sendCmd(outputBuffer, inventoryG2CMD);
+		sendCmd(outputBuffer, InventoryG2CMD);
 		HAL_IWDG_Refresh(&hiwdg);
+		if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 1000) == ReceiveOK){
+			if (receiveStage == 1){
+				HAL_UART_Receive_DMA(&huart6,inputBuffer+1,inputBuffer[0]);
+				if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 1000) == ReceiveOK)
+				readRfidResponse(inputBuffer);
+			}		
+		}	
 		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
   }
   /* USER CODE END readRfid */
+}
+
+void getCurrentTag(uint8_t* tagBuf){
+	copyTag(currentTag, tagBuf);
 }

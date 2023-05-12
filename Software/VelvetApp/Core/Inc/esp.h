@@ -11,8 +11,15 @@ extern "C" {
 #endif
 #include <stdint.h>
 
-void sendMsgToESP(void *argument);
-void readEspResponse(uint8_t* buf);
+typedef enum{
+	None,
+	CheckFW,
+	TimeSynchronization,
+	WeightBufferReady
+} EspMsg_t;
+
+void sendMsgToESPTask(void *argument);
+
 #ifdef __cplusplus
 }
 #endif
