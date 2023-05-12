@@ -14,10 +14,10 @@ extern "C" {
 #define ADC_BUSY 1
 #define ADC_FREE 0
 
-extern float weightBuffer[60];
-
 void readWeightTask(void *argument);
 uint8_t getAdcState(void);
+float getWeightValByIndex (uint8_t index);
+
 #ifdef __cplusplus
 }
 #endif

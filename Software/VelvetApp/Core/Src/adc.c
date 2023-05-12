@@ -12,14 +12,12 @@
 
 extern osSemaphoreId_t readWeightSemHandle;
 extern osMessageQueueId_t espSendQueueHandle;
-static EspMsg_t espmsg;
 
-hx711_t loadcell;
-float weightBuffer[60];
-uint8_t weightIndex = 0;
-uint8_t startConversion = 1;
-uint8_t adcConversionInProcess = 0;
-static uint8_t state = ADC_FREE;
+static EspMsg_t espmsg;
+static hx711_t loadcell;
+static float weightBuffer[60];
+static uint8_t weightIndex = 0;
+static uint8_t adcState = ADC_FREE;
 
 void initADC(void)
 {
@@ -37,15 +35,13 @@ void readWeightTask(void *argument)
 	initADC();	  
   for(;;)
   {
-		osSemaphoreAcquire (readWeightSemHandle, MAX_DELAY);
-		if(startConversion) startConversion=0;
-		else {	
-			state = ADC_BUSY;
+		if(osSemaphoreAcquire (readWeightSemHandle, MAX_DELAY) == osOK){	
+			adcState = ADC_BUSY;
 			for(weightIndex=0;weightIndex<60;weightIndex++){
 				osDelay(20);	//mytest add time management
 				weightBuffer[weightIndex] = hx711_weight(&loadcell, 10);			
 			}		
-			state = ADC_FREE;
+			adcState = ADC_FREE;
 			espmsg = WeightBufferReady;
 			osMessageQueuePut(espSendQueueHandle, &espmsg, 0, 0);							
 		}		
@@ -53,5 +49,9 @@ void readWeightTask(void *argument)
 }
 
 uint8_t getAdcState(void){
-	return state;
+	return adcState;
+}
+
+float getWeightValByIndex (uint8_t index){
+	return weightBuffer[index];
 }

@@ -70,7 +70,7 @@ void prepareSendBuffer(void){
 	sendBuffer[9] = (uint8_t)((timestamp&0xFF00)>>8);
 	sendBuffer[10] = (uint8_t)(timestamp&0xFF);
 	for(i=0;i<60;i++){
-		weight.floatVal = weightBuffer[i];
+		weight.floatVal = getWeightValByIndex(i);
 		sendBuffer[11+i*4+0] = (uint8_t)((weight.uintVal&0xFF000000)>>24);
 		sendBuffer[11+i*4+1] = (uint8_t)((weight.uintVal&0xFF0000)>>16);
 		sendBuffer[11+i*4+2] = (uint8_t)((weight.uintVal&0xFF00)>>8);
@@ -116,8 +116,7 @@ void sendMsgToESPTask(void *argument){
 			case WeightBufferReady:
 				currentCmdESP = 4;
 			  HAL_UART_Transmit(&huart4,sendWeightPrepareCmd,8, 1000);
-				//HAL_UART_Transmit_IT(&huart4,sendWeightPrepareCmd,8);							
-				//adcConversionInProcess = 0;
+				//HAL_UART_Transmit_IT(&huart4,sendWeightPrepareCmd,8);		
 			break;
 			case CheckFW:
 				checkFWCmd[1] = (versionNum&0xff00)>>8;
