@@ -19,6 +19,12 @@ Software/velvet_bootloader/build/
 Software/velvet_bootloader/Drivers/
 Software/velvet_bootloader/Middlewares/
 Software/velvet_bootloader/USB_DEVICE/
+Software/velvet_boot_stm/MDK-ARM/velvet_boot_stm/
+
+*.uvguix.*
+*.log
+*.bin
+
 # Docs
 *.bkp
 
