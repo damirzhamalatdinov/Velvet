@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=GSM_UART1_TX Pin=TP1gs-1
+Removed Pin From Net: NetName=GSM_UART1_RX Pin=TP3gs-1
+Removed Member From Class: ClassName=Ñץולא GSM Velvet Controller Member=TP1gs
+Removed Member From Class: ClassName=Ñץולא GSM Velvet Controller Member=TP3gs

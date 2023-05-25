@@ -1,4 +1,0 @@
-Removed Pin From Net: NetName=S2+ Pin=X11-1
-Removed Pin From Net: NetName=S2- Pin=X12-1
-Removed Member From Class: ClassName=Схема модуля АЦП Member=X11
-Removed Member From Class: ClassName=Схема модуля АЦП Member=X12

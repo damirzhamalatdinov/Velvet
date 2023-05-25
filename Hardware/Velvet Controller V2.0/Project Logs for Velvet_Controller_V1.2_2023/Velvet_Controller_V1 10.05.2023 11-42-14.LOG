@@ -1,0 +1,463 @@
+Change component parameters: Designator = "VD1mc" ("VD1mc"); Footprint = "0805 DIODE"; UniqueID = "\OVDCXRAA" ("\OVDCXRAA")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD1wf" ("VD1wf"); Footprint = "0805 DIODE"; UniqueID = "\THZATQBN" ("\THZATQBN")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD2mc" ("VD2mc"); Footprint = "0805 DIODE"; UniqueID = "\EGPMURSN" ("\EGPMURSN")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD2p" ("VD2p"); Footprint = "0805 DIODE"; UniqueID = "\FRBJHFVI" ("\FRBJHFVI")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD3mc" ("VD3mc"); Footprint = "0805 DIODE"; UniqueID = "\NFJNJZAJ" ("\NFJNJZAJ")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD4gs" ("VD4gs"); Footprint = "0805 DIODE"; UniqueID = "\MHHSHWHL" ("\MHHSHWHL")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD4mc" ("VD4mc"); Footprint = "0805 DIODE"; UniqueID = "\PNDDNOMY" ("\PNDDNOMY")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD5gs" ("VD5gs"); Footprint = "0805 DIODE"; UniqueID = "\NZOTTFQU" ("\NZOTTFQU")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD5mc" ("VD5mc"); Footprint = "0805 DIODE"; UniqueID = "\TBNDDUYQ" ("\TBNDDUYQ")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD6mc" ("VD6mc"); Footprint = "0805 DIODE"; UniqueID = "\UKJVAVPV" ("\UKJVAVPV")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD7mc" ("VD7mc"); Footprint = "0805 DIODE"; UniqueID = "\CJUFVNCR" ("\CJUFVNCR")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD8mc" ("VD8mc"); Footprint = "0805 DIODE"; UniqueID = "\CLNHGXOW" ("\CLNHGXOW")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD9mc" ("VD9mc"); Footprint = "0805 DIODE"; UniqueID = "\PCPQMDMW" ("\PCPQMDMW")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD10mc" ("VD10mc"); Footprint = "0805 DIODE"; UniqueID = "\IIZSZTYA" ("\IIZSZTYA")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD11mc" ("VD11mc"); Footprint = "0805 DIODE"; UniqueID = "\QPRKOJYH" ("\QPRKOJYH")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD12mc" ("VD12mc"); Footprint = "0805 DIODE"; UniqueID = "\OTYKQCQW" ("\OTYKQCQW")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "VD13mc" ("VD13mc"); Footprint = "0805 DIODE"; UniqueID = "\GKHMPWNQ" ("\GKHMPWNQ")
+Change component parameters (AddParameter): Name = "Forward Voltage"; Value = "2.2V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer 1"; Value = "Lite-On Inc."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number 1"; Value = "LTST-S220GKT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Continious Current"; Value = "30mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "+85∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Pulse Current"; Value = "120mA"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-55∞C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "0805"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power Dissipation"; Value = "100mW"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reverse Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Added Component: Designator=TP1gs(TESTPOINT 1.2mm)
+Added Component: Designator=TP1io(TESTPOINT 1.2mm)
+Added Component: Designator=TP1lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP1mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP1wf(TESTPOINT 1.2mm)
+Added Component: Designator=TP2gs(TESTPOINT 1.2mm)
+Added Component: Designator=TP2io(TESTPOINT 1.2mm)
+Added Component: Designator=TP2lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP2mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP2wf(TESTPOINT 1.2mm)
+Added Component: Designator=TP3gs(TESTPOINT 1.2mm)
+Added Component: Designator=TP3io(TESTPOINT 1.2mm)
+Added Component: Designator=TP3lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP3mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP3wf(TESTPOINT 1.2mm)
+Added Component: Designator=TP4gs(TESTPOINT 1.2mm)
+Added Component: Designator=TP4io(TESTPOINT 1.2mm)
+Added Component: Designator=TP4lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP4mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP4wf(TESTPOINT 1.2mm)
+Added Component: Designator=TP5gs(TESTPOINT 1.2mm)
+Added Component: Designator=TP5io(TESTPOINT 1.2mm)
+Added Component: Designator=TP5lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP5mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP5wf(TESTPOINT 1.2mm)
+Added Component: Designator=TP6gs(TESTPOINT 1.2mm)
+Added Component: Designator=TP6io(TESTPOINT 1.2mm)
+Added Component: Designator=TP6lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP6mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP6wf(TESTPOINT 1.2mm)
+Added Component: Designator=TP7gs(TESTPOINT 1.2mm)
+Added Component: Designator=TP7io(TESTPOINT 1.2mm)
+Added Component: Designator=TP7lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP7mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP7wf(TESTPOINT 1.2mm)
+Added Component: Designator=TP8gs(TESTPOINT 1.2mm)
+Added Component: Designator=TP8io(TESTPOINT 1.2mm)
+Added Component: Designator=TP8lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP8mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP8wf(TESTPOINT 1.2mm)
+Added Component: Designator=TP9gs(TESTPOINT 1.2mm)
+Added Component: Designator=TP9io(TESTPOINT 1.2mm)
+Added Component: Designator=TP9lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP9mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP9wf(TESTPOINT 1.2mm)
+Added Component: Designator=TP10gs(TESTPOINT 1.2mm)
+Added Component: Designator=TP10io(TESTPOINT 1.2mm)
+Added Component: Designator=TP10lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP10mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP10wf(TESTPOINT 1.2mm)
+Added Component: Designator=TP11gs(TESTPOINT 1.2mm)
+Added Component: Designator=TP11io(TESTPOINT 1.2mm)
+Added Component: Designator=TP11lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP11mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP11wf(TESTPOINT 1.2mm)
+Added Component: Designator=TP12gs(TESTPOINT 1.2mm)
+Added Component: Designator=TP12io(TESTPOINT 1.2mm)
+Added Component: Designator=TP12lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP12mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP12wf(TESTPOINT 1.2mm)
+Added Component: Designator=TP13lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP13mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP14lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP14mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP15lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP15mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP16lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP16mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP17lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP17mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP18lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP18mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP19lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP19mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP20lr(TESTPOINT 1.2mm)
+Added Component: Designator=TP20mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP21mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP22mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP23mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP24mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP25mc(TESTPOINT 1.2mm)
+Added Component: Designator=TP26mc(TESTPOINT 1.2mm)
+Added Pin To Net: NetName=GSM_UART1_TX Pin=TP1gs-1
+Added Pin To Net: NetName=DO5_MK Pin=TP1io-1
+Added Pin To Net: NetName=LoRa_UART2_RX Pin=TP1lr-1
+Added Pin To Net: NetName=SDIO_DET Pin=TP1mc-1
+Added Pin To Net: NetName=ESP_EN Pin=TP1wf-1
+Added Pin To Net: NetName=MK_GSM_TX Pin=TP2gs-1
+Added Pin To Net: NetName=DI2_MK Pin=TP2io-1
+Added Pin To Net: NetName=LoRa_UART2_TX Pin=TP2lr-1
+Added Pin To Net: NetName=TS2_ALERT Pin=TP2mc-1
+Added Pin To Net: NetName=USB_RTS Pin=TP2wf-1
+Added Pin To Net: NetName=GSM_UART1_RX Pin=TP3gs-1
+Added Pin To Net: NetName=DO4_MK Pin=TP3io-1
+Added Pin To Net: NetName=LORA_LINK Pin=TP3lr-1
+Added Pin To Net: NetName=SDIO_CMD Pin=TP3mc-1
+Added Pin To Net: NetName=ESP_MK_RX Pin=TP3wf-1
+Added Pin To Net: NetName=MK_GSM_RX Pin=TP4gs-1
+Added Pin To Net: NetName=DI1_MK Pin=TP4io-1
+Added Pin To Net: NetName=SWDIO_LoRa Pin=TP4lr-1
+Added Pin To Net: NetName=TS1_ALERT Pin=TP4mc-1
+Added Pin To Net: NetName=USB_DTR Pin=TP4wf-1
+Added Pin To Net: NetName=GSM_EN Pin=TP5gs-1
+Added Pin To Net: NetName=DO3_MK Pin=TP5io-1
+Added Pin To Net: NetName=SWCLK_LoRA Pin=TP5lr-1
+Added Pin To Net: NetName=ESP_MK_TX Pin=TP5wf-1
+Added Pin To Net: NetName=GSM_STATUS Pin=TP6gs-1
+Added Pin To Net: NetName=DI0_MK Pin=TP6io-1
+Added Pin To Net: NetName=NRST_LoRa Pin=TP6lr-1
+Added Pin To Net: NetName=TS1_SDA Pin=TP6mc-1
+Added Pin To Net: NetName=USB_VBUS Pin=TP6wf-1
+Added Pin To Net: NetName=NetDD1gs_14 Pin=TP7gs-1
+Added Pin To Net: NetName=DO2_MK Pin=TP7io-1
+Added Pin To Net: NetName=BOOT0_LoRa_MK Pin=TP7lr-1
+Added Pin To Net: NetName=GSM_NETLIGHT Pin=TP8gs-1
+Added Pin To Net: NetName=DI2_LED Pin=TP8io-1
+Added Pin To Net: NetName=BOOT0_LoRa Pin=TP8lr-1
+Added Pin To Net: NetName=TS1_SCL Pin=TP8mc-1
+Added Pin To Net: NetName=USB_DM Pin=TP8wf-1
+Added Pin To Net: NetName=DO1_MK Pin=TP9io-1
+Added Pin To Net: NetName=RFID_To_MK_GPI Pin=TP9lr-1
+Added Pin To Net: NetName=ESP_BOOT Pin=TP9wf-1
+Added Pin To Net: NetName=NetC6gs_1 Pin=TP10gs-1
+Added Pin To Net: NetName=DI1_LED Pin=TP10io-1
+Added Pin To Net: NetName=RFID_LINK Pin=TP10lr-1
+Added Pin To Net: NetName=USB_DP Pin=TP10wf-1
+Added Pin To Net: NetName=DO0_MK Pin=TP11io-1
+Added Pin To Net: NetName=RFID_To_MK_GPO Pin=TP11lr-1
+Added Pin To Net: NetName=MK_LVDS_CS Pin=TP11mc-1
+Added Pin To Net: NetName=ESP_RX Pin=TP11wf-1
+Added Pin To Net: NetName=NetC5gs_1 Pin=TP12gs-1
+Added Pin To Net: NetName=DI0_LED Pin=TP12io-1
+Added Pin To Net: NetName=MK_to_RFID_TX Pin=TP12lr-1
+Added Pin To Net: NetName=ESP_TX Pin=TP12wf-1
+Added Pin To Net: NetName=RFID_To_MK_EN Pin=TP13lr-1
+Added Pin To Net: NetName=MK_LVDS_SCK Pin=TP13mc-1
+Added Pin To Net: NetName=MK_to_RFID_RX Pin=TP14lr-1
+Added Pin To Net: NetName=RFID_to_MK_TX Pin=TP15lr-1
+Added Pin To Net: NetName=MK_LVDS_MISO Pin=TP15mc-1
+Added Pin To Net: NetName=MK_To_RFID_GPO Pin=TP16lr-1
+Added Pin To Net: NetName=SDIO_DET Pin=TP16mc-1
+Added Pin To Net: NetName=RFID_to_MK_RX Pin=TP17lr-1
+Added Pin To Net: NetName=MK_LVDS_MOSI Pin=TP17mc-1
+Added Pin To Net: NetName=MK_To_RFID_EN Pin=TP18lr-1
+Added Pin To Net: NetName=SDIO_D0 Pin=TP18mc-1
+Added Pin To Net: NetName=RFID_HEAT Pin=TP19lr-1
+Added Pin To Net: NetName=SDIO_D1 Pin=TP19mc-1
+Added Pin To Net: NetName=MK_To_RFID_GPI Pin=TP20lr-1
+Added Pin To Net: NetName=NRST Pin=TP20mc-1
+Added Pin To Net: NetName=SDIO_D2 Pin=TP21mc-1
+Added Pin To Net: NetName=SWCLK Pin=TP22mc-1
+Added Pin To Net: NetName=SDIO_D3 Pin=TP23mc-1
+Added Pin To Net: NetName=SWDIO Pin=TP24mc-1
+Added Pin To Net: NetName=SDIO_CLK Pin=TP25mc-1
+Added Pin To Net: NetName=SWO Pin=TP26mc-1
+Change Net Name : Old Net Name=NetC5gs_1 New Net Name=SIM_VDD
+Change Net Name : Old Net Name=NetC6gs_1 New Net Name=SIM_CLK
+Change Net Name : Old Net Name=NetDD1gs_14 New Net Name=SIM_DET
+Added Pin To Net: NetName=ESP_LED Pin=DD1wf-5
+Added Pin To Net: NetName=ESP_LED Pin=R2wf-1
+Added Pin To Net: NetName=ESP_LED Pin=TP7wf-1
+Added Net: Name=ESP_LED
+Added Pin To Net: NetName=SD_C/R Pin=DA1mc-12
+Added Pin To Net: NetName=SD_C/R Pin=TP9mc-1
+Added Pin To Net: NetName=SD_C/R Pin=X4mc-3
+Added Net: Name=SD_C/R
+Added Pin To Net: NetName=SD_CLK Pin=DA1mc-11
+Added Pin To Net: NetName=SD_CLK Pin=TP10mc-1
+Added Pin To Net: NetName=SD_CLK Pin=X4mc-5
+Added Net: Name=SD_CLK
+Added Pin To Net: NetName=SD_DAT0 Pin=DA1mc-10
+Added Pin To Net: NetName=SD_DAT0 Pin=TP12mc-1
+Added Pin To Net: NetName=SD_DAT0 Pin=X4mc-7
+Added Net: Name=SD_DAT0
+Added Pin To Net: NetName=SD_DAT1 Pin=DA1mc-9
+Added Pin To Net: NetName=SD_DAT1 Pin=TP14mc-1
+Added Pin To Net: NetName=SD_DAT1 Pin=X4mc-8
+Added Net: Name=SD_DAT1
+Added Pin To Net: NetName=SD_DAT2 Pin=DA1mc-14
+Added Pin To Net: NetName=SD_DAT2 Pin=TP5mc-1
+Added Pin To Net: NetName=SD_DAT2 Pin=X4mc-1
+Added Net: Name=SD_DAT2
+Added Pin To Net: NetName=SD_DAT3 Pin=DA1mc-13
+Added Pin To Net: NetName=SD_DAT3 Pin=TP7mc-1
+Added Pin To Net: NetName=SD_DAT3 Pin=X4mc-2
+Added Net: Name=SD_DAT3
+Added Pin To Net: NetName=SIM_DATA Pin=DD1gs-15
+Added Pin To Net: NetName=SIM_DATA Pin=R2gs-2
+Added Pin To Net: NetName=SIM_DATA Pin=TP9gs-1
+Added Net: Name=SIM_DATA
+Added Pin To Net: NetName=SIM_RST Pin=DD1gs-17
+Added Pin To Net: NetName=SIM_RST Pin=R4gs-2
+Added Pin To Net: NetName=SIM_RST Pin=TP11gs-1
+Added Net: Name=SIM_RST
+Added Member To Class: ClassName=—хема GSM Velvet Controller Member=Component TP1gs 1.2MM TP
+Added Member To Class: ClassName=—хема дискретных входов и выходов Member=Component TP1io 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP1lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP1mc 1.2MM TP
+Added Member To Class: ClassName=—хема Wi-Fi Velvet Controller Member=Component TP1wf 1.2MM TP
+Added Member To Class: ClassName=—хема GSM Velvet Controller Member=Component TP2gs 1.2MM TP
+Added Member To Class: ClassName=—хема дискретных входов и выходов Member=Component TP2io 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP2lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP2mc 1.2MM TP
+Added Member To Class: ClassName=—хема Wi-Fi Velvet Controller Member=Component TP2wf 1.2MM TP
+Added Member To Class: ClassName=—хема GSM Velvet Controller Member=Component TP3gs 1.2MM TP
+Added Member To Class: ClassName=—хема дискретных входов и выходов Member=Component TP3io 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP3lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP3mc 1.2MM TP
+Added Member To Class: ClassName=—хема Wi-Fi Velvet Controller Member=Component TP3wf 1.2MM TP
+Added Member To Class: ClassName=—хема GSM Velvet Controller Member=Component TP4gs 1.2MM TP
+Added Member To Class: ClassName=—хема дискретных входов и выходов Member=Component TP4io 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP4lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP4mc 1.2MM TP
+Added Member To Class: ClassName=—хема Wi-Fi Velvet Controller Member=Component TP4wf 1.2MM TP
+Added Member To Class: ClassName=—хема GSM Velvet Controller Member=Component TP5gs 1.2MM TP
+Added Member To Class: ClassName=—хема дискретных входов и выходов Member=Component TP5io 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP5lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP5mc 1.2MM TP
+Added Member To Class: ClassName=—хема Wi-Fi Velvet Controller Member=Component TP5wf 1.2MM TP
+Added Member To Class: ClassName=—хема GSM Velvet Controller Member=Component TP6gs 1.2MM TP
+Added Member To Class: ClassName=—хема дискретных входов и выходов Member=Component TP6io 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP6lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP6mc 1.2MM TP
+Added Member To Class: ClassName=—хема Wi-Fi Velvet Controller Member=Component TP6wf 1.2MM TP
+Added Member To Class: ClassName=—хема GSM Velvet Controller Member=Component TP7gs 1.2MM TP
+Added Member To Class: ClassName=—хема дискретных входов и выходов Member=Component TP7io 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP7lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP7mc 1.2MM TP
+Added Member To Class: ClassName=—хема Wi-Fi Velvet Controller Member=Component TP7wf 1.2MM TP
+Added Member To Class: ClassName=—хема GSM Velvet Controller Member=Component TP8gs 1.2MM TP
+Added Member To Class: ClassName=—хема дискретных входов и выходов Member=Component TP8io 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP8lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP8mc 1.2MM TP
+Added Member To Class: ClassName=—хема Wi-Fi Velvet Controller Member=Component TP8wf 1.2MM TP
+Added Member To Class: ClassName=—хема GSM Velvet Controller Member=Component TP9gs 1.2MM TP
+Added Member To Class: ClassName=—хема дискретных входов и выходов Member=Component TP9io 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP9lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP9mc 1.2MM TP
+Added Member To Class: ClassName=—хема Wi-Fi Velvet Controller Member=Component TP9wf 1.2MM TP
+Added Member To Class: ClassName=—хема GSM Velvet Controller Member=Component TP10gs 1.2MM TP
+Added Member To Class: ClassName=—хема дискретных входов и выходов Member=Component TP10io 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP10lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP10mc 1.2MM TP
+Added Member To Class: ClassName=—хема Wi-Fi Velvet Controller Member=Component TP10wf 1.2MM TP
+Added Member To Class: ClassName=—хема GSM Velvet Controller Member=Component TP11gs 1.2MM TP
+Added Member To Class: ClassName=—хема дискретных входов и выходов Member=Component TP11io 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP11lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP11mc 1.2MM TP
+Added Member To Class: ClassName=—хема Wi-Fi Velvet Controller Member=Component TP11wf 1.2MM TP
+Added Member To Class: ClassName=—хема GSM Velvet Controller Member=Component TP12gs 1.2MM TP
+Added Member To Class: ClassName=—хема дискретных входов и выходов Member=Component TP12io 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP12lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP12mc 1.2MM TP
+Added Member To Class: ClassName=—хема Wi-Fi Velvet Controller Member=Component TP12wf 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP13lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP13mc 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP14lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP14mc 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP15lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP15mc 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP16lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP16mc 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP17lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP17mc 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP18lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP18mc 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP19lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP19mc 1.2MM TP
+Added Member To Class: ClassName=—хема LoRa и RFID Velvet Controller Member=Component TP20lr 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP20mc 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP21mc 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP22mc 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP23mc 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP24mc 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP25mc 1.2MM TP
+Added Member To Class: ClassName=—хема ћ  и датчиков Velvet Controller Member=Component TP26mc 1.2MM TP
