@@ -9,40 +9,93 @@
 //#include "main.h"
 #include "app.h"
 #include "esp.h"
+#include "string.h"
 
 extern osSemaphoreId_t readWeightSemHandle;
 extern osMessageQueueId_t espSendQueueHandle;
+extern osMessageQueueId_t adcQueueHandle;
+#define ReceiveOK 0
+#define FLASH_SECTOR_6     6U
 
 static EspMsg_t espmsg;
 static hx711_t loadcell;
 static float weightBuffer[60];
 static uint8_t weightIndex = 0;
 static uint8_t adcState = ADC_FREE;
+static const uint32_t offsetAddress = 0x08040000UL;
+static const uint32_t calibrationValAddress = 0x08040004UL;
+static const uint32_t calibrationWeight = 10.0;
+static union coefficient{
+	float floatVal;
+	uint32_t uintVal;
+} coefficient;
 
 void initADC(void)
 {
+	 //hx711->offset = noload_raw;
+  //hx711->coef	
+	int32_t offset = 0;
+	int32_t coefInt = 0;
+	float coef = 0;
+		
+	memcpy(&offset, (uint32_t *)&offsetAddress, 4);
+	memcpy(&coefInt, (uint32_t *)&calibrationValAddress, 4);	
 	hx711_init(&loadcell, HX_SCK_GPIO_Port, HX_SCK_Pin, HX_DOUT_GPIO_Port, HX_DOUT_Pin);
   //hx711_coef_set(&loadcell, 354.5); // read afer calibration
-  hx711_coef_set(&loadcell, 1.0);//no calibration, clean adc val
+	if (coefInt != 0xffffffff){
+		memcpy(&coef, &coefInt, 4);
+		hx711_coef_set(&loadcell, coef);		
+	}
+  else hx711_coef_set(&loadcell, 1.0);//no calibration, clean adc val
 	osDelay(100);	
-	hx711_tare(&loadcell, 10);	
+	if (offset != 0xffffffff) hx711_offset_set(&loadcell, offset);
+	else hx711_tare(&loadcell, 10);	
 	//osDelay(5000);	
 	//hx711_coef_set(&loadcell, hx711_weight(&loadcell, 10)/55);//55 тарированный вес 55 г
 }
 
+void saveCoefficientsToFlash(int32_t offset, float calibrationValue){
+	static uint32_t SectorError = 0;
+	static FLASH_EraseInitTypeDef EraseInitStruct;
+	
+	HAL_FLASH_Unlock();
+	EraseInitStruct.TypeErase = FLASH_TYPEERASE_SECTORS;
+  EraseInitStruct.VoltageRange = FLASH_VOLTAGE_RANGE_3;
+  EraseInitStruct.Sector = FLASH_SECTOR_6;//0x08040000) /* Base @ of Sector 6, 128 Kbytes
+  EraseInitStruct.NbSectors = 1;
+	HAL_FLASHEx_Erase(&EraseInitStruct, &SectorError);
+	HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, offsetAddress, offset);
+	coefficient.floatVal = calibrationValue;
+	HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, calibrationValAddress, coefficient.uintVal);
+	HAL_FLASH_Lock();
+}
+
 void readWeightTask(void *argument)
-{  
+{ 	
+	static AdcMsg_t adcMsg;		
+	
 	initADC();	  
   for(;;)
   {
-		if(osSemaphoreAcquire (readWeightSemHandle, MAX_DELAY) == osOK){	
-			adcState = ADC_BUSY;
-			for(weightIndex=0;weightIndex<60;weightIndex++){
-				osDelay(20);	//mytest add time management
-				weightBuffer[weightIndex] = hx711_weight(&loadcell, 10);			
-			}					
-			espmsg = WeightBufferReady;
-			osMessageQueuePut(espSendQueueHandle, &espmsg, 0, 0);							
+		if(osMessageQueueGet (adcQueueHandle, &adcMsg, 0, MAX_DELAY) == ReceiveOK){		
+			if(adcMsg == ReadWeight){
+				adcState = ADC_BUSY;
+				for(weightIndex=0;weightIndex<60;weightIndex++){
+					osDelay(20);	//mytest add time management
+					weightBuffer[weightIndex] = hx711_weight(&loadcell, 10);			
+				}	
+				//adcState = ADC_FREE;// mytest			
+				espmsg = WeightBufferReady;
+				osMessageQueuePut(espSendQueueHandle, &espmsg, 0, 0);	
+			}
+			else if (adcMsg == Calibration){				
+				hx711_calibration(&loadcell, hx711_offset_get(&loadcell), hx711_value_ave(&loadcell, 10), calibrationWeight);
+				saveCoefficientsToFlash(hx711_offset_get(&loadcell), hx711_coef_get(&loadcell));
+			}
+			else if (adcMsg == SetOffset){
+				hx711_tare(&loadcell, 10);
+				saveCoefficientsToFlash(hx711_offset_get(&loadcell), hx711_coef_get(&loadcell));
+			}
 		}		
   }
 }

@@ -7,13 +7,14 @@
 #include "app.h"
 #include "adc.h"
 #include "rfid.h"
+#include "main.h"
 
 #define RestartSTM 12
 #define TransmitPrepareOK 42
 #define SendWeightOK 52
 #define TransmitWifiError 53
 #define TimestampRespOK 62
-#define ReceiveOK 1
+#define ReceiveOK 0
 
 static const uint8_t checkFWRspOK[8] = {0x01, 0x01, 0X00, 0x00, 0x00, 0x00, 0x00, 0x00};
 static const uint8_t getTimestampCmd[8] = {0x06, 0x01, 0X00, 0x00, 0x00, 0x00, 0x00, 0x00};
@@ -135,18 +136,26 @@ void sendMsgToESPTask(void *argument){
 	static uint8_t messageReceived = 0;
 	static uint8_t ingnoreCounter = 0;
 	
+	HAL_GPIO_WritePin(GPIOA, ESP_EN_Pin, GPIO_PIN_SET);
+	
 	for(;;)
-	{		
-		osMessageQueueGet (espSendQueueHandle, &sendMessageType, 0, MAX_DELAY);
-		if((currentCmdESP == 4)&&(sendMessageType!=SendWeight)){
-			ingnoreCounter++;
-			if(ingnoreCounter>3) {ingnoreCounter = 0; currentCmdESP = 0;}
-			continue;	//ingnore other messages, if send weight process started				
-		}
-		sendMsgToESP();
+	{	
+		HAL_UART_Transmit(&huart4,sendWeightPrepareCmd,8, 1000);	
 		HAL_UART_Receive_DMA(&huart4,receiveBuffer,8);
 		if(osMessageQueueGet (espReceiveQueueHandle, &messageReceived, 0, 1000) == ReceiveOK)
-			readEspResponse(receiveBuffer);		
-		osDelay(1);		 		
+				readEspResponse(receiveBuffer);
+		osDelay(100);		
+		if(osMessageQueueGet (espSendQueueHandle, &sendMessageType, 0, MAX_DELAY) == ReceiveOK){
+			if((currentCmdESP == 4)&&(sendMessageType!=SendWeight)){
+				ingnoreCounter++;
+				if(ingnoreCounter>3) {ingnoreCounter = 0; currentCmdESP = 0;}
+				continue;	//ingnore other messages, if send weight process started				
+			}
+			sendMsgToESP();
+			HAL_UART_Receive_DMA(&huart4,receiveBuffer,8);
+			if(osMessageQueueGet (espReceiveQueueHandle, &messageReceived, 0, 1000) == ReceiveOK)
+				readEspResponse(receiveBuffer);	
+		}		
+		osDelay(1);		
 	}
 }

@@ -7,27 +7,32 @@
 #include "stm32f4xx_hal.h"
 #include "main.h"
 #include "adc.h"
+#include "uartCallback.h"
+#include "string.h"
 //#include "app.h"
 
 extern UART_HandleTypeDef huart6;
 extern IWDG_HandleTypeDef hiwdg;
-extern osSemaphoreId_t readWeightSemHandle;
 extern osMessageQueueId_t rfidReceiveQueueHandle;
+extern osMessageQueueId_t adcQueueHandle;
 
 #define PRESET_VALUE 0xFFFF
 #define POLYNOMIAL  0x8408
-#define ReceiveOK 1
+#define ReceiveOK 0
 #define GetReaderInfoCMD 0x21
 #define InventoryG2CMD 0x01
 
 static uint8_t outputBuffer[50];
 static uint8_t inputBuffer[50];
 static uint8_t receiveStage = 0;
-static uint8_t rfidInitState = RFID_ERROR;
+static int8_t rfidInitState = RFID_ERROR;
 static uint8_t currentTag[6] = {0};
 static uint8_t deviceAddress = 0;
 static uint8_t currentCmdRFID = 0;
 static uint8_t tagsBuffer[5][6];
+static uint8_t calibrationTag[6] = {1, 2, 3, 4, 5, 6};
+static uint8_t offsetTag[6] 	   = {6, 5, 4, 3, 2, 1};
+//static const uint8_t calibrationMsg = 1;
 
 uint16_t uiCrc16Calc(uint8_t  *buf, uint8_t length){
 	uint8_t ucI,ucJ;
@@ -85,6 +90,7 @@ void writeCMDToBuf(uint8_t* buf, uint8_t cmdNum){
 void sendCmd(uint8_t* buf, uint8_t cmdNum){
 	writeCMDToBuf(buf, cmdNum);
 	HAL_UART_Transmit(&huart6,buf,buf[0]+1,1000);	
+	setReceiveStage(1);
 	HAL_UART_Receive_DMA(&huart6,inputBuffer,1);		
 }
 
@@ -106,14 +112,11 @@ uint8_t isTagsEqual(uint8_t* newTag, uint8_t* currentTag){
 	return 1;
 }
 
-void copyTag(uint8_t* srcTag, uint8_t* destTag){
-	uint8_t i=0;
-	
-	for(i=0;i<6;i++) destTag[i]=srcTag[i];
-}
 void readEPCData(uint8_t* buf){
-	uint8_t i=0, j, tagsNum = buf[5], tempBuf[7];	
+	static uint8_t i=0, j, tempBuf[7], tagsNum;	
+	static AdcMsg_t adcMsg;	
 	
+	tagsNum = buf[5];	
 	while(tagsNum>0){
 		for(j=0;j<7;j++) tempBuf[j] = buf[10+j];
 		for(j=0;j<6;j++) tagsBuffer[i][j] = ((tempBuf[j]&0x0f)<<4)|((tempBuf[j+1]&0xf0)>>4);		
@@ -121,10 +124,21 @@ void readEPCData(uint8_t* buf){
 		i++;
 	}
 	if(buf[5]>0){		
-		if(isTagsEqual(&tagsBuffer[i-1][0], currentTag) == 0){
+		if(memcmp(&tagsBuffer[i-1][0], currentTag, 6) != 0){
 			if(getAdcState() == ADC_FREE){
-				copyTag(&tagsBuffer[i-1][0], currentTag);
-				osSemaphoreRelease(readWeightSemHandle);
+				memcpy(currentTag, &tagsBuffer[i-1][0], 6);				
+				if(memcmp(currentTag, calibrationTag, 6) == 0){
+					adcMsg = Calibration;
+					osMessageQueuePut(adcQueueHandle, &adcMsg, 0, 0);
+				}
+				else if (memcmp(currentTag, offsetTag, 6) == 0){
+					adcMsg = SetOffset;
+					osMessageQueuePut(adcQueueHandle, &adcMsg, 0, 0);
+				}
+				else {
+					adcMsg = ReadWeight;
+					osMessageQueuePut(adcQueueHandle, &adcMsg, 0, 0);
+				}				
 			}
 		}			
 	}
@@ -149,11 +163,11 @@ void readRfidResponse(uint8_t* buf){
 void rfidInit(void){	
 	HAL_GPIO_WritePin(RFID_EN_GPIO_Port, RFID_EN_Pin, GPIO_PIN_SET);
 	osDelay(2000);
-	sendCmd(outputBuffer, GetReaderInfoCMD);
-	if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 1000) == ReceiveOK){
+	sendCmd(outputBuffer, GetReaderInfoCMD);	
+	if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 2000) == ReceiveOK){
 		HAL_UART_Receive_DMA(&huart6,inputBuffer+1,inputBuffer[0]);
-		if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 1000) == ReceiveOK)
-			readRfidResponse(inputBuffer);
+		if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 2000) == ReceiveOK)
+			readRfidResponse(inputBuffer);		
 	}	
 	//writeCMDToBuf(outputBuffer, getReaderInfoCMD);
 	//->getReaderInfo(outputBuffer);
@@ -187,10 +201,10 @@ void readRfidTask(void *argument)
     osDelay(1000);
 		sendCmd(outputBuffer, InventoryG2CMD);
 		HAL_IWDG_Refresh(&hiwdg);
-		if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 1000) == ReceiveOK){
+		if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 2000) == ReceiveOK){
 			if (receiveStage == 1){
 				HAL_UART_Receive_DMA(&huart6,inputBuffer+1,inputBuffer[0]);
-				if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 1000) == ReceiveOK)
+				if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 2000) == ReceiveOK)
 				readRfidResponse(inputBuffer);
 			}		
 		}	
@@ -200,5 +214,5 @@ void readRfidTask(void *argument)
 }
 
 void getCurrentTag(uint8_t* tagBuf){
-	copyTag(currentTag, tagBuf);
+	memcpy(tagBuf, currentTag, 6);	
 }

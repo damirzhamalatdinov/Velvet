@@ -14,6 +14,12 @@ extern "C" {
 #define ADC_BUSY 1
 #define ADC_FREE 0
 
+typedef enum{
+	Calibration,
+	ReadWeight,
+	SetOffset
+}AdcMsg_t;
+
 void readWeightTask(void *argument);
 uint8_t getAdcState(void);
 void setAdcState(uint8_t state);
