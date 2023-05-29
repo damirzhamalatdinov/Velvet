@@ -1,0 +1,7 @@
+Removed Pin From Net: NetName=ESP_LED Pin=TP7wf-1
+Removed Member From Class: ClassName=Ñץולא Wi-Fi Velvet Controller Member=TP7wf
+Added Pin To Net: NetName=NetR2gs_1 Pin=TP9gs-1
+Change Net Name : Old Net Name=NetR2gs_1 New Net Name=SIM_DATA
+Added Pin To Net: NetName=NetDD1gs_15 Pin=DD1gs-15
+Added Pin To Net: NetName=NetDD1gs_15 Pin=R2gs-2
+Added Net: Name=NetDD1gs_15

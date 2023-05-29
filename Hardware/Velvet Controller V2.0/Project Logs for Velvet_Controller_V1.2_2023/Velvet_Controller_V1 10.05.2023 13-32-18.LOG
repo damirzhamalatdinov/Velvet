@@ -1,0 +1,10 @@
+Removed Pin From Net: NetName=BOOT0_LoRa_MK Pin=TP7lr-1
+Removed Pin From Net: NetName=BOOT0_LoRa Pin=TP8lr-1
+Removed Member From Class: ClassName=—хема LoRa и RFID Velvet Controller Member=TP7lr
+Removed Member From Class: ClassName=—хема LoRa и RFID Velvet Controller Member=TP8lr
+Added Room: Name=—хема GSM Velvet Controller
+Added Room: Name=—хема LoRa и RFID Velvet Controller
+Added Room: Name=—хема Wi-Fi Velvet Controller
+Added Room: Name=—хема ћ  и датчиков Velvet Controller
+Added Room: Name=—хема дискретных входов и выходов
+Added Room: Name=—хема питани€ Velvet Controller

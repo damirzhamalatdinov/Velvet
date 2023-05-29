@@ -50,7 +50,7 @@ PrefsRevisionGUID=
 
 [Document1]
 DocumentPath=Схема питания Velvet Controller.SchDoc
-AnnotationEnabled=0
+AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
 AnnotateSuffix=p
@@ -67,7 +67,7 @@ DocumentUniqueId=NQGYRODU
 
 [Document2]
 DocumentPath=Схема МК и датчиков Velvet Controller.SchDoc
-AnnotationEnabled=0
+AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
 AnnotateSuffix=mc
@@ -84,7 +84,7 @@ DocumentUniqueId=DJETOVFQ
 
 [Document3]
 DocumentPath=Схема LoRa и RFID Velvet Controller.SchDoc
-AnnotationEnabled=0
+AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
 AnnotateSuffix=lr
@@ -101,7 +101,7 @@ DocumentUniqueId=WRAMXEAC
 
 [Document4]
 DocumentPath=Схема Wi-Fi Velvet Controller.SchDoc
-AnnotationEnabled=0
+AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
 AnnotateSuffix=wf
@@ -118,7 +118,7 @@ DocumentUniqueId=XMFRQVIY
 
 [Document5]
 DocumentPath=Схема GSM Velvet Controller.SchDoc
-AnnotationEnabled=0
+AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
 AnnotateSuffix=gs
@@ -150,6 +150,61 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=QBHKGJXV
 
+[Document7]
+DocumentPath=Velvet_Controller_V1.2_2023.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=VTAFGRFV
+
+[Document8]
+DocumentPath=Velvet_Controller_V1.2_2023.BomDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
+
+[Document9]
+DocumentPath=Velvet_Controller_V1.2_2023.OutJob
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
+
+[GeneratedDocument1]
+DocumentPath=Project Outputs for Velvet_Controller_V1.2_2023\Design Rule Check - Velvet_Controller_V1.html
+DItemRevisionGUID=
+
 [Configuration1]
 Name=Sources
 ParameterCount=0
@@ -159,6 +214,44 @@ Variant=[No Variations]
 OutputJobsCount=0
 ContentTypeGUID=CB6F2064-E317-11DF-B822-12313F0024A2
 ConfigurationType=Source
+
+[Generic_SmartPDF]
+AutoOpenFile=-1
+AutoOpenOutJob=-1
+
+[Generic_SmartPDFSettings]
+ProjectMode=-1
+ZoomPrecision=50
+AddNetsInformation=-1
+AddNetPins=-1
+AddNetNetLabels=-1
+AddNetPorts=-1
+ShowComponentParameters=-1
+GlobalBookmarks=0
+ExportBOM=0
+TemplateFilename=Board Stack Report.XLT
+TemplateStoreRelative=-1
+PCB_PrintColor=1
+SCH_PrintColor=0
+PrintQuality=-3
+SCH_ShowNoErc=-1
+SCH_ShowParameter=-1
+SCH_ShowProbes=-1
+SCH_ShowBlankets=-1
+SCH_NoERCSymbolsToShow="Thin Cross","Thick Cross","Small Cross",Checkbox,Triangle
+SCH_ShowNote=-1
+SCH_ShowNoteCollapsed=-1
+Wir_PrintColor=0
+Ldr_PrintColor=0
+SCH_ExpandLogicalToPhysical=-1
+SCH_VariantName=[No Variations]
+SCH_ExpandComponentDesignators=-1
+SCH_ExpandNetlabels=0
+SCH_ExpandPorts=0
+SCH_ExpandSheetNumber=0
+SCH_ExpandDocumentNumber=0
+SCH_HasExpandLogicalToPhysicalSheets=-1
+SaveSettingsToOutJob=-1
 
 [OutputGroup1]
 Name=Netlist Outputs
@@ -265,12 +358,22 @@ OutputName20=WireList Netlist
 OutputDocumentPath20=
 OutputVariantName20=
 OutputDefault20=0
+OutputType21=XSpiceNetlist
+OutputName21=Mixed Sim Netlist
+OutputDocumentPath21=
+OutputVariantName21=
+OutputDefault21=0
 
 [OutputGroup2]
 Name=Simulator Outputs
 Description=
 TargetPrinter=Microsoft Print to PDF
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
+OutputType1=AdvSimNetlist
+OutputName1=Mixed Sim
+OutputDocumentPath1=
+OutputVariantName1=
+OutputDefault1=0
 
 [OutputGroup3]
 Name=Documentation Outputs
@@ -461,6 +564,24 @@ OutputDocumentPath1=
 OutputVariantName1=[No Variations]
 OutputDefault1=0
 PageOptions1=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
+Configuration1_Name1=ColumnNameFormat
+Configuration1_Item1=CaptionAsName
+Configuration1_Name2=ForceUpdateSettings
+Configuration1_Item2=False
+Configuration1_Name3=General
+Configuration1_Item3=OpenExported=False|AddToProject=False|ReportBOMViolationsInMessages=False|ForceFit=False|NotFitted=False|Database=False|DatabasePriority=False|IncludePcbData=False|IncludeVaultData=False|IncludeCloudData=False|IncludeDocumentData=False|IncludeAlternatives=True|ShowExportOptions=True|TemplateFilename=C:\Users\Public\Documents\Altium\AD21\Templates\BOM Template Single Supplier.xlsx|TemplateVaultGuid=|TemplateItemGuid=|TemplateRevisionGuid=|BatchMode=2|FormWidth=1200|FormHeight=710|SupplierProdQty=1|SupplierAutoQty=True|SupplierUseCachedPricing=False|SupplierCurrency=USD|SolutionsPerItem=1|SuppliersPerSolution=1|ViewType=0|UseDirectApi=True|BomSetName=
+Configuration1_Name4=GroupOrder
+Configuration1_Item4=
+Configuration1_Name5=SortOrder
+Configuration1_Item5=Supplier 1=Down
+Configuration1_Name6=VisibleOrder
+Configuration1_Item6=Line #=53|Comment=80|Description=254|Designator=77|Quantity=67|Manufacturer 1=99|Manufacturer Part Number 1=166|Manufacturer Lifecycle 1=143|Supplier 1=75|Supplier Part Number 1=139|Supplier Unit Price 1=123|Supplier Subtotal 1=116
+Configuration1_Name7=VisibleOrder_Base
+Configuration1_Item7=Line #=53|Comment=80|Description=254|Designator=77|Quantity=67|Manufacturer 1=99|Manufacturer Part Number 1=166|Manufacturer Lifecycle 1=143|Supplier 1=75|Supplier Part Number 1=139|Supplier Unit Price 1=123|Supplier Subtotal 1=116
+Configuration1_Name8=VisibleOrder_Consolidated
+Configuration1_Item8=Line #=100|Comment=100|Description=100|Designator=100|Quantity=100|Manufacturer 1=99|Manufacturer Part Number 1=166|Manufacturer Lifecycle 1=143|Supplier 1=75|Supplier Part Number 1=139|Supplier Unit Price 1=123|Supplier Subtotal 1=116
+Configuration1_Name9=VisibleOrder_Flat
+Configuration1_Item9=Line #=100|Comment=100|Description=100|Designator=100|Manufacturer 1=99|Manufacturer Part Number 1=166|Manufacturer Lifecycle 1=143|Supplier 1=75|Supplier Part Number 1=139|Supplier Unit Price 1=123|Supplier Subtotal 1=116
 OutputType2=BOM_ReportCompare
 OutputName2=BOM Compare
 OutputDocumentPath2=
@@ -504,6 +625,11 @@ OutputName9=Report Single Pin Nets
 OutputDocumentPath9=
 OutputVariantName9=[No Variations]
 OutputDefault9=0
+OutputType10=GOSTBOM
+OutputName10=GOST BOM
+OutputDocumentPath10=
+OutputVariantName10=[No Variations]
+OutputDefault10=0
 
 [OutputGroup7]
 Name=Other Outputs
@@ -1101,8 +1227,8 @@ UpdateToLatestRevision=1
 PartTypes=0
 ComponentLibIdentifierKind0=Library Name And Type
 ComponentLibraryIdentifier0=Passive components.IntLib
-ComponentDesignItemID0=ESR10EZPF2200
-ComponentSymbolReference0=ESR10EZPF2200
+ComponentDesignItemID0=ECA-1HM331B
+ComponentSymbolReference0=ECA-1HM331B
 ComponentUpdate0=1
 ComponentIsDeviceSheet0=0
 FullReplace=1
@@ -1118,44 +1244,59 @@ RemoveParameters=0
 AddModels=1
 RemoveModels=1
 UpdateCurrentModels=1
-ParameterName0=Comment
+ParameterName0=Capacitance
 ParameterUpdate0=1
-ParameterName1=Component Kind
+ParameterName1=Capacitor Type
 ParameterUpdate1=1
-ParameterName2=Description
+ParameterName2=Comment
 ParameterUpdate2=1
-ParameterName3=Library Reference
+ParameterName3=Component Kind
 ParameterUpdate3=1
-ParameterName4=Manufacturer 1
+ParameterName4=Description
 ParameterUpdate4=1
-ParameterName5=Manufacturer Part Number 1
+ParameterName5=Diameter
 ParameterUpdate5=1
-ParameterName6=Max Operating Temperature
+ParameterName6=Height
 ParameterUpdate6=1
-ParameterName7=Min Operating Temperature
+ParameterName7=Lead Spacing
 ParameterUpdate7=1
-ParameterName8=Package
+ParameterName8=Library Reference
 ParameterUpdate8=1
-ParameterName9=Power Rated
+ParameterName9=Manufacturer 1
 ParameterUpdate9=1
-ParameterName10=Ratings
+ParameterName10=Manufacturer Part Number 1
 ParameterUpdate10=1
-ParameterName11=Resistance
+ParameterName11=Max Operating Temperature
 ParameterUpdate11=1
-ParameterName12=Supplier 1
+ParameterName12=Min Operating Temperature
 ParameterUpdate12=1
-ParameterName13=Supplier Part Number 1
+ParameterName13=Ripple Current @ High Frequency
 ParameterUpdate13=1
-ParameterName14=Tolerance
+ParameterName14=Ripple Current @ Low Frequency
 ParameterUpdate14=1
-ParameterName15=Voltage Rated
+ParameterName15=Tolerance
 ParameterUpdate15=1
+ParameterName16=Voltage Rated
+ParameterUpdate16=1
+ModelTypeGroup0=PCBLIB
+ModelTypeUpdate0=1
+ModelType0=PCBLIB
+ModelName0=CAP RADIAL D10.0 L17,0 P5.0
+ModelUpdate0=1
 
 [DatabaseUpdateOptions]
 SelectedOnly=0
 UpdateVariants=1
 UpdateToLatestRevision=1
 PartTypes=0
+
+[NetInfos]
+Net1=NetName=+12V|NetColor=clRed
+Net2=NetName=+3.3V|NetColor=$000099FF
+Net3=NetName=+4V|NetColor=clLime
+Net4=NetName=+5V|NetColor=clAqua
+Net5=NetName=GND|NetColor=$001D7638
+Net6=NetName=PE|NetColor=$00FF0099
 
 [Comparison Options]
 ComparisonOptions0=Kind=Net|MinPercent=75|MinMatch=3|ShowMatch=0|UseName=-1|InclAllRules=0

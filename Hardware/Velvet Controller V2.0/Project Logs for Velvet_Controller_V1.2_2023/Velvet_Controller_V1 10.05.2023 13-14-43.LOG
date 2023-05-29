@@ -1,0 +1,8 @@
+Removed Pin From Net: NetName=RFID_To_MK_GPI Pin=TP9lr-1
+Removed Pin From Net: NetName=RFID_To_MK_GPO Pin=TP11lr-1
+Removed Pin From Net: NetName=RFID_to_MK_TX Pin=TP15lr-1
+Removed Pin From Net: NetName=RFID_to_MK_RX Pin=TP17lr-1
+Removed Member From Class: ClassName=Ñץולא LoRa ט RFID Velvet Controller Member=TP9lr
+Removed Member From Class: ClassName=Ñץולא LoRa ט RFID Velvet Controller Member=TP11lr
+Removed Member From Class: ClassName=Ñץולא LoRa ט RFID Velvet Controller Member=TP15lr
+Removed Member From Class: ClassName=Ñץולא LoRa ט RFID Velvet Controller Member=TP17lr
