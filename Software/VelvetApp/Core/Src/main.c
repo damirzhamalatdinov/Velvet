@@ -86,10 +86,10 @@ osMessageQueueId_t rfidReceiveQueueHandle;
 const osMessageQueueAttr_t rfidReceiveQueue_attributes = {
   .name = "rfidReceiveQueue"
 };
-/* Definitions for readWeightSem */
-osSemaphoreId_t readWeightSemHandle;
-const osSemaphoreAttr_t readWeightSem_attributes = {
-  .name = "readWeightSem"
+/* Definitions for adcQueue */
+osMessageQueueId_t adcQueueHandle;
+const osMessageQueueAttr_t adcQueue_attributes = {
+  .name = "adcQueue"
 };
 /* USER CODE BEGIN PV */
 
@@ -123,7 +123,7 @@ extern void readRfidTask(void *argument);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	SCB->VTOR = 0x08020000;
+	//SCB->VTOR = 0x08020000;
   //SCB->VTOR = 0x0800E000;  
   __HAL_RCC_GPIOA_CLK_DISABLE();
   __HAL_RCC_GPIOB_CLK_DISABLE();
@@ -169,10 +169,6 @@ int main(void)
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
 
-  /* Create the semaphores(s) */
-  /* creation of readWeightSem */
-  readWeightSemHandle = osSemaphoreNew(1, 1, &readWeightSem_attributes);
-
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
@@ -191,19 +187,22 @@ int main(void)
   /* creation of rfidReceiveQueue */
   rfidReceiveQueueHandle = osMessageQueueNew (2, sizeof(uint8_t), &rfidReceiveQueue_attributes);
 
+  /* creation of adcQueue */
+  adcQueueHandle = osMessageQueueNew (3, sizeof(uint8_t), &adcQueue_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
   /* creation of sendMsg */
-  sendMsgHandle = osThreadNew(sendMsgToESPTask, NULL, &sendMsg_attributes);
+  sendMsgHandle = osThreadNew(sendMsgToESPTask, (void*) &huart4, &sendMsg_attributes);
 
   /* creation of readWeight */
   readWeightHandle = osThreadNew(readWeightTask, NULL, &readWeight_attributes);
 
   /* creation of readRfid */
-  readRfidHandle = osThreadNew(readRfidTask, NULL, &readRfid_attributes);
+  readRfidHandle = osThreadNew(readRfidTask, (void*) &huart6, &readRfid_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -438,10 +437,17 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12|GPIO_PIN_13|HX_DOUT_Pin|HX_SCK_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, ESP_EN_Pin|RFID_EN_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(RFID_EN_GPIO_Port, RFID_EN_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12|GPIO_PIN_13|HX_DOUT_Pin|HX_SCK_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : ESP_EN_Pin RFID_EN_Pin */
+  GPIO_InitStruct.Pin = ESP_EN_Pin|RFID_EN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PD12 PD13 HX_DOUT_Pin HX_SCK_Pin */
   GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13|HX_DOUT_Pin|HX_SCK_Pin;
@@ -449,13 +455,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : RFID_EN_Pin */
-  GPIO_InitStruct.Pin = RFID_EN_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(RFID_EN_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */

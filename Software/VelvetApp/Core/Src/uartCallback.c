@@ -9,8 +9,6 @@
 #include "cmsis_os2.h"
 #include "app.h"
 
-extern UART_HandleTypeDef huart4;
-extern UART_HandleTypeDef huart6;
 extern osMessageQueueId_t espReceiveQueueHandle;
 extern osMessageQueueId_t rfidReceiveQueueHandle;
 
@@ -18,7 +16,7 @@ static const uint8_t espMsgReceived = 1;
 static uint8_t receiveStage = 0;
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){	
-	if (huart->Instance == USART6) receiveStage = 1;
+	//if (huart->Instance == USART6) receiveStage = 1;
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
@@ -33,4 +31,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 			receiveStage = 0;
 		}
 	}
+}
+
+void setReceiveStage (uint8_t stage){
+	receiveStage = stage;
 }
