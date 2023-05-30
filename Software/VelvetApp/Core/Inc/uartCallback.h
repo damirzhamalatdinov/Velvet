@@ -9,7 +9,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#include <stdint.h>
 
+void setReceiveStage (uint8_t stage);
 #ifdef __cplusplus
 }
 #endif

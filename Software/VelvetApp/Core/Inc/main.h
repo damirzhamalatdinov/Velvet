@@ -57,6 +57,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define ESP_EN_Pin GPIO_PIN_2
+#define ESP_EN_GPIO_Port GPIOA
 #define RFID_EN_Pin GPIO_PIN_8
 #define RFID_EN_GPIO_Port GPIOA
 #define HX_DOUT_Pin GPIO_PIN_4

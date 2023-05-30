@@ -15,7 +15,8 @@ typedef enum{
 	None,
 	CheckFW,
 	TimeSynchronization,
-	WeightBufferReady
+	WeightBufferReady,
+	SendWeight
 } EspMsg_t;
 
 void sendMsgToESPTask(void *argument);
