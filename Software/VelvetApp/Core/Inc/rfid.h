@@ -18,7 +18,8 @@ extern "C" {
 void readRfidTask(void *argument);
 void getCurrentTag(uint8_t* tagBuf);
 /* Definitions for rfidReceiveQueue */
-osMessageQueueId_t rfidReceiveQueueHandle;
+extern osMessageQueueId_t rfidReceiveQueueHandle;
+
 #ifdef __cplusplus
 }
 #endif

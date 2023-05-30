@@ -18,7 +18,10 @@ typedef enum{
 	TransmitWifiError,
 	TimestampRespOK
 } EspResponse_t;
-
+/* Definitions for espSendQueue */
+osMessageQueueId_t espSendQueueHandle;
+/* Definitions for espReceiveQueue */
+osMessageQueueId_t espReceiveQueueHandle;
 #define ReceiveOK 0
 
 static UART_HandleTypeDef* pUart;

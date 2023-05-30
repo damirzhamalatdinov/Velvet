@@ -20,9 +20,9 @@ typedef enum{
 	SendWeight
 } EspMsg_t;
 /* Definitions for espSendQueue */
-osMessageQueueId_t espSendQueueHandle;
+extern osMessageQueueId_t espSendQueueHandle;
 /* Definitions for espReceiveQueue */
-osMessageQueueId_t espReceiveQueueHandle;
+extern osMessageQueueId_t espReceiveQueueHandle;
 
 void sendMsgToESPTask(void *argument);
 

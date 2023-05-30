@@ -26,6 +26,7 @@
 #include "app.h"
 #include "esp.h"
 #include "rfid.h"
+#include "adc.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

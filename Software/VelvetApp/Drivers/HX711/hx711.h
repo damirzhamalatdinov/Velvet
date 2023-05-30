@@ -54,7 +54,8 @@ void        hx711_tare(hx711_t *hx711, uint16_t sample);
 float       hx711_weight(hx711_t *hx711, uint16_t sample);
 void        hx711_power_down(hx711_t *hx711);
 void        hx711_power_up(hx711_t *hx711);
-
+void 				hx711_offset_set(hx711_t *hx711, int32_t offset);
+int32_t 		hx711_offset_get(hx711_t *hx711);
 //####################################################################################################################
 
 #ifdef __cplusplus
