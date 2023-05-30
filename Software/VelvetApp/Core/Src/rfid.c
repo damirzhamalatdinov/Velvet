@@ -12,7 +12,6 @@
 //#include "app.h"
 
 extern IWDG_HandleTypeDef hiwdg;
-extern osMessageQueueId_t rfidReceiveQueueHandle;
 extern osMessageQueueId_t adcQueueHandle;
 
 #define PRESET_VALUE 0xFFFF

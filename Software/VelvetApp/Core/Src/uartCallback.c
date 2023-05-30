@@ -9,9 +9,6 @@
 #include "cmsis_os2.h"
 #include "app.h"
 
-extern osMessageQueueId_t espReceiveQueueHandle;
-extern osMessageQueueId_t rfidReceiveQueueHandle;
-
 static const uint8_t espMsgReceived = 1;
 static uint8_t receiveStage = 0;
 

@@ -10,6 +10,7 @@
 extern "C" {
 #endif
 #include <stdint.h>
+#include "cmsis_os2.h"
 
 typedef enum{
 	None,
@@ -18,6 +19,10 @@ typedef enum{
 	WeightBufferReady,
 	SendWeight
 } EspMsg_t;
+/* Definitions for espSendQueue */
+osMessageQueueId_t espSendQueueHandle;
+/* Definitions for espReceiveQueue */
+osMessageQueueId_t espReceiveQueueHandle;
 
 void sendMsgToESPTask(void *argument);
 

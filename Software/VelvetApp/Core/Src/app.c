@@ -7,8 +7,6 @@
 #include "cmsis_os2.h"
 #include "esp.h"
 
-extern osMessageQueueId_t espSendQueueHandle;
-
 volatile uint16_t secondsCounter;
 volatile uint32_t timestamp = 0;
 static EspMsg_t espMsg;

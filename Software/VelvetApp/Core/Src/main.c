@@ -24,6 +24,8 @@
 /* USER CODE BEGIN Includes */
 #include "appInit.h"
 #include "app.h"
+#include "esp.h"
+#include "rfid.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -70,26 +72,6 @@ const osThreadAttr_t readRfid_attributes = {
   .name = "readRfid",
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal1,
-};
-/* Definitions for espSendQueue */
-osMessageQueueId_t espSendQueueHandle;
-const osMessageQueueAttr_t espSendQueue_attributes = {
-  .name = "espSendQueue"
-};
-/* Definitions for espReceiveQueue */
-osMessageQueueId_t espReceiveQueueHandle;
-const osMessageQueueAttr_t espReceiveQueue_attributes = {
-  .name = "espReceiveQueue"
-};
-/* Definitions for rfidReceiveQueue */
-osMessageQueueId_t rfidReceiveQueueHandle;
-const osMessageQueueAttr_t rfidReceiveQueue_attributes = {
-  .name = "rfidReceiveQueue"
-};
-/* Definitions for adcQueue */
-osMessageQueueId_t adcQueueHandle;
-const osMessageQueueAttr_t adcQueue_attributes = {
-  .name = "adcQueue"
 };
 /* USER CODE BEGIN PV */
 
@@ -177,21 +159,29 @@ int main(void)
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
-  /* Create the queue(s) */
-  /* creation of espSendQueue */
-  espSendQueueHandle = osMessageQueueNew (5, sizeof(uint8_t), &espSendQueue_attributes);
-
-  /* creation of espReceiveQueue */
-  espReceiveQueueHandle = osMessageQueueNew (2, sizeof(uint8_t), &espReceiveQueue_attributes);
-
-  /* creation of rfidReceiveQueue */
-  rfidReceiveQueueHandle = osMessageQueueNew (2, sizeof(uint8_t), &rfidReceiveQueue_attributes);
-
-  /* creation of adcQueue */
-  adcQueueHandle = osMessageQueueNew (3, sizeof(uint8_t), &adcQueue_attributes);
-
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
+	const osMessageQueueAttr_t espSendQueue_attributes = {
+  .name = "espSendQueue"
+	};
+	const osMessageQueueAttr_t espReceiveQueue_attributes = {
+  .name = "espReceiveQueue"
+	};
+	const osMessageQueueAttr_t rfidReceiveQueue_attributes = {
+  .name = "rfidReceiveQueue"
+	};
+	const osMessageQueueAttr_t adcQueue_attributes = {
+  .name = "adcQueue"
+	};
+	/* Create the queue(s) */
+  /* creation of espSendQueue */
+  espSendQueueHandle = osMessageQueueNew (5, sizeof(uint8_t), &espSendQueue_attributes);
+  /* creation of espReceiveQueue */
+  espReceiveQueueHandle = osMessageQueueNew (2, sizeof(uint8_t), &espReceiveQueue_attributes);
+  /* creation of rfidReceiveQueue */
+  rfidReceiveQueueHandle = osMessageQueueNew (2, sizeof(uint8_t), &rfidReceiveQueue_attributes);
+  /* creation of adcQueue */
+  //adcQueueHandle = osMessageQueueNew (3, sizeof(uint8_t), &adcQueue_attributes);
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */

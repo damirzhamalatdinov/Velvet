@@ -10,13 +10,15 @@
 extern "C" {
 #endif
 #include <stdint.h>
+#include "cmsis_os2.h"
 
 #define RFID_ERROR					   -1
 #define RFID_OK						    0
 
 void readRfidTask(void *argument);
 void getCurrentTag(uint8_t* tagBuf);
-
+/* Definitions for rfidReceiveQueue */
+osMessageQueueId_t rfidReceiveQueueHandle;
 #ifdef __cplusplus
 }
 #endif
