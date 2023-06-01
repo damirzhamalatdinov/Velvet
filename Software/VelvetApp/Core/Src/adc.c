@@ -25,28 +25,36 @@ static const uint32_t calibrationValAddress = 0x08040004UL;
 static const uint32_t calibrationWeight = 10.0;
 static union coefficient{
 	float floatVal;
-	uint32_t uintVal;
+	uint32_t uintVal;	
 } coefficient;
 
+
 void initADC(void)
-{
-	 //hx711->offset = noload_raw;
-  //hx711->coef	
+{	
+	int32_t offsetUint = 0;
 	int32_t offset = 0;
-	int32_t coefInt = 0;
+	uint32_t coefInt = 0;
+	uint32_t ffVal = 0xFFFFFFFFUL;
 	float coef = 0;
 		
-	memcpy(&offset, (uint32_t *)&offsetAddress, 4);
-	memcpy(&coefInt, (uint32_t *)&calibrationValAddress, 4);	
+	offsetUint = *(__IO uint32_t*)offsetAddress;
+	coefInt = *(__IO uint32_t*)calibrationValAddress;
+	//memcpy(&offset, (uint32_t *)&offsetAddress, 4);
+	//memcpy(&coefInt, (uint32_t *)&calibrationValAddress, 4);	
 	hx711_init(&loadcell, HX_SCK_GPIO_Port, HX_SCK_Pin, HX_DOUT_GPIO_Port, HX_DOUT_Pin);
   //hx711_coef_set(&loadcell, 354.5); // read afer calibration
-	if (coefInt != 0xffffffff){
+	if(memcmp(&coefInt,&ffVal,4) != 0){
+	//if (coefInt != 0xFFFFFFFFUL){
 		memcpy(&coef, &coefInt, 4);
 		hx711_coef_set(&loadcell, coef);		
 	}
   else hx711_coef_set(&loadcell, 1.0);//no calibration, clean adc val
 	osDelay(100);	
-	if (offset != 0xffffffff) hx711_offset_set(&loadcell, offset);
+	if(memcmp(&offsetUint,&ffVal,4) != 0){
+		memcpy(&offset, &offsetUint, 4);
+		hx711_offset_set(&loadcell, offset);		
+	}
+	//if (offset != 0xFFFFFFFFUL) hx711_offset_set(&loadcell, offset);
 	else hx711_tare(&loadcell, 10);	
 	//osDelay(5000);	
 	//hx711_coef_set(&loadcell, hx711_weight(&loadcell, 10)/55);//55 тарированный вес 55 г

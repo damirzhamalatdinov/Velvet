@@ -20,7 +20,7 @@ void checkTasksTimeout(){
 		espMsg = TimeSynchronization;
 		osMessageQueuePut(espSendQueueHandle, &espMsg, 0, 0);		
 	}	
-	if(secondsCounter%CHECK_FW_TIMEOUT == 0){
+	else if(secondsCounter%CHECK_FW_TIMEOUT == 0){
 		espMsg = CheckFW;
 		osMessageQueuePut(espSendQueueHandle, &espMsg, 0, 0);
 	}

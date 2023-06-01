@@ -74,6 +74,7 @@ void prepareSendBuffer(void){
 
 void readEspResponse(uint8_t* buf){//<<<<----- mytest testFunction
 	static uint32_t timest;
+	static EspMsg_t msgType = None;
 	
 	if(currentCmdESP==buf[0]){
 		switch(checkResponse(buf)){
@@ -81,8 +82,8 @@ void readEspResponse(uint8_t* buf){//<<<<----- mytest testFunction
 				HAL_NVIC_SystemReset(); //Jump to bootloader 
 			break;
 			case TransmitPrepareOK:
-				sendMessageType = SendWeight;				
-				osMessageQueuePut(espSendQueueHandle, &sendMessageType, 0, 0);	
+				msgType = SendWeight;				
+				osMessageQueuePut(espSendQueueHandle, &msgType, 0, 0);	
 			break;
 			case SendWeightOK:
 				setAdcState(ADC_FREE);				
