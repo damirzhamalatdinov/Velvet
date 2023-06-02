@@ -41,7 +41,6 @@ static union weight{
 } weight;
 static uint16_t versionNum = 1;
 static uint8_t currentCmdESP = 0;
-static EspMsg_t sendMessageType = None;
 
 EspResponse_t checkResponse(uint8_t* buf){
 	if(memcmp(buf, checkFWRspOK, 8) == 0) return RestartSTM;
@@ -104,7 +103,7 @@ void readEspResponse(uint8_t* buf){//<<<<----- mytest testFunction
 	}
 }
 
-void sendMsgToESP(void){
+void sendMsgToESP(EspMsg_t sendMessageType){
 	switch(sendMessageType){
 			case WeightBufferReady:
 				currentCmdESP = 4;
@@ -134,6 +133,7 @@ void sendMsgToESP(void){
 void sendMsgToESPTask(void *argument){	
 	static uint8_t messageReceived = 0;
 	static uint8_t ingnoreCounter = 0;
+	EspMsg_t sendMessageType = None;
 	
 	pUart = (UART_HandleTypeDef*) argument;	
 	HAL_GPIO_WritePin(GPIOA, ESP_EN_Pin, GPIO_PIN_SET);
@@ -147,7 +147,7 @@ void sendMsgToESPTask(void *argument){
 				continue;	//ingnore other messages, if send weight process started				
 			}
 			HAL_UART_Receive_DMA(pUart,receiveBuffer,8);
-			sendMsgToESP();			
+			sendMsgToESP(sendMessageType);			
 			if(osMessageQueueGet (espReceiveQueueHandle, &messageReceived, 0, 1000) == ReceiveOK)
 				readEspResponse(receiveBuffer);	
 			else {
