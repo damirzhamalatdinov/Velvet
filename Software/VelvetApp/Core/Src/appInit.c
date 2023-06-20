@@ -11,5 +11,6 @@
 extern TIM_HandleTypeDef htim6;
 
 void initApp(void){	
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);
 	HAL_TIM_Base_Start_IT(&htim6);
 };

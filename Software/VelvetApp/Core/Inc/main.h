@@ -59,6 +59,8 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define ESP_EN_Pin GPIO_PIN_2
 #define ESP_EN_GPIO_Port GPIOA
+#define SPI1_CS_Pin GPIO_PIN_4
+#define SPI1_CS_GPIO_Port GPIOA
 #define RFID_EN_Pin GPIO_PIN_8
 #define RFID_EN_GPIO_Port GPIOA
 #define HX_DOUT_Pin GPIO_PIN_4

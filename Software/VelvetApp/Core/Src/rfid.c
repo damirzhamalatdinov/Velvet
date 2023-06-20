@@ -195,6 +195,7 @@ void readRfidTask(void *argument)
 			rfidReInit();
 		}		
 	}
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
   /* Infinite loop */
   for(;;)
   {		
