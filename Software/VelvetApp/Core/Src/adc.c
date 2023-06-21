@@ -11,8 +11,7 @@
 #include "esp.h"
 
 extern osSemaphoreId_t readWeightSemHandle;
-extern osMessageQueueId_t espSendQueueHandle;
-
+osMessageQueueId_t adcQueueHandle;
 static EspMsg_t espmsg;
 static hx711_t loadcell;
 static float weightBuffer[60];

@@ -26,6 +26,7 @@
 #include "app.h"
 #include "esp.h"
 #include "rfid.h"
+#include "adc.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -74,7 +75,11 @@ const osThreadAttr_t readRfid_attributes = {
   .priority = (osPriority_t) osPriorityNormal1,
 };
 /* USER CODE BEGIN PV */
-
+/* Definitions for readWeightSem */
+osSemaphoreId_t readWeightSemHandle;
+const osSemaphoreAttr_t readWeightSem_attributes = {
+  .name = "readWeightSem"
+};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -185,7 +190,7 @@ int main(void)
   /* creation of rfidReceiveQueue */
   rfidReceiveQueueHandle = osMessageQueueNew (2, sizeof(uint8_t), &rfidReceiveQueue_attributes);
   /* creation of adcQueue */
-  //adcQueueHandle = osMessageQueueNew (3, sizeof(uint8_t), &adcQueue_attributes);
+  adcQueueHandle = osMessageQueueNew (3, sizeof(uint8_t), &adcQueue_attributes);
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */

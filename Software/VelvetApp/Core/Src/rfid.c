@@ -12,7 +12,7 @@
 //#include "app.h"
 
 extern IWDG_HandleTypeDef hiwdg;
-extern osMessageQueueId_t adcQueueHandle;
+osMessageQueueId_t rfidReceiveQueueHandle;
 
 #define PRESET_VALUE 0xFFFF
 #define POLYNOMIAL  0x8408

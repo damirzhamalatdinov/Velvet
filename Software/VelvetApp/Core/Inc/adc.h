@@ -10,9 +10,18 @@
 extern "C" {
 #endif
 #include <stdint.h>
+#include "cmsis_os2.h"
 
 #define ADC_BUSY 1
 #define ADC_FREE 0
+
+typedef enum{
+	Calibration,
+	ReadWeight,
+	SetOffset
+}AdcMsg_t;
+/* Definitions for adcQueue */
+extern osMessageQueueId_t adcQueueHandle;
 
 void readWeightTask(void *argument);
 uint8_t getAdcState(void);
