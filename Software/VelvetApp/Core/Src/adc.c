@@ -10,7 +10,8 @@
 #include "app.h"
 #include "esp.h"
 
-extern osSemaphoreId_t readWeightSemHandle;
+#define ReceiveOK 0
+
 osMessageQueueId_t adcQueueHandle;
 static EspMsg_t espmsg;
 static hx711_t loadcell;
@@ -30,11 +31,13 @@ void initADC(void)
 }
 
 void readWeightTask(void *argument)
-{  
+{
+	static AdcMsg_t adcMsg;	
+	
 	initADC();	  
   for(;;)
   {
-		if(osSemaphoreAcquire (readWeightSemHandle, MAX_DELAY) == osOK){	
+		if(osMessageQueueGet (adcQueueHandle, &adcMsg, 0, MAX_DELAY) == ReceiveOK){	
 			adcState = ADC_BUSY;
 			for(weightIndex=0;weightIndex<60;weightIndex++){
 				osDelay(20);	//mytest add time management

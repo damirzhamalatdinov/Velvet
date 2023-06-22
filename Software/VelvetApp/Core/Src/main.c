@@ -75,11 +75,7 @@ const osThreadAttr_t readRfid_attributes = {
   .priority = (osPriority_t) osPriorityNormal1,
 };
 /* USER CODE BEGIN PV */
-/* Definitions for readWeightSem */
-osSemaphoreId_t readWeightSemHandle;
-const osSemaphoreAttr_t readWeightSem_attributes = {
-  .name = "readWeightSem"
-};
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -156,11 +152,7 @@ int main(void)
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
 
-  /* Create the semaphores(s) */
-  /* creation of readWeightSem */
-  readWeightSemHandle = osSemaphoreNew(1, 1, &readWeightSem_attributes);
-
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
+    /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
 
