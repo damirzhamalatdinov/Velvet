@@ -11,6 +11,7 @@
 #include "esp.h"
 
 #define ReceiveOK 0
+#define SampleNum 10
 
 osMessageQueueId_t adcQueueHandle;
 static EspMsg_t espmsg;
@@ -25,7 +26,7 @@ void initADC(void)
   //hx711_coef_set(&loadcell, 354.5); // read afer calibration
   hx711_coef_set(&loadcell, 1.0);//no calibration, clean adc val
 	osDelay(100);	
-	hx711_tare(&loadcell, 10);	
+	hx711_tare(&loadcell, SampleNum);	
 	//osDelay(5000);	
 	//hx711_coef_set(&loadcell, hx711_weight(&loadcell, 10)/55);//55 тарированный вес 55 г
 }
@@ -41,7 +42,7 @@ void readWeightTask(void *argument)
 			adcState = ADC_BUSY;
 			for(weightIndex=0;weightIndex<60;weightIndex++){
 				osDelay(20);	//mytest add time management
-				weightBuffer[weightIndex] = hx711_weight(&loadcell, 10);			
+				weightBuffer[weightIndex] = hx711_weight(&loadcell, SampleNum);			
 			}					
 			espmsg = WeightBufferReady;
 			osMessageQueuePut(espSendQueueHandle, &espmsg, 0, 0);							
