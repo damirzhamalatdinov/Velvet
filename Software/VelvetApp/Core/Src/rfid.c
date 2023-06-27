@@ -16,10 +16,10 @@ osMessageQueueId_t rfidReceiveQueueHandle;
 
 #define PRESET_VALUE 0xFFFF
 #define POLYNOMIAL  0x8408
-#define ReceiveOK 0
-#define TransmitOK 0
-#define GetReaderInfoCMD 0x21
-#define InventoryG2CMD 0x01
+#define RECEIVE_OK 0
+#define TRANSMIT_OK 0
+#define GET_READER_INFO_CMD 0x21
+#define INVENTORY_G2_CMD 0x01
 
 static UART_HandleTypeDef* pUart;
 static uint8_t outputBuffer[50];
@@ -63,12 +63,12 @@ void getReaderInfo (uint8_t* buf){
 
 void writeCMDToBuf(uint8_t* buf, uint8_t cmdNum){
 	switch(cmdNum){
-		case GetReaderInfoCMD:
+		case GET_READER_INFO_CMD:
 			buf[0] = 4;
 			buf[1] = 0xff;
 			buf[2] = cmdNum;			
 		break;
-		case InventoryG2CMD:
+		case INVENTORY_G2_CMD:
 			buf[0] = 13;
 			buf[1] = deviceAddress;
 			buf[2] = cmdNum;
@@ -90,7 +90,7 @@ void writeCMDToBuf(uint8_t* buf, uint8_t cmdNum){
 void sendCmd(uint8_t* buf, uint8_t cmdNum){
 	writeCMDToBuf(buf, cmdNum);
 	HAL_UART_Receive_DMA(pUart,inputBuffer,1);
-	if(HAL_UART_Transmit(pUart,buf,buf[0]+1,1000) == TransmitOK) setReceiveStage(1);			
+	if(HAL_UART_Transmit(pUart,buf,buf[0]+1,1000) == TRANSMIT_OK) setReceiveStage(1);			
 }
 
 int8_t checkBufCRC(uint8_t* buf){
@@ -146,11 +146,11 @@ void readEPCData(uint8_t* buf){
 void readRfidResponse(uint8_t* buf){
 	if((checkBufCRC(buf) == RFID_OK)&&(currentCmdRFID == buf[2])) {		
 		switch(buf[2]){
-			case GetReaderInfoCMD:
+			case GET_READER_INFO_CMD:
 				deviceAddress = buf[1];
 				rfidInitState = RFID_OK;
 			break;
-			case InventoryG2CMD:
+			case INVENTORY_G2_CMD:
 				if((buf[3] == 1)&&(buf[5] > 0)) readEPCData(buf);
 			break;
 		}
@@ -160,15 +160,15 @@ void readRfidResponse(uint8_t* buf){
 void rfidInit(void){	
 	HAL_GPIO_WritePin(RFID_EN_GPIO_Port, RFID_EN_Pin, GPIO_PIN_SET);
 	osDelay(2000);
-	sendCmd(outputBuffer, GetReaderInfoCMD);	
-	if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 2000) == ReceiveOK){
+	sendCmd(outputBuffer, GET_READER_INFO_CMD);	
+	if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK){
 		HAL_UART_Receive_DMA(pUart,inputBuffer+1,inputBuffer[0]);
-		if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 2000) == ReceiveOK)
+		if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK)
 			readRfidResponse(inputBuffer);
 		else HAL_UART_DMAStop(pUart);
 	}
 	else HAL_UART_DMAStop(pUart); //HAL_UART_Receive_DMA
-	//writeCMDToBuf(outputBuffer, getReaderInfoCMD);
+	//writeCMDToBuf(outputBuffer, GET_READER_INFO_CMD);
 	//->getReaderInfo(outputBuffer);
 	//HAL_UART_Transmit_IT(&huart6,outputBuffer,outputBuffer[0]+1);
 	//receiveStart = 1;
@@ -199,12 +199,12 @@ void readRfidTask(void *argument)
   for(;;)
   {		
     osDelay(1000);
-		sendCmd(outputBuffer, InventoryG2CMD);
+		sendCmd(outputBuffer, INVENTORY_G2_CMD);
 		HAL_IWDG_Refresh(&hiwdg);
-		if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 2000) == ReceiveOK){
+		if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK){
 			if (receiveStage == 1){
 				HAL_UART_Receive_DMA(pUart,inputBuffer+1,inputBuffer[0]);
-				if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 2000) == ReceiveOK)
+				if(osMessageQueueGet (rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK)
 					readRfidResponse(inputBuffer);
 				else HAL_UART_DMAStop(pUart);
 			}

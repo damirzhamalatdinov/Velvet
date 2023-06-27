@@ -22,7 +22,7 @@ typedef enum{
 osMessageQueueId_t espSendQueueHandle;
 /* Definitions for espReceiveQueue */
 osMessageQueueId_t espReceiveQueueHandle;
-#define ReceiveOK 0
+#define RECEIVE_OK 0
 
 static UART_HandleTypeDef* pUart;
 static const uint8_t checkFWRspOK[8] = {0x01, 0x01, 0X00, 0x00, 0x00, 0x00, 0x00, 0x00};
@@ -140,7 +140,7 @@ void sendMsgToESPTask(void *argument){
 	
 	for(;;)
 	{			
-		if(osMessageQueueGet (espSendQueueHandle, &sendMessageType, 0, MAX_DELAY) == ReceiveOK){
+		if(osMessageQueueGet (espSendQueueHandle, &sendMessageType, 0, MAX_DELAY) == RECEIVE_OK){
 			if((currentCmdESP == 4)&&(sendMessageType!=SendWeight)){
 				ingnoreCounter++;
 				if(ingnoreCounter>3) {ingnoreCounter = 0; currentCmdESP = 0;}
@@ -148,7 +148,7 @@ void sendMsgToESPTask(void *argument){
 			}
 			HAL_UART_Receive_DMA(pUart,receiveBuffer,8);
 			sendMsgToESP(sendMessageType);			
-			if(osMessageQueueGet (espReceiveQueueHandle, &messageReceived, 0, 1000) == ReceiveOK)
+			if(osMessageQueueGet (espReceiveQueueHandle, &messageReceived, 0, 1000) == RECEIVE_OK)
 				readEspResponse(receiveBuffer);	
 			else {
 				HAL_UART_DMAStop(pUart);
