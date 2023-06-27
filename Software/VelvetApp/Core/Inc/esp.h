@@ -13,16 +13,16 @@ extern "C" {
 #include "cmsis_os2.h"
 
 typedef enum{
-	None,
-	CheckFW,
-	TimeSynchronization,
-	WeightBufferReady,
-	SendWeight
+	EMPTY_MSG,
+	CHECK_FW,
+	TIME_SYNCHRONIZATION,
+	WEIGHT_BUFFER_READY,
+	SEND_WEIGHT
 } EspMsg_t;
 /* Definitions for espSendQueue */
-osMessageQueueId_t espSendQueueHandle;
+extern osMessageQueueId_t espSendQueueHandle;
 /* Definitions for espReceiveQueue */
-osMessageQueueId_t espReceiveQueueHandle;
+extern osMessageQueueId_t espReceiveQueueHandle;
 
 void sendMsgToESPTask(void *argument);
 

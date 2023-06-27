@@ -26,6 +26,7 @@
 #include "app.h"
 #include "esp.h"
 #include "rfid.h"
+#include "adc.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -181,7 +182,7 @@ int main(void)
   /* creation of rfidReceiveQueue */
   rfidReceiveQueueHandle = osMessageQueueNew (2, sizeof(uint8_t), &rfidReceiveQueue_attributes);
   /* creation of adcQueue */
-  //adcQueueHandle = osMessageQueueNew (3, sizeof(uint8_t), &adcQueue_attributes);
+  adcQueueHandle = osMessageQueueNew (3, sizeof(uint8_t), &adcQueue_attributes);
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
