@@ -73,7 +73,7 @@ void prepareSendBuffer(void){
 
 void readEspResponse(uint8_t* buf){//<<<<----- mytest testFunction
 	static uint32_t timest;
-	static EspMsg_t msgType = None;
+	static EspMsg_t msgType = EMPTY_MSG;
 	
 	if(currentCmdESP==buf[0]){
 		switch(checkResponse(buf)){
@@ -81,7 +81,7 @@ void readEspResponse(uint8_t* buf){//<<<<----- mytest testFunction
 				HAL_NVIC_SystemReset(); //Jump to bootloader 
 			break;
 			case TransmitPrepareOK:
-				msgType = SendWeight;				
+				msgType = SEND_WEIGHT;				
 				osMessageQueuePut(espSendQueueHandle, &msgType, 0, 0);	
 			break;
 			case SendWeightOK:
@@ -105,22 +105,22 @@ void readEspResponse(uint8_t* buf){//<<<<----- mytest testFunction
 
 void sendMsgToESP(EspMsg_t sendMessageType){
 	switch(sendMessageType){
-			case WeightBufferReady:
+			case WEIGHT_BUFFER_READY:
 				currentCmdESP = 4;
 				HAL_UART_Transmit(pUart,sendWeightPrepareCmd,8, 1000);
 				//HAL_UART_Transmit_IT(&huart4,sendWeightPrepareCmd,8);		
 			break;
-			case CheckFW:
+			case CHECK_FW:
 				checkFWCmd[1] = (versionNum&0xff00)>>8;
 				checkFWCmd[2] = versionNum&0xff;
 				currentCmdESP = 1;
 				HAL_UART_Transmit(pUart,checkFWCmd,8,1000);				
 			break;
-			case TimeSynchronization:
+			case TIME_SYNCHRONIZATION:
 				currentCmdESP = 6;			
 				HAL_UART_Transmit(pUart,getTimestampCmd,8,1000);
 			break;
-			case SendWeight:
+			case SEND_WEIGHT:
 				currentCmdESP = 5;
 				prepareSendBuffer();
 				HAL_UART_Transmit(pUart,sendBuffer,251,1000);
@@ -133,7 +133,7 @@ void sendMsgToESP(EspMsg_t sendMessageType){
 void sendMsgToESPTask(void *argument){	
 	static uint8_t messageReceived = 0;
 	static uint8_t ingnoreCounter = 0;
-	EspMsg_t sendMessageType = None;
+	EspMsg_t sendMessageType = EMPTY_MSG;
 	
 	pUart = (UART_HandleTypeDef*) argument;	
 	HAL_GPIO_WritePin(GPIOA, ESP_EN_Pin, GPIO_PIN_SET);
@@ -141,7 +141,7 @@ void sendMsgToESPTask(void *argument){
 	for(;;)
 	{			
 		if(osMessageQueueGet (espSendQueueHandle, &sendMessageType, 0, MAX_DELAY) == RECEIVE_OK){
-			if((currentCmdESP == 4)&&(sendMessageType!=SendWeight)){
+			if((currentCmdESP == 4)&&(sendMessageType!=SEND_WEIGHT)){
 				ingnoreCounter++;
 				if(ingnoreCounter>3) {ingnoreCounter = 0; currentCmdESP = 0;}
 				continue;	//ingnore other messages, if send weight process started				

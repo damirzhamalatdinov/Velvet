@@ -16,9 +16,9 @@ extern "C" {
 #define ADC_FREE 0
 
 typedef enum{
-	Calibration,
-	ReadWeight,
-	SetOffset
+	CALIBRATION,
+	READ_WEIGHT,
+	SET_OFFSET
 }AdcMsg_t;
 /* Definitions for adcQueue */
 extern osMessageQueueId_t adcQueueHandle;

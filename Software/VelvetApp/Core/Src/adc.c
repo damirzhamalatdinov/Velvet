@@ -46,7 +46,7 @@ void readWeightTask(void *argument)
 				osDelay(20); // mytest add time management
 				weightBuffer[weightIndex] = hx711_weight(&loadcell, SAMPLE_NUMBER);
 			}
-			espmsg = WeightBufferReady;
+			espmsg = WEIGHT_BUFFER_READY;
 			osMessageQueuePut(espSendQueueHandle, &espmsg, 0, 0);
 		}
 	}
