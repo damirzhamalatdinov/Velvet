@@ -1,6 +1,7 @@
-/* @file           : rfid.c
- * @date 02.04.2023
- * @author Kamalov Marat
+/** @file rfid.c
+	* @brief Исходный код функций для чтения RFID меток
+	* @date 02.04.2023
+	* @author Kamalov Marat
  */
 #include "rfid.h"
 #include "cmsis_os2.h"
@@ -33,7 +34,12 @@ static uint8_t tagsBuffer[5][6];
 static uint8_t calibrationTag[6] = {1, 2, 3, 4, 5, 6};
 static uint8_t offsetTag[6] = {6, 5, 4, 3, 2, 1};
 // static const uint8_t calibrationMsg = 1;
-
+/**
+	* @brief Функция расчёта контрольной суммы CRC16	
+  * @param buf Массив для расчёта контрольной суммы
+  * @param length Размер массива
+  * @retval Контрольная сумма массива
+  */
 uint16_t uiCrc16Calc(uint8_t *buf, uint8_t length)
 {
     uint8_t ucI, ucJ;
@@ -52,14 +58,22 @@ uint16_t uiCrc16Calc(uint8_t *buf, uint8_t length)
     }
     return uiCrcValue;
 }
-
+/**
+	* @brief Функция записи контрольной суммы CRC16	в массив
+  * @param buf Массив для расчёта контрольной суммы
+  * @retval Отсутствует
+  */
 void setCRC16(uint8_t *buf)
 {
     uint16_t crc = uiCrc16Calc(buf, buf[0] - 1);
     buf[buf[0] - 1] = crc & 0xff;
     buf[buf[0]] = (crc & 0xff00) >> 8;
 }
-
+/**
+	* @brief Функция записи в массив команды на чтение настроек RFID модуля
+  * @param buf Массив для записи команды
+  * @retval Отсутствует
+  */
 void getReaderInfo(uint8_t *buf)
 {
     buf[0] = 4;
@@ -67,7 +81,13 @@ void getReaderInfo(uint8_t *buf)
     buf[2] = 0x21;
     setCRC16(buf);
 }
-
+/**
+	* @brief Функция записи команды в массив
+	* @details Записываются команды на чтение настроек RFID модуля и массива считанных меток
+  * @param buf Массив для записи команды
+  * @param cmdNum Код команды
+  * @retval Отсутствует
+  */
 void writeCMDToBuf(uint8_t *buf, uint8_t cmdNum)
 {
     switch (cmdNum)
@@ -95,7 +115,13 @@ void writeCMDToBuf(uint8_t *buf, uint8_t cmdNum)
     setCRC16(buf);
     currentCmdRFID = buf[2];
 }
-
+/**
+	* @brief Функция отправки команды RFID модулю
+	* @details В функии также сразу включается приемник команд от RFID модуля
+  * @param buf Массив для записи команды
+  * @param cmdNum Код команды
+  * @retval Отсутствует
+  */
 void sendCmd(uint8_t *buf, uint8_t cmdNum)
 {
     writeCMDToBuf(buf, cmdNum);
@@ -103,7 +129,11 @@ void sendCmd(uint8_t *buf, uint8_t cmdNum)
     if (HAL_UART_Transmit(pUart, buf, buf[0] + 1, 1000) == TRANSMIT_OK)
         setReceiveStage(1);
 }
-
+/**
+	* @brief Функция проверки контрольной суммы буфера
+  * @param buf Массив для проверки
+  * @retval RFID_OK если CRC корректная, RFID_ERROR если нет
+  */
 int8_t checkBufCRC(uint8_t *buf)
 {
     uint16_t crcReceive;
@@ -114,19 +144,16 @@ int8_t checkBufCRC(uint8_t *buf)
         return RFID_OK;
     return RFID_ERROR;
 }
-
-uint8_t isTagsEqual(uint8_t *newTag, uint8_t *currentTag)
-{
-    uint8_t i = 0;
-
-    for (i = 0; i < 6; i++)
-    {
-        if (newTag[i] != currentTag[i])
-            return 0;
-    }
-    return 1;
-}
-
+/**
+	* @brief Функция чтения массива данных, полученных от RFID модуля
+	* @details В функии проверяется наличие меток в массиве данных,
+	отличие новой метки от текущей. Также проверяется если соответствует ли метка калибровочной, либо
+	предназначенной для установки нуля. 
+	При получении соответсвующей метки производится отправка команды на калибровку АЦП, установку нуля
+	и чтение массива весов.
+  * @param buf Массив данных, полученных от RFID модуля
+  * @retval Отсутствует
+  */
 void readEPCData(uint8_t *buf)
 {
     static uint8_t i = 0, j, tempBuf[7], tagsNum;
@@ -168,7 +195,12 @@ void readEPCData(uint8_t *buf)
         }
     }
 }
-
+/**
+	* @brief Функция чтения ответа, полученного от RFID модуля
+	* @details В функии код команы, полученной от RFID модуля и производится вызов функии для обработки массива
+  * @param buf Массив данных, полученных от RFID модуля
+  * @retval Отсутствует
+  */
 void readRfidResponse(uint8_t *buf)
 {
     if ((checkBufCRC(buf) == RFID_OK) && (currentCmdRFID == buf[2]))
@@ -186,7 +218,11 @@ void readRfidResponse(uint8_t *buf)
         }
     }
 }
-
+/**
+	* @brief Функция инициализации RFID модуля
+  * @param Отсутствует
+  * @retval Отсутствует
+  */
 void rfidInit(void)
 {
     HAL_GPIO_WritePin(RFID_EN_GPIO_Port, RFID_EN_Pin, GPIO_PIN_SET);
@@ -207,14 +243,24 @@ void rfidInit(void)
                                  // HAL_UART_Transmit_IT(&huart6,outputBuffer,outputBuffer[0]+1);
                                  // receiveStart = 1;
 }
-
+/**
+	* @brief Функция реинициализации RFID модуля
+  * @param Отсутствует
+  * @retval Отсутствует
+  */
 void rfidReInit(void)
 {
     HAL_GPIO_WritePin(RFID_EN_GPIO_Port, RFID_EN_Pin, GPIO_PIN_RESET);
     osDelay(1000);
     rfidInit();
 }
-
+/**
+	* @brief Задача чтения RFID меток	
+  * @details Задача производит инициализацию RFID модуля.
+	После инициализации с периодом 1 с производится чтение массива RFID меток и запуск соответствующих обработчиков
+  * @param argument Указатель на структуру интерфейса UART, подключенного к RFID модулю
+  * @retval Отсутствует
+  */
 void readRfidTask(void *argument)
 {
     /* USER CODE BEGIN readRfid */
@@ -257,7 +303,11 @@ void readRfidTask(void *argument)
     }
     /* USER CODE END readRfid */
 }
-
+/**
+	* @brief Функция записи текущей метки в массив
+  * @param buf Массив данных для записи
+  * @retval Отсутствует
+  */
 void getCurrentTag(uint8_t *tagBuf)
 {
     memcpy(tagBuf, currentTag, 6);

@@ -1,7 +1,8 @@
-/* @file           : adc.c
- * @date 19.04.2023
- * @author Kamalov Marat
- */
+/** @file adc.c
+	* @brief Исходный код функций для чтения АЦП
+	* @date 19.04.2023
+	* @author Kamalov Marat
+	*/
 #include "adc.h"
 #include "hx711.h"
 #include "cmsis_os2.h"
@@ -19,7 +20,11 @@ static hx711_t loadcell;
 static float weightBuffer[60];
 static uint8_t weightIndex = 0;
 static uint8_t adcState = ADC_FREE;
-
+/**
+	* @brief Функция инициализации АЦП
+  * @param Отсутствует
+  * @retval Отсутствует
+  */
 void initADC(void)
 {
 	hx711_init(&loadcell, HX_SCK_GPIO_Port, HX_SCK_Pin, HX_DOUT_GPIO_Port, HX_DOUT_Pin);
@@ -30,7 +35,14 @@ void initADC(void)
 	// osDelay(5000);
 	// hx711_coef_set(&loadcell, hx711_weight(&loadcell, 10)/55);//55 òàðèðîâàííûé âåñ 55 ã
 }
-
+/**
+	* @brief Задача чтения веса
+  Задача производит инициализацию АЦП.
+	После инициализации АЦП и поступления команды от задачи чтения RFID меток производится
+чтение АЦП в количестве 60 раз для заполнения массива весов
+  * @param Отсутствует
+  * @retval Отсутствует
+  */
 void readWeightTask(void *argument)
 {
 	static AdcMsg_t adcMsg;
@@ -51,17 +63,29 @@ void readWeightTask(void *argument)
 		}
 	}
 }
-
+/**
+	* @brief Функция получения состояния АЦП
+  * @param Отсутствует
+  * @retval ADC_BUSY если АЦП занято, ADC_FREE если свободно
+  */
 uint8_t getAdcState(void)
 {
 	return adcState;
 }
-
+/**
+	* @brief Функция установки состояния АЦП
+  * @param state - состояние АЦП
+  * @retval Отсутствует
+  */
 void setAdcState(uint8_t state)
 {
 	adcState = state;
 }
-
+/**
+	* @brief Функция чтения веса из массива весов по индексу
+	* @param index - индекс в массиве
+  * @retval Вес
+  */
 float getWeightValByIndex(uint8_t index)
 {
 	return weightBuffer[index];
