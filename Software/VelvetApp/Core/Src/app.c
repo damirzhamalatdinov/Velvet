@@ -1,4 +1,6 @@
- /* @file           : app.c
+ /**
+  * @file app.c
+	* @brief Исходный код функции запуска задач по таймауту
   * @date 23.02.2023  
   * @author Kamalov Marat  
   */
@@ -11,6 +13,13 @@ volatile uint16_t secondsCounter;
 volatile uint32_t timestamp = 0;
 static EspMsg_t espMsg;
 
+/**
+	* @brief Функция запуска задач по таймауту
+	* @details 1 раз в 15 минут вызывается синхронизация системного времени
+						 1 раз в минуту вызывается проверка наличия обновлений ПО
+  * @param Отсутствует
+  * @retval Отсутствует
+  */
 void checkTasksTimeout(){
 	secondsCounter++;
 	timestamp++;

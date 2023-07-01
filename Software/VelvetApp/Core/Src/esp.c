@@ -1,6 +1,7 @@
-/* @file           : esp.c
-* @date 12.03.2023  
-* @author Kamalov Marat  
+/** @file esp.c
+	* @brief Исходный код функций для отправки и приёма сообщений от микроконтроллера ESP
+	* @date 12.03.2023  
+	* @author Kamalov Marat  
 */
 #include "esp.h"
 #include "cmsis_os2.h"
@@ -9,14 +10,14 @@
 #include "rfid.h"
 #include "main.h"
 #include "string.h"
-
+/// Набор возможных ответов микроконтроллера ESP
 typedef enum{
-	ResponseError,
-	RestartSTM,
-	TransmitPrepareOK,
-	SendWeightOK,
-	TransmitWifiError,
-	TimestampRespOK
+	RESPONSE_ERROR,
+	RESTART_STM,
+	TRANSMIT_PREPARE_OK,
+	SEND_WEIGHT_OK,
+	TRANSMIT_WIFI_ERROR,
+	TIMESTAMP_RESPONSE_OK
 } EspResponse_t;
 /* Definitions for espSendQueue */
 osMessageQueueId_t espSendQueueHandle;
@@ -41,16 +42,25 @@ static union weight{
 } weight;
 static uint16_t versionNum = 1;
 static uint8_t currentCmdESP = 0;
-
+/**
+	* @brief Функция проверки ответа от микроконтроллера ESP	
+  * @param buf Массив с ответом микроконтроллера ESP
+  * @retval Код ответа микроконтроллера ESP
+  */
 EspResponse_t checkResponse(uint8_t* buf){
-	if(memcmp(buf, checkFWRspOK, 8) == 0) return RestartSTM;
-	else if(memcmp(buf, sendWeightPrepareOK, 8) == 0) return TransmitPrepareOK;
-	else if(memcmp(buf, sendWeightRspOK, 8) == 0) return SendWeightOK;
-	else if(memcmp(buf, sendWeightWifiErr, 8) == 0) return TransmitWifiError;	
-	else if(memcmp(buf, getTimestampOK, 1) == 0) return TimestampRespOK;
-	return ResponseError;
+	if(memcmp(buf, checkFWRspOK, 8) == 0) return RESTART_STM;
+	else if(memcmp(buf, sendWeightPrepareOK, 8) == 0) return TRANSMIT_PREPARE_OK;
+	else if(memcmp(buf, sendWeightRspOK, 8) == 0) return SEND_WEIGHT_OK;
+	else if(memcmp(buf, sendWeightWifiErr, 8) == 0) return TRANSMIT_WIFI_ERROR;	
+	else if(memcmp(buf, getTimestampOK, 1) == 0) return TIMESTAMP_RESPONSE_OK;
+	return RESPONSE_ERROR;
 }
-
+/**
+	* @brief Функция подготовки буфера измеренных весов для отправки в микроконтроллер ESP	
+	* @details Также отправляется RFID метка животного и метка времени
+  * @param Отсутствует
+  * @retval Отсутствует
+  */
 void prepareSendBuffer(void){
 	uint8_t i;
 	uint8_t tagBuf[6];
@@ -70,39 +80,57 @@ void prepareSendBuffer(void){
 		sendBuffer[11+i*4+3] = (uint8_t) (weight.uintVal&0xFF);
 	}
 }
-
+/**
+	* @brief Функция чтения ответа от микроконтроллера ESP	
+  * @details В соответствии с ответом ESP запускаются функции:
+	- Перезагрузка микроконтроллера
+	- Отправка массива с измеренными весами
+	- Разблокировка АЦП
+	- Обновление системного времени
+  * @param buf Массив с ответом микроконтроллера ESP
+  * @retval Отсутствует
+  */
 void readEspResponse(uint8_t* buf){//<<<<----- mytest testFunction
 	static uint32_t timest;
 	static EspMsg_t msgType = EMPTY_MSG;
 	
 	if(currentCmdESP==buf[0]){
 		switch(checkResponse(buf)){
-			case RestartSTM:
+			case RESTART_STM:
 				HAL_NVIC_SystemReset(); //Jump to bootloader 
 			break;
-			case TransmitPrepareOK:
+			case TRANSMIT_PREPARE_OK:
 				msgType = SEND_WEIGHT;				
 				osMessageQueuePut(espSendQueueHandle, &msgType, 0, 0);	
 			break;
-			case SendWeightOK:
+			case SEND_WEIGHT_OK:
 				setAdcState(ADC_FREE);				
 			break;
-			case TransmitWifiError:
+			case TRANSMIT_WIFI_ERROR:
 				//mytest add send LoRa or GSM functionality
 			break;
-			case TimestampRespOK:
+			case TIMESTAMP_RESPONSE_OK:
 				timest = buf[1];
 			  timest = (timest<<8)|buf[2];
 				timest = (timest<<8)|buf[3];
 			  timest = (timest<<8)|buf[4];
 				timestamp = timest;				
 			break;	
-			case ResponseError:
+			case RESPONSE_ERROR:
 			break;
 		}			
 	}
 }
-
+/**
+	* @brief Функция отправки сообщения микроконтроллеру ESP	
+  * @details В соответствии типом сообщения производится отправка соответствующей последовательности байт:
+	- Подготовка ESP к приёму массива весов
+	- Проверка наличия обновлений ПО
+	- Синхронизация системного времени
+	- Отправка массива измеренных весов
+  * @param sendMessageType Тип сообщения, отправляемого микроконтроллеру ESP
+  * @retval Отсутствует
+  */
 void sendMsgToESP(EspMsg_t sendMessageType){
 	switch(sendMessageType){
 			case WEIGHT_BUFFER_READY:
@@ -129,7 +157,13 @@ void sendMsgToESP(EspMsg_t sendMessageType){
 			break;
 	}
 }
-
+/**
+	* @brief Задача для отправки сообщений микроконтроллеру ESP	
+  * @details Задача производит отправку сообщений для микроконтроллера ESP.
+	Сообщения	принимаются через очередь сообщений. Также задача производит приём сообщений от ESP 
+  * @param argument Указатель на структуру интерфейса UART, подключенного к ESP
+  * @retval Отсутствует
+  */
 void sendMsgToESPTask(void *argument){	
 	static uint8_t messageReceived = 0;
 	static uint8_t ingnoreCounter = 0;
