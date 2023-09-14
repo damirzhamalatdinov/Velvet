@@ -9,8 +9,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#include "main.h"
 
-void initApp(void);
+void initApp(UART_HandleTypeDef *pEspUART, UART_HandleTypeDef *pRfidUART);
 
 #ifdef __cplusplus
 }

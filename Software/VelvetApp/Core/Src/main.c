@@ -27,6 +27,7 @@
 #include "esp.h"
 #include "rfid.h"
 #include "adc.h"
+#include "temperatureSensor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,14 +45,17 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+I2C_HandleTypeDef hi2c1;
+DMA_HandleTypeDef hdma_i2c1_rx;
+
 IWDG_HandleTypeDef hiwdg;
 
 TIM_HandleTypeDef htim6;
 
 UART_HandleTypeDef huart4;
-UART_HandleTypeDef huart6;
+UART_HandleTypeDef huart3;
 DMA_HandleTypeDef hdma_uart4_rx;
-DMA_HandleTypeDef hdma_usart6_rx;
+DMA_HandleTypeDef hdma_usart3_rx;
 
 /* Definitions for sendMsg */
 osThreadId_t sendMsgHandle;
@@ -74,6 +78,13 @@ const osThreadAttr_t readRfid_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal1,
 };
+/* Definitions for testTask */
+osThreadId_t testTaskHandle;
+const osThreadAttr_t testTask_attributes = {
+  .name = "testTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityBelowNormal6,
+};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -85,10 +96,12 @@ static void MX_DMA_Init(void);
 static void MX_IWDG_Init(void);
 static void MX_UART4_Init(void);
 static void MX_TIM6_Init(void);
-static void MX_USART6_UART_Init(void);
+static void MX_USART3_UART_Init(void);
+static void MX_I2C1_Init(void);
 void sendMsgToESPTask(void *argument);
 extern void readWeightTask(void *argument);
 extern void readRfidTask(void *argument);
+void testTaskRun(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -139,10 +152,11 @@ int main(void)
   MX_IWDG_Init();
   MX_UART4_Init();
   MX_TIM6_Init();
-  MX_USART6_UART_Init();
+  MX_USART3_UART_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 	__HAL_DBGMCU_FREEZE_IWDG();
-	initApp();
+	initApp(&huart3,&huart4);	
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -187,13 +201,16 @@ int main(void)
 
   /* Create the thread(s) */
   /* creation of sendMsg */
-  sendMsgHandle = osThreadNew(sendMsgToESPTask, (void*) &huart4, &sendMsg_attributes);
+  sendMsgHandle = osThreadNew(sendMsgToESPTask, (void*) &huart3, &sendMsg_attributes);
 
   /* creation of readWeight */
   readWeightHandle = osThreadNew(readWeightTask, NULL, &readWeight_attributes);
 
   /* creation of readRfid */
-  readRfidHandle = osThreadNew(readRfidTask, (void*) &huart6, &readRfid_attributes);
+  readRfidHandle = osThreadNew(readRfidTask, (void*) &huart4, &readRfid_attributes);
+
+  /* creation of testTask */
+  testTaskHandle = osThreadNew(testTaskRun, NULL, &testTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -256,6 +273,40 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief I2C1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C1_Init(void)
+{
+
+  /* USER CODE BEGIN I2C1_Init 0 */
+
+  /* USER CODE END I2C1_Init 0 */
+
+  /* USER CODE BEGIN I2C1_Init 1 */
+
+  /* USER CODE END I2C1_Init 1 */
+  hi2c1.Instance = I2C1;
+  hi2c1.Init.ClockSpeed = 100000;
+  hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C1_Init 2 */
+
+  /* USER CODE END I2C1_Init 2 */
+
 }
 
 /**
@@ -340,7 +391,7 @@ static void MX_UART4_Init(void)
 
   /* USER CODE END UART4_Init 1 */
   huart4.Instance = UART4;
-  huart4.Init.BaudRate = 115200;
+  huart4.Init.BaudRate = 57600;
   huart4.Init.WordLength = UART_WORDLENGTH_8B;
   huart4.Init.StopBits = UART_STOPBITS_1;
   huart4.Init.Parity = UART_PARITY_NONE;
@@ -358,35 +409,35 @@ static void MX_UART4_Init(void)
 }
 
 /**
-  * @brief USART6 Initialization Function
+  * @brief USART3 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_USART6_UART_Init(void)
+static void MX_USART3_UART_Init(void)
 {
 
-  /* USER CODE BEGIN USART6_Init 0 */
+  /* USER CODE BEGIN USART3_Init 0 */
 
-  /* USER CODE END USART6_Init 0 */
+  /* USER CODE END USART3_Init 0 */
 
-  /* USER CODE BEGIN USART6_Init 1 */
+  /* USER CODE BEGIN USART3_Init 1 */
 
-  /* USER CODE END USART6_Init 1 */
-  huart6.Instance = USART6;
-  huart6.Init.BaudRate = 57600;
-  huart6.Init.WordLength = UART_WORDLENGTH_8B;
-  huart6.Init.StopBits = UART_STOPBITS_1;
-  huart6.Init.Parity = UART_PARITY_NONE;
-  huart6.Init.Mode = UART_MODE_TX_RX;
-  huart6.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart6.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart6) != HAL_OK)
+  /* USER CODE END USART3_Init 1 */
+  huart3.Instance = USART3;
+  huart3.Init.BaudRate = 115200;
+  huart3.Init.WordLength = UART_WORDLENGTH_8B;
+  huart3.Init.StopBits = UART_STOPBITS_1;
+  huart3.Init.Parity = UART_PARITY_NONE;
+  huart3.Init.Mode = UART_MODE_TX_RX;
+  huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart3.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart3) != HAL_OK)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN USART6_Init 2 */
+  /* USER CODE BEGIN USART3_Init 2 */
 
-  /* USER CODE END USART6_Init 2 */
+  /* USER CODE END USART3_Init 2 */
 
 }
 
@@ -398,15 +449,17 @@ static void MX_DMA_Init(void)
 
   /* DMA controller clock enable */
   __HAL_RCC_DMA1_CLK_ENABLE();
-  __HAL_RCC_DMA2_CLK_ENABLE();
 
   /* DMA interrupt init */
+  /* DMA1_Stream0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream0_IRQn);
+  /* DMA1_Stream1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
   /* DMA1_Stream2_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream2_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream2_IRQn);
-  /* DMA2_Stream1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Stream1_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(DMA2_Stream1_IRQn);
 
 }
 
@@ -422,30 +475,95 @@ static void MX_GPIO_Init(void)
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, ESP_EN_Pin|RFID_EN_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE, DI2_LED_Pin|DI1_LED_Pin|ESP_EN_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12|GPIO_PIN_13|HX_DOUT_Pin|HX_SCK_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(DI0_LED_GPIO_Port, DI0_LED_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : ESP_EN_Pin RFID_EN_Pin */
-  GPIO_InitStruct.Pin = ESP_EN_Pin|RFID_EN_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, RFID_EN_Pin|RFID_HEAT_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOD, LED_Pin|GPIO_PIN_12|GPIO_PIN_13|DO5_Pin
+                          |DO4_Pin|DO3_Pin|DO2_Pin|DO1_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(DO0_GPIO_Port, DO0_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : DI2_Pin DI1_Pin DI0_Pin */
+  GPIO_InitStruct.Pin = DI2_Pin|DI1_Pin|DI0_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : DI2_LED_Pin DI1_LED_Pin */
+  GPIO_InitStruct.Pin = DI2_LED_Pin|DI1_LED_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : DI0_LED_Pin */
+  GPIO_InitStruct.Pin = DI0_LED_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(DI0_LED_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : RFID_EN_Pin RFID_HEAT_Pin */
+  GPIO_InitStruct.Pin = RFID_EN_Pin|RFID_HEAT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PD12 PD13 HX_DOUT_Pin HX_SCK_Pin */
-  GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13|HX_DOUT_Pin|HX_SCK_Pin;
+  /*Configure GPIO pin : ESP_EN_Pin */
+  GPIO_InitStruct.Pin = ESP_EN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(ESP_EN_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LED_Pin PD12 PD13 */
+  GPIO_InitStruct.Pin = LED_Pin|GPIO_PIN_12|GPIO_PIN_13;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : DO5_Pin DO4_Pin DO3_Pin DO2_Pin
+                           DO1_Pin */
+  GPIO_InitStruct.Pin = DO5_Pin|DO4_Pin|DO3_Pin|DO2_Pin
+                          |DO1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : DO0_Pin */
+  GPIO_InitStruct.Pin = DO0_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(DO0_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI2_IRQn, 7, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI3_IRQn, 7, 0);
+  HAL_NVIC_EnableIRQ(EXTI3_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 7, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -471,6 +589,52 @@ __weak void sendMsgToESPTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_testTaskRun */
+/**
+* @brief Function implementing the testTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_testTaskRun */
+void testTaskRun(void *argument)
+{
+  /* USER CODE BEGIN testTaskRun */
+	float temperatureEXT = 0;
+	float temperatureRFID = 0;
+  /* Infinite loop */
+  for(;;)
+  {		
+		HAL_IWDG_Refresh(&hiwdg);
+		HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+		osDelay(400);
+		temperatureEXT = getTemperature(EXTERNAL_TEMP_ADDR);
+		readTemperatureRegister(&hi2c1, EXTERNAL_TEMP_ADDR);//RFID_TEMP_ADDR);
+		temperatureRFID = getTemperature(RFID_TEMP_ADDR);
+		readTemperatureRegister(&hi2c1, RFID_TEMP_ADDR);
+//		HAL_GPIO_TogglePin(RFID_HEAT_GPIO_Port, RFID_HEAT_Pin);
+//		HAL_GPIO_WritePin(DO0_GPIO_Port, DO0_Pin, GPIO_PIN_SET);
+//		HAL_Delay(3000);
+//		HAL_GPIO_WritePin(DO0_GPIO_Port, DO0_Pin, GPIO_PIN_RESET);		
+//		HAL_GPIO_WritePin(DO1_GPIO_Port, DO1_Pin, GPIO_PIN_SET);
+//		HAL_Delay(3000);
+//		HAL_GPIO_WritePin(DO1_GPIO_Port, DO1_Pin, GPIO_PIN_RESET);
+//		HAL_GPIO_WritePin(DO2_GPIO_Port, DO2_Pin, GPIO_PIN_SET);
+//		HAL_Delay(3000);
+//		HAL_GPIO_WritePin(DO2_GPIO_Port, DO2_Pin, GPIO_PIN_RESET);
+//		HAL_GPIO_WritePin(DO3_GPIO_Port, DO3_Pin, GPIO_PIN_SET);
+//		HAL_Delay(3000);
+//		HAL_GPIO_WritePin(DO3_GPIO_Port, DO3_Pin, GPIO_PIN_RESET);
+//		HAL_GPIO_WritePin(DO4_GPIO_Port, DO4_Pin, GPIO_PIN_SET);
+//		HAL_Delay(2000);
+//		HAL_GPIO_WritePin(DO4_GPIO_Port, DO4_Pin, GPIO_PIN_RESET);
+//		HAL_GPIO_WritePin(DO5_GPIO_Port, DO5_Pin, GPIO_PIN_SET);
+//		HAL_Delay(2000);
+//		HAL_GPIO_WritePin(DO5_GPIO_Port, DO5_Pin, GPIO_PIN_RESET);
+    //osDelay(1);
+  }
+  /* USER CODE END testTaskRun */
 }
 
 /**

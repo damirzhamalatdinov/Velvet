@@ -6,6 +6,7 @@
 #include "app.h"
 #include "cmsis_os2.h"
 #include "esp.h"
+#include "main.h"
 
 volatile uint16_t secondsCounter;
 volatile uint32_t timestamp = 0;
@@ -25,3 +26,4 @@ void checkTasksTimeout(){
 		osMessageQueuePut(espSendQueueHandle, &espMsg, 0, 0);
 	}
 }
+

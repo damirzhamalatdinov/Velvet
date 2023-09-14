@@ -5,11 +5,13 @@
 
 #include "appInit.h"
 #include "app.h"
+#include "uartCallback.h"
 //#include "cmsis_os2.h"
 //#include "rfid.h"
 
 extern TIM_HandleTypeDef htim6;
 
-void initApp(void){	
+void initApp(UART_HandleTypeDef *pEspUART, UART_HandleTypeDef *pRfidUART){	
 	HAL_TIM_Base_Start_IT(&htim6);
+	setUARTHandlers(pEspUART, pRfidUART);	
 };

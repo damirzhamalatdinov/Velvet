@@ -41,6 +41,10 @@ static union weight{
 } weight;
 static uint16_t versionNum = 1;
 static uint8_t currentCmdESP = 0;
+<<<<<<< Updated upstream
+=======
+static EspMsg_t sendMessageType = EMPTY_MSG;
+>>>>>>> Stashed changes
 
 EspResponse_t checkResponse(uint8_t* buf){
 	if(memcmp(buf, checkFWRspOK, 8) == 0) return RestartSTM;
@@ -133,19 +137,19 @@ void sendMsgToESP(EspMsg_t sendMessageType){
 void sendMsgToESPTask(void *argument){	
 	static uint8_t messageReceived = 0;
 	static uint8_t ingnoreCounter = 0;
-	EspMsg_t sendMessageType = EMPTY_MSG;
+	EspMsg_t sendMessageType = CHECK_FW;//EMPTY_MSG; mytest
 	
 	pUart = (UART_HandleTypeDef*) argument;	
-	HAL_GPIO_WritePin(GPIOA, ESP_EN_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(ESP_EN_GPIO_Port, ESP_EN_Pin, GPIO_PIN_SET);
 	
 	for(;;)
 	{			
-		if(osMessageQueueGet (espSendQueueHandle, &sendMessageType, 0, MAX_DELAY) == RECEIVE_OK){
-			if((currentCmdESP == 4)&&(sendMessageType!=SEND_WEIGHT)){
-				ingnoreCounter++;
-				if(ingnoreCounter>3) {ingnoreCounter = 0; currentCmdESP = 0;}
-				continue;	//ingnore other messages, if send weight process started				
-			}
+//		if(osMessageQueueGet (espSendQueueHandle, &sendMessageType, 0, MAX_DELAY) == RECEIVE_OK){
+//			if((currentCmdESP == 4)&&(sendMessageType!=SEND_WEIGHT)){
+//				ingnoreCounter++;
+//				if(ingnoreCounter>3) {ingnoreCounter = 0; currentCmdESP = 0;}
+//				continue;	//ingnore other messages, if send weight process started				
+//			}
 			HAL_UART_Receive_DMA(pUart,receiveBuffer,8);
 			sendMsgToESP(sendMessageType);			
 			if(osMessageQueueGet (espReceiveQueueHandle, &messageReceived, 0, 1000) == RECEIVE_OK)
@@ -157,7 +161,7 @@ void sendMsgToESPTask(void *argument){
 					setAdcState(ADC_FREE);
 				}
 			}
-		}		
-		osDelay(1);		
+//		}		
+		osDelay(100);		
 	}
 }

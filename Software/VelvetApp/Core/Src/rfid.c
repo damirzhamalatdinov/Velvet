@@ -162,7 +162,7 @@ void readEPCData(uint8_t *buf)
                 else
                 {
                     adcMsg = READ_WEIGHT;
-                    osMessageQueuePut(adcQueueHandle, &adcMsg, 0, 0);
+                    //osMessageQueuePut(adcQueueHandle, &adcMsg, 0, 0);
                 }
             }
         }
@@ -190,8 +190,8 @@ void readRfidResponse(uint8_t *buf)
 void rfidInit(void)
 {
     HAL_GPIO_WritePin(RFID_EN_GPIO_Port, RFID_EN_Pin, GPIO_PIN_SET);
-    osDelay(2000);
-    sendCmd(outputBuffer, GET_READER_INFO_CMD);
+    osDelay(2000);	
+    sendCmd(outputBuffer, GET_READER_INFO_CMD);		
     if (osMessageQueueGet(rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK)
     {
         HAL_UART_Receive_DMA(pUart, inputBuffer + 1, inputBuffer[0]);

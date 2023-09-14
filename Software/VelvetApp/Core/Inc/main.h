@@ -57,14 +57,41 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define ESP_EN_Pin GPIO_PIN_2
-#define ESP_EN_GPIO_Port GPIOA
-#define RFID_EN_Pin GPIO_PIN_8
+#define DI2_Pin GPIO_PIN_2
+#define DI2_GPIO_Port GPIOE
+#define DI2_EXTI_IRQn EXTI2_IRQn
+#define DI1_Pin GPIO_PIN_3
+#define DI1_GPIO_Port GPIOE
+#define DI1_EXTI_IRQn EXTI3_IRQn
+#define DI0_Pin GPIO_PIN_4
+#define DI0_GPIO_Port GPIOE
+#define DI0_EXTI_IRQn EXTI4_IRQn
+#define DI2_LED_Pin GPIO_PIN_5
+#define DI2_LED_GPIO_Port GPIOE
+#define DI1_LED_Pin GPIO_PIN_6
+#define DI1_LED_GPIO_Port GPIOE
+#define DI0_LED_Pin GPIO_PIN_13
+#define DI0_LED_GPIO_Port GPIOC
+#define RFID_EN_Pin GPIO_PIN_6
 #define RFID_EN_GPIO_Port GPIOA
-#define HX_DOUT_Pin GPIO_PIN_4
-#define HX_DOUT_GPIO_Port GPIOD
-#define HX_SCK_Pin GPIO_PIN_6
-#define HX_SCK_GPIO_Port GPIOD
+#define RFID_HEAT_Pin GPIO_PIN_7
+#define RFID_HEAT_GPIO_Port GPIOA
+#define ESP_EN_Pin GPIO_PIN_15
+#define ESP_EN_GPIO_Port GPIOE
+#define LED_Pin GPIO_PIN_11
+#define LED_GPIO_Port GPIOD
+#define DO5_Pin GPIO_PIN_3
+#define DO5_GPIO_Port GPIOD
+#define DO4_Pin GPIO_PIN_4
+#define DO4_GPIO_Port GPIOD
+#define DO3_Pin GPIO_PIN_5
+#define DO3_GPIO_Port GPIOD
+#define DO2_Pin GPIO_PIN_6
+#define DO2_GPIO_Port GPIOD
+#define DO1_Pin GPIO_PIN_7
+#define DO1_GPIO_Port GPIOD
+#define DO0_Pin GPIO_PIN_4
+#define DO0_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

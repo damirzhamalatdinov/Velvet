@@ -10,8 +10,10 @@
 extern "C" {
 #endif
 #include <stdint.h>
+#include "main.h"
 
 void setReceiveStage (uint8_t stage);
+void setUARTHandlers(UART_HandleTypeDef *pEspUART, UART_HandleTypeDef *pRfidUART);
 #ifdef __cplusplus
 }
 #endif

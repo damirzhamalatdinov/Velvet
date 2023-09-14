@@ -11,14 +11,16 @@
 
 static const uint8_t espMsgReceived = 1;
 static uint8_t receiveStage = 0;
+static UART_HandleTypeDef *pRfidUart;
+static UART_HandleTypeDef *pEspUart;
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){	
 	//if (huart->Instance == USART6) receiveStage = 1;
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
-	if (huart->Instance == UART4) osMessageQueuePut(espReceiveQueueHandle, &espMsgReceived, 0, 0);	 
-	if (huart->Instance == USART6){
+	if (huart == pEspUart) osMessageQueuePut(espReceiveQueueHandle, &espMsgReceived, 0, 0);	 
+	if (huart == pRfidUart){
 		if(receiveStage == 1){						
 			osMessageQueuePut(rfidReceiveQueueHandle, &receiveStage, 0, 0);
 			receiveStage = 2;
@@ -32,4 +34,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 
 void setReceiveStage (uint8_t stage){
 	receiveStage = stage;
+}
+
+void setUARTHandlers(UART_HandleTypeDef *pEspUART, UART_HandleTypeDef *pRfidUART){
+	pEspUart = pEspUART;
+	pRfidUart = pRfidUART;
 }
