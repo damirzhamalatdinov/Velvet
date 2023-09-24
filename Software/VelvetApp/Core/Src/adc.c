@@ -55,7 +55,7 @@ void initADC(void)
 		//hx711_offset_set(&loadcell, offset);		
 	}
 	//if (offset != 0xFFFFFFFFUL) hx711_offset_set(&loadcell, offset);
-	else hx711_tare(&loadcell, 10);	
+	else hx711_tare(&loadcell, SAMPLE_NUMBER);	
 	//osDelay(5000);	
 	//hx711_coef_set(&loadcell, hx711_weight(&loadcell, 10)/55);//55 ������������ ��� 55 �
 }
@@ -99,7 +99,7 @@ void readWeightTask(void *argument)
 				//saveCoefficientsToFlash(hx711_offset_get(&loadcell), hx711_coef_get(&loadcell));
 			}
 			else if (adcMsg == SET_OFFSET){
-				hx711_tare(&loadcell, 10);
+				hx711_tare(&loadcell, SAMPLE_NUMBER);
 				//saveCoefficientsToFlash(hx711_offset_get(&loadcell), hx711_coef_get(&loadcell));
 			}
 		}		
