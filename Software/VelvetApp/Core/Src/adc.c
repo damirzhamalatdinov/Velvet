@@ -58,9 +58,6 @@ void initADC(void)
 	//if (offset != 0xFFFFFFFFUL) hx711_offset_set(&loadcell, offset);
 	else hx711_tare(&loadcell, SAMPLE_NUMBER);	
 	//osDelay(5000);	
-	//hx711_coef_set(&loadcell, hx711_weight(&loadcell, 10)/55);//55 ������������ ��� 55 �
-}
-
 void saveCoefficientsToFlash(int32_t offset, float calibrationValue){
 	static uint32_t SectorError = 0;
 	static FLASH_EraseInitTypeDef EraseInitStruct;
@@ -82,8 +79,8 @@ void readWeightTask(void *argument)
 	static AdcMsg_t adcMsg;		
 	
 	initADC();	  
-  for(;;)
-  {
+  	for(;;)
+  	{
 		if(osMessageQueueGet (adcQueueHandle, &adcMsg, 0, MAX_DELAY) == RECEIVE_OK){		
 			if(adcMsg == READ_WEIGHT){
 				adcState = ADC_BUSY;
