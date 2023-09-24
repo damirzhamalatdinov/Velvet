@@ -57,7 +57,9 @@ void initADC(void)
 	}
 	//if (offset != 0xFFFFFFFFUL) hx711_offset_set(&loadcell, offset);
 	else hx711_tare(&loadcell, SAMPLE_NUMBER);	
-	//osDelay(5000);	
+	//osDelay(5000);
+}
+
 void saveCoefficientsToFlash(int32_t offset, float calibrationValue){
 	static uint32_t SectorError = 0;
 	static FLASH_EraseInitTypeDef EraseInitStruct;
