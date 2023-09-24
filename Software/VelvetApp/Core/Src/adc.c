@@ -13,6 +13,7 @@
 
 #define RECEIVE_OK 0
 #define SAMPLE_NUMBER 10
+#define FLASH_SECTOR_6     6U
 
 osMessageQueueId_t adcQueueHandle;
 static EspMsg_t espmsg;
@@ -20,38 +21,15 @@ static hx711_t loadcell;
 static float weightBuffer[60];
 static uint8_t weightIndex = 0;
 static uint8_t adcState = ADC_FREE;
+static const uint32_t offsetAddress = 0x08040000UL;
+static const uint32_t calibrationValAddress = 0x08040004UL;
+static const uint32_t calibrationWeight = 10.0;
+static union coefficient{
+	float floatVal;
+	uint32_t uintVal;	
+} coefficient;
 
 void initADC(void)
-<<<<<<< Updated upstream
-{
-	hx711_init(&loadcell, HX_SCK_GPIO_Port, HX_SCK_Pin, HX_DOUT_GPIO_Port, HX_DOUT_Pin);
-	// hx711_coef_set(&loadcell, 354.5); // read afer calibration
-	hx711_coef_set(&loadcell, 1.0); // no calibration, clean adc val
-	osDelay(100);
-	hx711_tare(&loadcell, SAMPLE_NUMBER);
-	// osDelay(5000);
-	// hx711_coef_set(&loadcell, hx711_weight(&loadcell, 10)/55);//55 òàðèðîâàííûé âåñ 55 ã
-}
-
-void readWeightTask(void *argument)
-{
-	static AdcMsg_t adcMsg;
-
-	initADC();
-	for (;;)
-	{
-		if (osMessageQueueGet(adcQueueHandle, &adcMsg, 0, MAX_DELAY) == RECEIVE_OK)
-		{
-			adcState = ADC_BUSY;
-			for (weightIndex = 0; weightIndex < 60; weightIndex++)
-			{
-				osDelay(20); // mytest add time management
-				weightBuffer[weightIndex] = hx711_weight(&loadcell, SAMPLE_NUMBER);
-			}
-			espmsg = WEIGHT_BUFFER_READY;
-			osMessageQueuePut(espSendQueueHandle, &espmsg, 0, 0);
-		}
-=======
 {	
 	int32_t offsetUint = 0;
 	int32_t offset = 0;
@@ -63,7 +41,7 @@ void readWeightTask(void *argument)
 	coefInt = *(__IO uint32_t*)calibrationValAddress;
 	//memcpy(&offset, (uint32_t *)&offsetAddress, 4);
 	//memcpy(&coefInt, (uint32_t *)&calibrationValAddress, 4);	
-	hx711_init(&loadcell, GPIOB, GPIO_PIN_14, GPIOB, GPIO_PIN_15); // mytest //HX_SCK_GPIO_Port, HX_SCK_Pin, HX_DOUT_GPIO_Port, HX_DOUT_Pin);
+	//hx711_init(&loadcell, HX_SCK_GPIO_Port, HX_SCK_Pin, HX_DOUT_GPIO_Port, HX_DOUT_Pin);
   //hx711_coef_set(&loadcell, 354.5); // read afer calibration
 	if(memcmp(&coefInt,&ffVal,4) != 0){
 	//if (coefInt != 0xFFFFFFFFUL){
@@ -74,7 +52,7 @@ void readWeightTask(void *argument)
 	osDelay(100);	
 	if(memcmp(&offsetUint,&ffVal,4) != 0){
 		memcpy(&offset, &offsetUint, 4);
-		hx711_offset_set(&loadcell, offset);		
+		//hx711_offset_set(&loadcell, offset);		
 	}
 	//if (offset != 0xFFFFFFFFUL) hx711_offset_set(&loadcell, offset);
 	else hx711_tare(&loadcell, 10);	
@@ -117,15 +95,14 @@ void readWeightTask(void *argument)
 				osMessageQueuePut(espSendQueueHandle, &espmsg, 0, 0);	
 			}
 			else if (adcMsg == CALIBRATION){				
-				hx711_calibration(&loadcell, hx711_offset_get(&loadcell), hx711_value_ave(&loadcell, 10), calibrationWeight);
-				saveCoefficientsToFlash(hx711_offset_get(&loadcell), hx711_coef_get(&loadcell));
+				//hx711_calibration(&loadcell, hx711_offset_get(&loadcell), hx711_value_ave(&loadcell, 10), calibrationWeight);
+				//saveCoefficientsToFlash(hx711_offset_get(&loadcell), hx711_coef_get(&loadcell));
 			}
 			else if (adcMsg == SET_OFFSET){
 				hx711_tare(&loadcell, 10);
-				saveCoefficientsToFlash(hx711_offset_get(&loadcell), hx711_coef_get(&loadcell));
+				//saveCoefficientsToFlash(hx711_offset_get(&loadcell), hx711_coef_get(&loadcell));
 			}
 		}		
->>>>>>> Stashed changes
 	}
 }
 

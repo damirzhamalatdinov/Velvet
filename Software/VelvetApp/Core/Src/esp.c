@@ -32,7 +32,7 @@ static const uint8_t sendWeightPrepareOK[8] = {0x04, 0x02, 0X00, 0x00, 0x00, 0x0
 static const uint8_t sendWeightRspOK[8] = {0x05, 0x01, 0X00, 0x00, 0x00, 0x00, 0x00, 0x00};
 static const uint8_t sendWeightWifiErr[8] = {0x05, 0x02, 0X00, 0x00, 0x00, 0x00, 0x00, 0x00};
 static const uint8_t getTimestampOK[1] = {0x06};
-static uint8_t checkFWCmd[8] = {0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00};
+static uint8_t checkFWCmd[8] = {0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};// mytest
 static uint8_t sendBuffer[251];
 static uint8_t receiveBuffer[8] = {0};
 static union weight{
@@ -41,10 +41,7 @@ static union weight{
 } weight;
 static uint16_t versionNum = 1;
 static uint8_t currentCmdESP = 0;
-<<<<<<< Updated upstream
-=======
 static EspMsg_t sendMessageType = EMPTY_MSG;
->>>>>>> Stashed changes
 
 EspResponse_t checkResponse(uint8_t* buf){
 	if(memcmp(buf, checkFWRspOK, 8) == 0) return RestartSTM;
@@ -115,8 +112,8 @@ void sendMsgToESP(EspMsg_t sendMessageType){
 				//HAL_UART_Transmit_IT(&huart4,sendWeightPrepareCmd,8);		
 			break;
 			case CHECK_FW:
-				checkFWCmd[1] = (versionNum&0xff00)>>8;
-				checkFWCmd[2] = versionNum&0xff;
+//				checkFWCmd[1] = (versionNum&0xff00)>>8; mytest
+//				checkFWCmd[2] = versionNum&0xff;
 				currentCmdESP = 1;
 				HAL_UART_Transmit(pUart,checkFWCmd,8,1000);				
 			break;
@@ -150,7 +147,9 @@ void sendMsgToESPTask(void *argument){
 //				if(ingnoreCounter>3) {ingnoreCounter = 0; currentCmdESP = 0;}
 //				continue;	//ingnore other messages, if send weight process started				
 //			}
-			HAL_UART_Receive_DMA(pUart,receiveBuffer,8);
+		osDelay(3000);	
+		HAL_UART_Receive_DMA(pUart,receiveBuffer,8);
+		osDelay(200);
 			sendMsgToESP(sendMessageType);			
 			if(osMessageQueueGet (espReceiveQueueHandle, &messageReceived, 0, 1000) == RECEIVE_OK)
 				readEspResponse(receiveBuffer);	
@@ -162,6 +161,6 @@ void sendMsgToESPTask(void *argument){
 				}
 			}
 //		}		
-		osDelay(100);		
+		osDelay(1000);		
 	}
 }
