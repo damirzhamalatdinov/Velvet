@@ -162,7 +162,7 @@ void readEPCData(uint8_t *buf)
                 else
                 {
                     adcMsg = READ_WEIGHT;
-                    //osMessageQueuePut(adcQueueHandle, &adcMsg, 0, 0);
+                    osMessageQueuePut(adcQueueHandle, &adcMsg, 0, 0);
                 }
             }
         }

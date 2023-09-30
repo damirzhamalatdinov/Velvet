@@ -150,7 +150,7 @@ void sendMsgToESPTask(void *argument){
 		osDelay(3000);	
 		HAL_UART_Receive_DMA(pUart,receiveBuffer,8);
 		osDelay(200);
-			sendMsgToESP(sendMessageType);			
+//			sendMsgToESP(sendMessageType);			
 			if(osMessageQueueGet (espReceiveQueueHandle, &messageReceived, 0, 1000) == RECEIVE_OK)
 				readEspResponse(receiveBuffer);	
 			else {

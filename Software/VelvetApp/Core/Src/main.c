@@ -41,7 +41,6 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -49,6 +48,8 @@ I2C_HandleTypeDef hi2c1;
 DMA_HandleTypeDef hdma_i2c1_rx;
 
 IWDG_HandleTypeDef hiwdg;
+
+SPI_HandleTypeDef hspi2;
 
 TIM_HandleTypeDef htim6;
 
@@ -98,6 +99,7 @@ static void MX_UART4_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_I2C1_Init(void);
+static void MX_SPI2_Init(void);
 void sendMsgToESPTask(void *argument);
 extern void readWeightTask(void *argument);
 extern void readRfidTask(void *argument);
@@ -121,13 +123,13 @@ int main(void)
   /* USER CODE BEGIN 1 */
 	//SCB->VTOR = 0x08020000;
   //SCB->VTOR = 0x0800E000;  
-  __HAL_RCC_GPIOA_CLK_DISABLE();
-  __HAL_RCC_GPIOB_CLK_DISABLE();
-  __HAL_RCC_GPIOC_CLK_DISABLE();
-  __HAL_RCC_GPIOD_CLK_DISABLE();
-  HAL_RCC_DeInit();
-  HAL_DeInit();
-  __enable_irq();
+//  __HAL_RCC_GPIOA_CLK_DISABLE();
+//  __HAL_RCC_GPIOB_CLK_DISABLE();
+//  __HAL_RCC_GPIOC_CLK_DISABLE();
+//  __HAL_RCC_GPIOD_CLK_DISABLE();
+//  HAL_RCC_DeInit();
+//  HAL_DeInit();
+//  __enable_irq();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -154,6 +156,7 @@ int main(void)
   MX_TIM6_Init();
   MX_USART3_UART_Init();
   MX_I2C1_Init();
+  MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
 	__HAL_DBGMCU_FREEZE_IWDG();
 	initApp(&huart3,&huart4);	
@@ -338,6 +341,44 @@ static void MX_IWDG_Init(void)
 }
 
 /**
+  * @brief SPI2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI2_Init(void)
+{
+
+  /* USER CODE BEGIN SPI2_Init 0 */
+
+  /* USER CODE END SPI2_Init 0 */
+
+  /* USER CODE BEGIN SPI2_Init 1 */
+
+  /* USER CODE END SPI2_Init 1 */
+  /* SPI2 parameter configuration*/
+  hspi2.Instance = SPI2;
+  hspi2.Init.Mode = SPI_MODE_MASTER;
+  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi2.Init.CLKPolarity = SPI_POLARITY_HIGH;
+  hspi2.Init.CLKPhase = SPI_PHASE_2EDGE;
+  hspi2.Init.NSS = SPI_NSS_SOFT;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
+  hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi2.Init.CRCPolynomial = 10;
+  if (HAL_SPI_Init(&hspi2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI2_Init 2 */
+
+  /* USER CODE END SPI2_Init 2 */
+
+}
+
+/**
   * @brief TIM6 Initialization Function
   * @param None
   * @retval None
@@ -492,6 +533,9 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, RFID_EN_Pin|RFID_HEAT_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(ADC_EN_GPIO_Port, ADC_EN_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, LED_Pin|GPIO_PIN_12|GPIO_PIN_13|DO5_Pin
                           |DO4_Pin|DO3_Pin|DO2_Pin|DO1_Pin, GPIO_PIN_RESET);
 
@@ -531,6 +575,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(ESP_EN_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : ADC_EN_Pin */
+  GPIO_InitStruct.Pin = ADC_EN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(ADC_EN_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LED_Pin PD12 PD13 */
   GPIO_InitStruct.Pin = LED_Pin|GPIO_PIN_12|GPIO_PIN_13;

@@ -78,6 +78,10 @@ void Error_Handler(void);
 #define RFID_HEAT_GPIO_Port GPIOA
 #define ESP_EN_Pin GPIO_PIN_15
 #define ESP_EN_GPIO_Port GPIOE
+#define ADC_EN_Pin GPIO_PIN_12
+#define ADC_EN_GPIO_Port GPIOB
+#define ADC_DOUT_Pin GPIO_PIN_14
+#define ADC_DOUT_GPIO_Port GPIOB
 #define LED_Pin GPIO_PIN_11
 #define LED_GPIO_Port GPIOD
 #define DO5_Pin GPIO_PIN_3
