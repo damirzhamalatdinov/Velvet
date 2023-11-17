@@ -100,6 +100,7 @@ void sendCmd(uint8_t *buf, uint8_t cmdNum)
 {
     writeCMDToBuf(buf, cmdNum);
     HAL_UART_Receive_DMA(pUart, inputBuffer, 1);
+		osDelay(5);
     if (HAL_UART_Transmit(pUart, buf, buf[0] + 1, 1000) == TRANSMIT_OK)
         setReceiveStage(1);
 }
@@ -189,23 +190,23 @@ void readRfidResponse(uint8_t *buf)
 
 void rfidInit(void)
 {
-    HAL_GPIO_WritePin(RFID_EN_GPIO_Port, RFID_EN_Pin, GPIO_PIN_SET);
-    osDelay(2000);	
-    sendCmd(outputBuffer, GET_READER_INFO_CMD);		
-    if (osMessageQueueGet(rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK)
-    {
-        HAL_UART_Receive_DMA(pUart, inputBuffer + 1, inputBuffer[0]);
-        if (osMessageQueueGet(rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK)
-            readRfidResponse(inputBuffer);
-        else
-            HAL_UART_DMAStop(pUart);
-    }
-    else
-        HAL_UART_DMAStop(pUart); // HAL_UART_Receive_DMA
-                                 // writeCMDToBuf(outputBuffer, GET_READER_INFO_CMD);
-                                 //->getReaderInfo(outputBuffer);
-                                 // HAL_UART_Transmit_IT(&huart6,outputBuffer,outputBuffer[0]+1);
-                                 // receiveStart = 1;
+	HAL_GPIO_WritePin(RFID_EN_GPIO_Port, RFID_EN_Pin, GPIO_PIN_SET);
+	osDelay(2000);	
+	sendCmd(outputBuffer, GET_READER_INFO_CMD);
+	if (osMessageQueueGet(rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK)
+	{
+		HAL_UART_Receive_DMA(pUart, inputBuffer + 1, inputBuffer[0]);
+		if (osMessageQueueGet(rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK)
+				readRfidResponse(inputBuffer);
+		else
+				HAL_UART_DMAStop(pUart);
+	}
+	else
+		HAL_UART_DMAStop(pUart); // HAL_UART_Receive_DMA
+														 // writeCMDToBuf(outputBuffer, GET_READER_INFO_CMD);
+														 //->getReaderInfo(outputBuffer);
+														 // HAL_UART_Transmit_IT(&huart6,outputBuffer,outputBuffer[0]+1);
+														 // receiveStart = 1;
 }
 
 void rfidReInit(void)
@@ -217,48 +218,48 @@ void rfidReInit(void)
 
 void readRfidTask(void *argument)
 {
-    /* USER CODE BEGIN readRfid */
-    uint8_t initCounter = 0;
-    pUart = (UART_HandleTypeDef *)argument;
+	/* USER CODE BEGIN readRfid */
+	uint8_t initCounter = 0;
+	pUart = (UART_HandleTypeDef *)argument;
 
-    rfidInit();
-    while (rfidInitState != RFID_OK)
-    {
-        osDelay(1000); // mytest add time management
-        initCounter++;
-        if (initCounter >= 255)
-        {
-            initCounter = 0;
-            rfidReInit();
-        }
-    }
-    /* Infinite loop */
-    for (;;)
-    {
-        osDelay(1000);
-        sendCmd(outputBuffer, INVENTORY_G2_CMD);
-        HAL_IWDG_Refresh(&hiwdg);
-        if (osMessageQueueGet(rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK)
-        {
-            if (receiveStage == 1)
-            {
-                HAL_UART_Receive_DMA(pUart, inputBuffer + 1, inputBuffer[0]);
-                if (osMessageQueueGet(rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK)
-                    readRfidResponse(inputBuffer);
-                else
-                    HAL_UART_DMAStop(pUart);
-            }
-            else
-                HAL_UART_DMAStop(pUart);
-        }
-        else
-            HAL_UART_DMAStop(pUart);
-        HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
-    }
-    /* USER CODE END readRfid */
+	rfidInit();
+	while (rfidInitState != RFID_OK)
+	{
+		osDelay(1000); // mytest add time management
+		initCounter++;
+		if (initCounter >= 255)
+		{
+			initCounter = 0;
+			rfidReInit();
+		}
+	}
+	/* Infinite loop */
+	for (;;)
+	{
+		osDelay(1000);
+		sendCmd(outputBuffer, INVENTORY_G2_CMD);
+		HAL_IWDG_Refresh(&hiwdg);
+		if (osMessageQueueGet(rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK)
+		{
+			if (receiveStage == 1)
+			{
+				HAL_UART_Receive_DMA(pUart, inputBuffer + 1, inputBuffer[0]);
+				if (osMessageQueueGet(rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK)
+					readRfidResponse(inputBuffer);
+				else
+					HAL_UART_DMAStop(pUart);
+			}
+			else
+				HAL_UART_DMAStop(pUart);
+		}
+		else
+			HAL_UART_DMAStop(pUart);
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
+	}
+	/* USER CODE END readRfid */
 }
 
 void getCurrentTag(uint8_t *tagBuf)
 {
-    memcpy(tagBuf, currentTag, 6);
+   memcpy(tagBuf, currentTag, 6);
 }

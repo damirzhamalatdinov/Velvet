@@ -141,26 +141,26 @@ void sendMsgToESPTask(void *argument){
 	
 	for(;;)
 	{			
-//		if(osMessageQueueGet (espSendQueueHandle, &sendMessageType, 0, MAX_DELAY) == RECEIVE_OK){
-//			if((currentCmdESP == 4)&&(sendMessageType!=SEND_WEIGHT)){
-//				ingnoreCounter++;
-//				if(ingnoreCounter>3) {ingnoreCounter = 0; currentCmdESP = 0;}
-//				continue;	//ingnore other messages, if send weight process started				
-//			}
-		osDelay(3000);	
-		HAL_UART_Receive_DMA(pUart,receiveBuffer,8);
-		osDelay(200);
-//			sendMsgToESP(sendMessageType);			
-			if(osMessageQueueGet (espReceiveQueueHandle, &messageReceived, 0, 1000) == RECEIVE_OK)
+		if(osMessageQueueGet (espSendQueueHandle, &sendMessageType, 0, MAX_DELAY) == RECEIVE_OK){
+			if((currentCmdESP == 4)&&(sendMessageType!=SEND_WEIGHT)){
+				ingnoreCounter++;
+				if(ingnoreCounter>3) {ingnoreCounter = 0; currentCmdESP = 0;}
+				continue;	//ingnore other messages, if send weight process started				
+			}
+			osDelay(3000);	
+			HAL_UART_Receive_DMA(pUart,receiveBuffer,8);
+			osDelay(200);
+			sendMsgToESP(sendMessageType);			
+			if(osMessageQueueGet (espReceiveQueueHandle, &messageReceived, 0, 60000) == RECEIVE_OK)
 				readEspResponse(receiveBuffer);	
 			else {
 				HAL_UART_DMAStop(pUart);
-				if(currentCmdESP == 4){
+				if((currentCmdESP == 4)||(currentCmdESP == 5)){
 					currentCmdESP = 0;
 					setAdcState(ADC_FREE);
 				}
 			}
-//		}		
+		}		
 		osDelay(1000);		
 	}
 }

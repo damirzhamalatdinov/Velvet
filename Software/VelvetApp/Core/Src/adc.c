@@ -35,6 +35,8 @@ static uint8_t adcState = ADC_FREE;
 static const uint32_t offsetAddress = 0x08040000UL;
 static const uint32_t calibrationValAddress = 0x08040004UL;
 static const uint32_t calibrationWeight = 10.0;
+static int32_t adcOffset;
+static float adcCoefficient;
 uint8_t communicationRegister[8] = {96,0x00,96,0x00,96,0x00,96,0x00};//0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff};
 uint8_t adcBuffer[8]={0};
 int8_t adcInitState = ADC_ERROR;
@@ -43,38 +45,21 @@ static union coefficient{
 	uint32_t uintVal;	
 } coefficient;
 
-void initHX711(void){
+float readWeightAD7797(uint32_t offset, float coefficient);
+
+void initHX711(int32_t offset, float coef){
 #ifdef HX711	
-  int32_t offsetUint = 0;
-	int32_t offset = 0;
-	uint32_t coefInt = 0;
-	uint32_t ffVal = 0xFFFFFFFFUL;
-	float coef = 0;
-		
-	offsetUint = *(__IO uint32_t*)offsetAddress;
-	coefInt = *(__IO uint32_t*)calibrationValAddress;	
-	hx711_init(&loadcell, HX_SCK_GPIO_Port, HX_SCK_Pin, HX_DOUT_GPIO_Port, HX_DOUT_Pin);
+  hx711_init(&loadcell, HX_SCK_GPIO_Port, HX_SCK_Pin, HX_DOUT_GPIO_Port, HX_DOUT_Pin);
   hx711_coef_set(&loadcell, 354.5); // read afer calibration
-	if(memcmp(&coefInt,&ffVal,4) != 0){
-	//if (coefInt != 0xFFFFFFFFUL){
-		memcpy(&coef, &coefInt, 4);
-		hx711_coef_set(&loadcell, coef);		
-	}
-  else hx711_coef_set(&loadcell, 1.0);//no calibration, clean adc val
-	osDelay(100);	
-	if(memcmp(&offsetUint,&ffVal,4) != 0){
-		memcpy(&offset, &offsetUint, 4);
-		//hx711_offset_set(&loadcell, offset);		
-	}
-	//if (offset != 0xFFFFFFFFUL) hx711_offset_set(&loadcell, offset);
-	else hx711_tare(&loadcell, SAMPLE_NUMBER);	
+	hx711_coef_set(&loadcell, coef);
+	osDelay(100);
+	hx711_offset_set(&loadcell, offset);	
+	//hx711_tare(&loadcell, SAMPLE_NUMBER);	
 	//osDelay(5000);	
 	//hx711_coef_set(&loadcell, hx711_weight(&loadcell, 10)/55);//55 ������������ ��� 55 �
 	adcInitState = ADC_OK;
 #endif
 }
-
-HAL_StatusTypeDef adcError;
 
 void resetADC(uint8_t* readBuffer){
 	uint8_t commandBuf[4]={0xff,0xff,0xff,0xff};	
@@ -93,28 +78,32 @@ void getADCRegister(uint8_t command, uint8_t* readBuffer, uint8_t registerSize){
 
 uint16_t conversionCounter = 0;
 uint16_t delayCounter = 0;
-void initAD7797(void){		
+void initAD7797(void){	
+	uint32_t adcValue;	
+	
 	HAL_GPIO_WritePin(ADC_EN_GPIO_Port, ADC_EN_Pin, GPIO_PIN_RESET);
 	resetADC(adcBuffer);	
 	getADCRegister(READ_ID_REGISTER, adcBuffer, 1);
 	if(adcBuffer[1]==0x5B) adcInitState = ADC_OK;
 	else adcInitState = ADC_ERROR;
-	osDelay(100);
-	for(;;){
-		if(HAL_GPIO_ReadPin(ADC_DOUT_GPIO_Port, ADC_DOUT_Pin) == GPIO_PIN_RESET){
-			getADCRegister(READ_STATUS_REGISTER, adcBuffer, 1);	
-			conversionCounter++;
-			if((adcBuffer[1]&0x80)==0){
-				getADCRegister(READ_DATA_REGISTER, adcBuffer, 3);	
-				osDelay(100);
-			}
-		}
-		else{
-			osDelay(1);
-			delayCounter++;
-		}
-	}
-  HAL_GPIO_WritePin(ADC_EN_GPIO_Port, ADC_EN_Pin, GPIO_PIN_SET); 
+	readWeightAD7797(adcOffset, adcCoefficient);	
+	HAL_GPIO_WritePin(ADC_EN_GPIO_Port, ADC_EN_Pin, GPIO_PIN_SET);	
+	
+//	osDelay(100);
+//	for(;;){
+//		if(HAL_GPIO_ReadPin(ADC_DOUT_GPIO_Port, ADC_DOUT_Pin) == GPIO_PIN_RESET){
+//			getADCRegister(READ_STATUS_REGISTER, adcBuffer, 1);	
+//			conversionCounter++;
+//			if((adcBuffer[1]&0x80)==0){
+//				getADCRegister(READ_DATA_REGISTER, adcBuffer, 3);	
+//				osDelay(100);				
+//			}
+//		}
+//		else{
+//			osDelay(1);
+//			delayCounter++;
+//		}
+//	}   
 }
 
 void initADC(void)
@@ -123,52 +112,61 @@ void initADC(void)
 	int32_t offset = 0;
 	uint32_t coefInt = 0;
 	uint32_t ffVal = 0xFFFFFFFFUL;
-	float coef = 0;
+	float coef = 1.0;
 		
 	offsetUint = *(__IO uint32_t*)offsetAddress;
 	coefInt = *(__IO uint32_t*)calibrationValAddress;
-
+	if(memcmp(&offsetUint,&ffVal,4) != 0){
+		memcpy(&offset, &offsetUint, 4);				
+	}
+	if(memcmp(&coefInt,&ffVal,4) != 0){	
+		memcpy(&coef, &coefInt, 4);				
+	}  
 #ifdef HX711
-	initHX711();
+	initHX711(offset, coef);
 #endif	
 #ifdef AD7797
+	adcOffset = offset;
+	adcCoefficient = coef;
 	initAD7797();
 #endif
 }
 
+float weight;
 float readWeightAD7797(uint32_t offset, float coefficient){
-	float weight;
+	
 	uint32_t adcValue;
 	
-	for(uint8_t i=0; i<3;i++){
-		HAL_GPIO_WritePin(ADC_EN_GPIO_Port, ADC_EN_Pin, GPIO_PIN_RESET);
-		communicationRegister[0] = READ_STATUS_REGISTER;
-		HAL_SPI_TransmitReceive(&hspi2, communicationRegister, adcBuffer, 2, 1000);
-		if((adcBuffer[0]&0x80)==0){
-			communicationRegister[0] = READ_DATA_REGISTER;
-			HAL_SPI_Transmit(&hspi2, communicationRegister, 2, 1000);
-			HAL_SPI_Receive(&hspi2, adcBuffer, 3, 1000);
-			HAL_GPIO_WritePin(ADC_EN_GPIO_Port, ADC_EN_Pin, GPIO_PIN_SET); 
-			adcValue = adcBuffer[0]<<16;
-			adcValue |= adcBuffer[1]<<8;
-			adcValue |= adcBuffer[2];
-			weight = (adcValue - offset)/coefficient;
-			return weight;
+	for(uint8_t i=0; i<5;i++){
+		for(;;){
+		if(HAL_GPIO_ReadPin(ADC_DOUT_GPIO_Port, ADC_DOUT_Pin) == GPIO_PIN_RESET){			
+		getADCRegister(READ_STATUS_REGISTER, adcBuffer, 1);	
+			conversionCounter++;
+			if((adcBuffer[1]&0x80)==0){
+				getADCRegister(READ_DATA_REGISTER, adcBuffer, 3);	
+				adcValue = adcBuffer[1]<<16;
+				adcValue |= adcBuffer[2]<<8;
+				adcValue |= adcBuffer[3];
+				weight = (adcValue - offset)/coefficient;
+				//return weight;				
+				//break;
+			}
 		}
-		else {
-			HAL_GPIO_WritePin(ADC_EN_GPIO_Port, ADC_EN_Pin, GPIO_PIN_SET); 
-			osDelay(250);		
-		}
-	}
+		else{
+			osDelay(50);
+			delayCounter++;
+		}	
+	}		
+	}	
 	return 0;
 }
 
-float readWeight(void){
+float readWeight(uint32_t offset, float coefficient){
 #ifdef HX711
 	return hx711_weight(&loadcell, 10);	
 #endif	
 #ifdef AD7797
-	return readWeightAD7797(0, 1);
+	return readWeightAD7797(offset, coefficient);
 #endif
 }
 
@@ -188,6 +186,89 @@ void saveCoefficientsToFlash(int32_t offset, float calibrationValue){
 	HAL_FLASH_Lock();
 }
 
+void runADC(void){
+	#ifdef AD7797
+	HAL_GPIO_WritePin(ADC_EN_GPIO_Port, ADC_EN_Pin, GPIO_PIN_RESET);
+	osDelay(70);
+	#endif
+}
+
+void stopADC(void){
+	#ifdef AD7797
+	HAL_GPIO_WritePin(ADC_EN_GPIO_Port, ADC_EN_Pin, GPIO_PIN_SET);
+	#endif
+}
+
+void shellSort(float *a, uint16_t n) 
+{
+  //  n/2, n/4, n/8, 
+  for (uint16_t interval = n/2; interval > 0; interval /= 2)  
+	{  
+			for (uint16_t i = interval; i < n; i ++)  
+			{  
+					/* store a[i] to the variable temp and make the ith position empty */  
+					float temp = a[i];  
+					uint16_t j;        
+					for (j = i; j >= interval && a[j - interval] > temp; j -= interval)  
+							a[j] = a[j - interval];  
+						
+					// put temp (the original a[i]) in its correct position  
+					a[j] = temp;  
+			}  	
+	
+	}
+}
+
+float findAverage(float *a, uint8_t n){
+	float avg = 0, num = n/3;
+	for (uint16_t i = num; i < (n-num); i++){  
+		avg+=a[i];
+	}
+	return avg/(n-2*num);
+}
+
+void startCalibration(){
+	float avgWeight;
+	
+	#ifdef HX711
+		hx711_calibration(&loadcell, hx711_offset_get(&loadcell), hx711_value_ave(&loadcell, 10), calibrationWeight);
+		saveCoefficientsToFlash(hx711_offset_get(&loadcell), hx711_coef_get(&loadcell));
+	#endif	
+	#ifdef AD7797
+		adcState = ADC_BUSY;
+		runADC();
+		for(weightIndex=0;weightIndex<10;weightIndex++){					
+			weightBuffer[weightIndex] = readWeight(adcOffset, 1);
+			osDelay(15);
+		}	
+		stopADC();
+		shellSort(weightBuffer, 10);
+		adcCoefficient = calibrationWeight/findAverage(weightBuffer, 10);	
+		adcState = ADC_FREE;
+		saveCoefficientsToFlash(adcOffset, adcCoefficient);
+	#endif
+}
+
+void setOffset(void){
+	#ifdef HX711
+		hx711_tare(&loadcell, SAMPLE_NUMBER);
+		saveCoefficientsToFlash(hx711_offset_get(&loadcell), hx711_coef_get(&loadcell));
+	#endif	
+	#ifdef AD7797
+		adcState = ADC_BUSY;
+		runADC();
+		for(weightIndex=0;weightIndex<10;weightIndex++){					
+			weightBuffer[weightIndex] = readWeight(0, 1);
+			osDelay(15);
+		}	
+		stopADC();
+		shellSort(weightBuffer, 10);
+		adcCoefficient = findAverage(weightBuffer, 10);	
+		adcState = ADC_FREE;
+		saveCoefficientsToFlash(adcOffset, adcCoefficient);
+	#endif
+}
+
 void readWeightTask(void *argument)
 { 	
 	static AdcMsg_t adcMsg;	
@@ -196,7 +277,7 @@ void readWeightTask(void *argument)
 	initADC();
 	while (adcInitState != ADC_OK)
 	{
-			osDelay(1000); // mytest add time management
+			osDelay(100); // mytest add time management
 			initCounter++;
 			if (initCounter >= 255)
 			{
@@ -209,22 +290,18 @@ void readWeightTask(void *argument)
 		if(osMessageQueueGet (adcQueueHandle, &adcMsg, 0, MAX_DELAY) == RECEIVE_OK){		
 			if(adcMsg == READ_WEIGHT){
 				adcState = ADC_BUSY;
-				for(weightIndex=0;weightIndex<60;weightIndex++){
-					osDelay(20);	//mytest add time management
-					weightBuffer[weightIndex] = readWeight();
+				runADC();
+				for(weightIndex=0;weightIndex<60;weightIndex++){					
+					weightBuffer[weightIndex] = readWeight(adcOffset, adcCoefficient);
+					osDelay(15);
 				}	
+				stopADC();
 				//adcState = ADC_FREE;// mytest			
 				espmsg = WEIGHT_BUFFER_READY;
 				osMessageQueuePut(espSendQueueHandle, &espmsg, 0, 0);	
 			}
-			else if (adcMsg == CALIBRATION){				
-				//hx711_calibration(&loadcell, hx711_offset_get(&loadcell), hx711_value_ave(&loadcell, 10), calibrationWeight);
-				//saveCoefficientsToFlash(hx711_offset_get(&loadcell), hx711_coef_get(&loadcell));
-			}
-			else if (adcMsg == SET_OFFSET){
-				hx711_tare(&loadcell, SAMPLE_NUMBER);
-				//saveCoefficientsToFlash(hx711_offset_get(&loadcell), hx711_coef_get(&loadcell));
-			}
+			else if (adcMsg == CALIBRATION) startCalibration();				
+			else if (adcMsg == SET_OFFSET) setOffset();
 		}		
 	}
 }

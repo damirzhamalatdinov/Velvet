@@ -152,146 +152,141 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>2385</LineNumber>
+          <LineNumber>157</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>122</Address>
+          <Address>134237384</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c</Filename>
+          <Filename>..\Core\Src\esp.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\VelvetApp\../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c\2385</Expression>
+          <Expression>\\VelvetApp\../Core/Src/esp.c\157</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>164</LineNumber>
+          <LineNumber>13</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134235758</Address>
+          <Address>134220254</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Core\Src\rfid.c</Filename>
+          <Filename>..\Core\Src\digitalIO.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\VelvetApp\../Core/Src/rfid.c\164</Expression>
+          <Expression>\\VelvetApp\../Core/Src/digitalIO.c\13</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>weight</ItemText>
+          <ItemText>secondsCounter,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>loadcell</ItemText>
+          <ItemText>currentCMD</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>secondsCounter,0x0A</ItemText>
+          <ItemText>checkFWCmd</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>currentCMD</ItemText>
+          <ItemText>receiveBuffer</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>checkFWCmd</ItemText>
+          <ItemText>outputBuffer</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>receiveBuffer</ItemText>
+          <ItemText>inputBuffer</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>outputBuffer</ItemText>
+          <ItemText>receiveStage</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>inputBuffer</ItemText>
+          <ItemText>tagsBuffer</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>receiveStage</ItemText>
+          <ItemText>currentTag</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>tagsBuffer</ItemText>
+          <ItemText>testBuf</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>1</WinNumber>
-          <ItemText>currentTag</ItemText>
+          <ItemText>weightBuffer</ItemText>
         </Ww>
         <Ww>
           <count>11</count>
           <WinNumber>1</WinNumber>
-          <ItemText>testBuf</ItemText>
+          <ItemText>receiveBuf</ItemText>
         </Ww>
         <Ww>
           <count>12</count>
           <WinNumber>1</WinNumber>
-          <ItemText>weightBuffer</ItemText>
+          <ItemText>temperatureExternal</ItemText>
         </Ww>
         <Ww>
           <count>13</count>
           <WinNumber>1</WinNumber>
-          <ItemText>receiveBuf</ItemText>
+          <ItemText>temperatureRFID</ItemText>
         </Ww>
         <Ww>
           <count>14</count>
           <WinNumber>1</WinNumber>
-          <ItemText>temperatureExternal</ItemText>
+          <ItemText>adcBuffer</ItemText>
         </Ww>
         <Ww>
           <count>15</count>
           <WinNumber>1</WinNumber>
-          <ItemText>temperatureRFID</ItemText>
+          <ItemText>conversionCounter,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>16</count>
           <WinNumber>1</WinNumber>
-          <ItemText>receiveStage</ItemText>
+          <ItemText>delayCounter,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>17</count>
           <WinNumber>1</WinNumber>
-          <ItemText>adcBuffer</ItemText>
+          <ItemText>sendBuffer</ItemText>
         </Ww>
         <Ww>
           <count>18</count>
           <WinNumber>1</WinNumber>
-          <ItemText>adcError</ItemText>
+          <ItemText>timestamp,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>19</count>
           <WinNumber>1</WinNumber>
-          <ItemText>BUFFERSIZE</ItemText>
+          <ItemText>adcState</ItemText>
         </Ww>
         <Ww>
           <count>20</count>
           <WinNumber>1</WinNumber>
-          <ItemText>conversionCounter,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>21</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>delayCounter,0x0A</ItemText>
+          <ItemText>weight</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -336,6 +331,12 @@
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
       <pMultCmdsp></pMultCmdsp>
+      <SystemViewers>
+        <Entry>
+          <Name>System Viewer\GPIOB</Name>
+          <WinId>35905</WinId>
+        </Entry>
+      </SystemViewers>
       <DebugDescription>
         <Enable>1</Enable>
         <EnableFlashSeq>0</EnableFlashSeq>
