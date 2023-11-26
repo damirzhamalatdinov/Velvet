@@ -150,7 +150,7 @@ float readWeightAD7797(uint32_t offset, float coeff){
 				adcValue = adcBuffer[1]<<16;
 				adcValue |= adcBuffer[2]<<8;
 				adcValue |= adcBuffer[3];
-				if(errorFlag == 0) weight = (offset-adcValue)/coeff;
+				if(errorFlag == 0) weight = ((float)offset-adcValue)/coeff;
 				else weight = 0;
 				//return weight;				
 				//break;
