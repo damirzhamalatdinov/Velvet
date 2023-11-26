@@ -154,7 +154,7 @@
           <Type>0</Type>
           <LineNumber>157</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134237384</Address>
+          <Address>134237400</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -164,22 +164,6 @@
           <Filename>..\Core\Src\esp.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\VelvetApp\../Core/Src/esp.c\157</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>13</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134220254</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Core\Src\digitalIO.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\VelvetApp\../Core/Src/digitalIO.c\13</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>

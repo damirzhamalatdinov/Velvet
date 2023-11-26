@@ -133,9 +133,9 @@ void initADC(void)
 }
 
 float weight;
-float readWeightAD7797(uint32_t offset, float coefficient){
-	
+float readWeightAD7797(uint32_t offset, float coefficient){	
 	uint32_t adcValue;
+	uint8_t errorFlag = 0;
 	
 	for(uint8_t i=0; i<5;i++){
 		for(;;){
@@ -143,11 +143,14 @@ float readWeightAD7797(uint32_t offset, float coefficient){
 		getADCRegister(READ_STATUS_REGISTER, adcBuffer, 1);	
 			conversionCounter++;
 			if((adcBuffer[1]&0x80)==0){
+				if((adcBuffer[1]&0x40)==0) errorFlag = 1;
+				else errorFlag = 0;
 				getADCRegister(READ_DATA_REGISTER, adcBuffer, 3);	
 				adcValue = adcBuffer[1]<<16;
 				adcValue |= adcBuffer[2]<<8;
 				adcValue |= adcBuffer[3];
-				weight = (adcValue - offset)/coefficient;
+				if(errorFlag == 0) weight = (adcValue - offset)/coefficient;
+				else weight = 0;
 				//return weight;				
 				//break;
 			}
