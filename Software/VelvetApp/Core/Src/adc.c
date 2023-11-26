@@ -35,15 +35,15 @@ static uint8_t adcState = ADC_FREE;
 static const uint32_t offsetAddress = 0x08040000UL;
 static const uint32_t calibrationValAddress = 0x08040004UL;
 static const uint32_t calibrationWeight = 10.0;
-static int32_t adcOffset;
+static uint32_t adcOffset;
 static float adcCoefficient;
 uint8_t communicationRegister[8] = {96,0x00,96,0x00,96,0x00,96,0x00};//0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff};
 uint8_t adcBuffer[8]={0};
 int8_t adcInitState = ADC_ERROR;
-static union coefficient{
+static union floatUintConv{
 	float floatVal;
 	uint32_t uintVal;	
-} coefficient;
+} floatUintConv;
 
 float readWeightAD7797(uint32_t offset, float coefficient);
 
@@ -86,7 +86,7 @@ void initAD7797(void){
 	getADCRegister(READ_ID_REGISTER, adcBuffer, 1);
 	if(adcBuffer[1]==0x5B) adcInitState = ADC_OK;
 	else adcInitState = ADC_ERROR;
-	readWeightAD7797(adcOffset, adcCoefficient);	
+	readWeightAD7797(adcOffset, 1);//adcCoefficient);	
 	HAL_GPIO_WritePin(ADC_EN_GPIO_Port, ADC_EN_Pin, GPIO_PIN_SET);	
 	
 //	osDelay(100);
@@ -108,8 +108,8 @@ void initAD7797(void){
 
 void initADC(void)
 {	
-	int32_t offsetUint = 0;
-	int32_t offset = 0;
+	uint32_t offsetUint = 0;
+	uint32_t offset = 0;
 	uint32_t coefInt = 0;
 	uint32_t ffVal = 0xFFFFFFFFUL;
 	float coef = 1.0;
@@ -133,9 +133,10 @@ void initADC(void)
 }
 
 float weight;
-float readWeightAD7797(uint32_t offset, float coefficient){	
+uint8_t errorFlag = 0;
+float readWeightAD7797(uint32_t offset, float coeff){	
 	uint32_t adcValue;
-	uint8_t errorFlag = 0;
+	
 	
 	for(uint8_t i=0; i<5;i++){
 		for(;;){
@@ -143,13 +144,13 @@ float readWeightAD7797(uint32_t offset, float coefficient){
 		getADCRegister(READ_STATUS_REGISTER, adcBuffer, 1);	
 			conversionCounter++;
 			if((adcBuffer[1]&0x80)==0){
-				if((adcBuffer[1]&0x40)==0) errorFlag = 1;
+				if((adcBuffer[1]&0x40)) errorFlag = 1;
 				else errorFlag = 0;
 				getADCRegister(READ_DATA_REGISTER, adcBuffer, 3);	
 				adcValue = adcBuffer[1]<<16;
 				adcValue |= adcBuffer[2]<<8;
 				adcValue |= adcBuffer[3];
-				if(errorFlag == 0) weight = (adcValue - offset)/coefficient;
+				if(errorFlag == 0) weight = (offset-adcValue)/coeff;
 				else weight = 0;
 				//return weight;				
 				//break;
@@ -173,7 +174,7 @@ float readWeight(uint32_t offset, float coefficient){
 #endif
 }
 
-void saveCoefficientsToFlash(int32_t offset, float calibrationValue){
+void saveCoefficientsToFlash(uint32_t offset, float calibrationValue){
 	static uint32_t SectorError = 0;
 	static FLASH_EraseInitTypeDef EraseInitStruct;
 	
@@ -184,8 +185,8 @@ void saveCoefficientsToFlash(int32_t offset, float calibrationValue){
   EraseInitStruct.NbSectors = 1;
 	HAL_FLASHEx_Erase(&EraseInitStruct, &SectorError);
 	HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, offsetAddress, offset);
-	coefficient.floatVal = calibrationValue;
-	HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, calibrationValAddress, coefficient.uintVal);
+	floatUintConv.floatVal = calibrationValue;
+	HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, calibrationValAddress, floatUintConv.uintVal);
 	HAL_FLASH_Lock();
 }
 
@@ -202,32 +203,12 @@ void stopADC(void){
 	#endif
 }
 
-void shellSort(float *a, uint16_t n) 
-{
-  //  n/2, n/4, n/8, 
-  for (uint16_t interval = n/2; interval > 0; interval /= 2)  
-	{  
-			for (uint16_t i = interval; i < n; i ++)  
-			{  
-					/* store a[i] to the variable temp and make the ith position empty */  
-					float temp = a[i];  
-					uint16_t j;        
-					for (j = i; j >= interval && a[j - interval] > temp; j -= interval)  
-							a[j] = a[j - interval];  
-						
-					// put temp (the original a[i]) in its correct position  
-					a[j] = temp;  
-			}  	
-	
-	}
-}
-
 float findAverage(float *a, uint8_t n){
-	float avg = 0, num = n/3;
-	for (uint16_t i = num; i < (n-num); i++){  
+	float avg = 0;
+	for (uint16_t i = 0; i < n; i++){  
 		avg+=a[i];
 	}
-	return avg/(n-2*num);
+	return avg/n;
 }
 
 void startCalibration(){
@@ -244,8 +225,7 @@ void startCalibration(){
 			weightBuffer[weightIndex] = readWeight(adcOffset, 1);
 			osDelay(15);
 		}	
-		stopADC();
-		shellSort(weightBuffer, 10);
+		stopADC();		
 		adcCoefficient = calibrationWeight/findAverage(weightBuffer, 10);	
 		adcState = ADC_FREE;
 		saveCoefficientsToFlash(adcOffset, adcCoefficient);
@@ -264,9 +244,8 @@ void setOffset(void){
 			weightBuffer[weightIndex] = readWeight(0, 1);
 			osDelay(15);
 		}	
-		stopADC();
-		shellSort(weightBuffer, 10);
-		adcCoefficient = findAverage(weightBuffer, 10);	
+		stopADC();		
+		adcOffset = (uint32_t)(findAverage(weightBuffer, 10)*(-1));	
 		adcState = ADC_FREE;
 		saveCoefficientsToFlash(adcOffset, adcCoefficient);
 	#endif

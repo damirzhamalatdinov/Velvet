@@ -154,7 +154,7 @@
           <Type>0</Type>
           <LineNumber>157</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134237400</Address>
+          <Address>134237480</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -164,6 +164,38 @@
           <Filename>..\Core\Src\esp.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\VelvetApp\../Core/Src/esp.c\157</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>153</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134236786</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\Core\Src\adc.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\VelvetApp\../Core/Src/adc.c\153</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>143</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134236704</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\Core\Src\adc.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\VelvetApp\../Core/Src/adc.c\143</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -271,6 +303,16 @@
           <count>20</count>
           <WinNumber>1</WinNumber>
           <ItemText>weight</ItemText>
+        </Ww>
+        <Ww>
+          <count>21</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>errorFlag</ItemText>
+        </Ww>
+        <Ww>
+          <count>22</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>adcCoefficient</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
