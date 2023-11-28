@@ -27,6 +27,8 @@
 
 extern SPI_HandleTypeDef hspi2;
 osMessageQueueId_t adcQueueHandle;
+osMessageQueueId_t spiQueueHandle;
+static SPI_HandleTypeDef* pAdcSpi;
 static EspMsg_t espmsg;
 static hx711_t loadcell;
 static float weightBuffer[60];
@@ -67,13 +69,21 @@ void resetADC(uint8_t* readBuffer){
 	HAL_SPI_TransmitReceive(&hspi2, commandBuf, readBuffer, 4, 5000);
 }
 
-void getADCRegister(uint8_t command, uint8_t* readBuffer, uint8_t registerSize){
+int8_t getADCRegister(uint8_t command, uint8_t* readBuffer, uint8_t registerSize){
 	uint8_t i;
-	uint8_t commandBuf[2]={0, 0};
+	uint8_t commandBuf[4]={0};
+	uint8_t spiMsg = 1;
 	
 	commandBuf[0]=command;
-	HAL_SPI_TransmitReceive(&hspi2, commandBuf, readBuffer, 1, 5000);
-	for(i=1;i<registerSize+1;i++) HAL_SPI_TransmitReceive(&hspi2, &commandBuf[1], &readBuffer[i], 1, 5000);
+	if(command == 0xff) {
+		for(i=1;i<4;i++) commandBuf[i]=0xff;
+	}
+	HAL_SPI_TransmitReceive_DMA(pAdcSpi, commandBuf, readBuffer, registerSize);//, 5000);
+	if(osMessageQueueGet (spiQueueHandle, &spiMsg, 0, MAX_DELAY) == RECEIVE_OK){
+		if(spiMsg == RECEIVE_OK) return ADC_OK;
+	}
+	return ADC_ERROR;
+	//for(i=1;i<registerSize+1;i++) HAL_SPI_TransmitReceive(&hspi2, &commandBuf[1], &readBuffer[i], 1, 5000);
 }
 
 uint16_t conversionCounter = 0;
@@ -82,8 +92,9 @@ void initAD7797(void){
 	uint32_t adcValue;	
 	
 	HAL_GPIO_WritePin(ADC_EN_GPIO_Port, ADC_EN_Pin, GPIO_PIN_RESET);
-	resetADC(adcBuffer);	
-	getADCRegister(READ_ID_REGISTER, adcBuffer, 1);
+	//resetADC(adcBuffer);	
+	getADCRegister(RESET_ADC, adcBuffer, 4);
+	getADCRegister(READ_ID_REGISTER, adcBuffer, 2);
 	if(adcBuffer[1]==0x5B) adcInitState = ADC_OK;
 	else adcInitState = ADC_ERROR;
 	readWeightAD7797(adcOffset, 1);//adcCoefficient);	
@@ -141,12 +152,12 @@ float readWeightAD7797(uint32_t offset, float coeff){
 	for(uint8_t i=0; i<5;i++){
 		for(;;){
 		if(HAL_GPIO_ReadPin(ADC_DOUT_GPIO_Port, ADC_DOUT_Pin) == GPIO_PIN_RESET){			
-		getADCRegister(READ_STATUS_REGISTER, adcBuffer, 1);	
+			getADCRegister(READ_STATUS_REGISTER, adcBuffer, 2);	
 			conversionCounter++;
 			if((adcBuffer[1]&0x80)==0){
 				if((adcBuffer[1]&0x40)) errorFlag = 1;
 				else errorFlag = 0;
-				getADCRegister(READ_DATA_REGISTER, adcBuffer, 3);	
+				getADCRegister(READ_DATA_REGISTER, adcBuffer, 4);	
 				adcValue = adcBuffer[1]<<16;
 				adcValue |= adcBuffer[2]<<8;
 				adcValue |= adcBuffer[3];
@@ -256,6 +267,7 @@ void readWeightTask(void *argument)
 	static AdcMsg_t adcMsg;	
 	uint8_t initCounter = 0;	
 	
+	pAdcSpi = (SPI_HandleTypeDef*) argument;	
 	initADC();
 	while (adcInitState != ADC_OK)
 	{
@@ -301,4 +313,13 @@ void setAdcState(uint8_t state)
 float getWeightValByIndex(uint8_t index)
 {
 	return weightBuffer[index];
+}
+
+void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi){
+	if (hspi == pAdcSpi){
+		uint8_t spiMsg = RECEIVE_OK;
+		
+		osMessageQueuePut(spiQueueHandle, &spiMsg, 0, 0);
+	}
+	
 }

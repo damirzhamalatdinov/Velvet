@@ -22,6 +22,7 @@ typedef enum{
 }AdcMsg_t;
 /* Definitions for adcQueue */
 extern osMessageQueueId_t adcQueueHandle;
+extern osMessageQueueId_t spiQueueHandle;
 
 void readWeightTask(void *argument);
 uint8_t getAdcState(void);

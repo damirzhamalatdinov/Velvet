@@ -192,6 +192,9 @@ int main(void)
 	const osMessageQueueAttr_t adcQueue_attributes = {
   .name = "adcQueue"
 	};
+	const osMessageQueueAttr_t spiQueue_attributes = {
+  .name = "spiQueue"
+	};
 	/* Create the queue(s) */
   /* creation of espSendQueue */
   espSendQueueHandle = osMessageQueueNew (5, sizeof(uint8_t), &espSendQueue_attributes);
@@ -201,6 +204,8 @@ int main(void)
   rfidReceiveQueueHandle = osMessageQueueNew (2, sizeof(uint8_t), &rfidReceiveQueue_attributes);
   /* creation of adcQueue */
   adcQueueHandle = osMessageQueueNew (3, sizeof(uint8_t), &adcQueue_attributes);
+	/* creation of spiQueue */
+  spiQueueHandle = osMessageQueueNew (3, sizeof(uint8_t), &spiQueue_attributes);
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
@@ -208,7 +213,7 @@ int main(void)
   sendMsgHandle = osThreadNew(sendMsgToESPTask, (void*) &huart3, &sendMsg_attributes);
 
   /* creation of readWeight */
-  readWeightHandle = osThreadNew(readWeightTask, NULL, &readWeight_attributes);
+  readWeightHandle = osThreadNew(readWeightTask, (void*) &hspi2, &readWeight_attributes);
 
   /* creation of readRfid */
   readRfidHandle = osThreadNew(readRfidTask, (void*) &huart4, &readRfid_attributes);
