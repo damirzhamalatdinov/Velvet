@@ -51,6 +51,7 @@ IWDG_HandleTypeDef hiwdg;
 
 SPI_HandleTypeDef hspi2;
 DMA_HandleTypeDef hdma_spi2_rx;
+DMA_HandleTypeDef hdma_spi2_tx;
 
 TIM_HandleTypeDef htim6;
 
@@ -510,6 +511,9 @@ static void MX_DMA_Init(void)
   /* DMA1_Stream3_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream3_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream3_IRQn);
+  /* DMA1_Stream4_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream4_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream4_IRQn);
 
 }
 

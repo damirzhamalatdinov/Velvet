@@ -97,7 +97,7 @@ void initAD7797(void){
 	getADCRegister(READ_ID_REGISTER, adcBuffer, 2);
 	if(adcBuffer[1]==0x5B) adcInitState = ADC_OK;
 	else adcInitState = ADC_ERROR;
-	readWeightAD7797(adcOffset, 1);//adcCoefficient);	
+	//readWeightAD7797(adcOffset, 1);//adcCoefficient);	
 	HAL_GPIO_WritePin(ADC_EN_GPIO_Port, ADC_EN_Pin, GPIO_PIN_SET);	
 	
 //	osDelay(100);
@@ -146,11 +146,9 @@ void initADC(void)
 float weight;
 uint8_t errorFlag = 0;
 float readWeightAD7797(uint32_t offset, float coeff){	
-	uint32_t adcValue;
+	uint32_t adcValue;	
 	
-	
-	for(uint8_t i=0; i<5;i++){
-		for(;;){
+	for(uint8_t i=0; i<5;i++){		
 		if(HAL_GPIO_ReadPin(ADC_DOUT_GPIO_Port, ADC_DOUT_Pin) == GPIO_PIN_RESET){			
 			getADCRegister(READ_STATUS_REGISTER, adcBuffer, 2);	
 			conversionCounter++;
@@ -163,15 +161,14 @@ float readWeightAD7797(uint32_t offset, float coeff){
 				adcValue |= adcBuffer[3];
 				if(errorFlag == 0) weight = ((float)offset-adcValue)/coeff;
 				else weight = 0;
-				//return weight;				
+				return weight;				
 				//break;
 			}
 		}
 		else{
 			osDelay(50);
 			delayCounter++;
-		}	
-	}		
+		}				
 	}	
 	return 0;
 }
@@ -315,7 +312,7 @@ float getWeightValByIndex(uint8_t index)
 	return weightBuffer[index];
 }
 
-void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi){
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi){
 	if (hspi == pAdcSpi){
 		uint8_t spiMsg = RECEIVE_OK;
 		

@@ -190,8 +190,12 @@ void readRfidResponse(uint8_t *buf)
 
 void rfidInit(void)
 {
+	static AdcMsg_t adcMsg2;
+	
 	HAL_GPIO_WritePin(RFID_EN_GPIO_Port, RFID_EN_Pin, GPIO_PIN_SET);
 	osDelay(2000);	
+//	adcMsg2 = READ_WEIGHT;
+//  osMessageQueuePut(adcQueueHandle, &adcMsg2, 0, 0);
 	sendCmd(outputBuffer, GET_READER_INFO_CMD);
 	if (osMessageQueueGet(rfidReceiveQueueHandle, &receiveStage, 0, 2000) == RECEIVE_OK)
 	{
