@@ -35,13 +35,29 @@ void readTemperatureValue(uint8_t devAddress){
   */
 void readTemperatureRegister(I2C_HandleTypeDef* pI2C, uint8_t devAddress){
 	uint8_t temperatureRegisterAddress = 0;
+	uint16_t i2cCounter = 0;
 	
 	currentSensor = devAddress;
 	HAL_I2C_Master_Transmit(pI2C, devAddress<<1, &temperatureRegisterAddress, 1, 1000);
-	while (HAL_I2C_GetState(pI2C) != HAL_I2C_STATE_READY) osDelay(1);  
-//	HAL_I2C_Master_Receive_DMA(pI2C, devAddress<<1, receiveBuf, TEMPERATURE_REG_SIZE);
-	HAL_I2C_Master_Receive(pI2C,devAddress<<1,receiveBuf, TEMPERATURE_REG_SIZE,1000);
-	readTemperatureValue(devAddress);	
+	while (HAL_I2C_GetState(pI2C) != HAL_I2C_STATE_READY) {
+		osDelay(1);
+		if(i2cCounter>1000){
+			HAL_I2C_Master_Abort_IT(pI2C, devAddress<<1);
+			return;
+		}
+		else i2cCounter++;
+	}
+	//HAL_I2C_Master_Receive_DMA(pI2C, devAddress<<1, receiveBuf, TEMPERATURE_REG_SIZE);
+	HAL_I2C_Master_Receive_IT(pI2C, devAddress<<1, receiveBuf, TEMPERATURE_REG_SIZE);
+	while (HAL_I2C_GetState(pI2C) != HAL_I2C_STATE_READY) {
+		osDelay(1);
+		if(i2cCounter>1000){
+			HAL_I2C_Master_Abort_IT(pI2C, devAddress<<1);
+			return;
+		}
+		else i2cCounter++;
+	}
+	//readTemperatureValue(devAddress);	
 }
 
 void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c){

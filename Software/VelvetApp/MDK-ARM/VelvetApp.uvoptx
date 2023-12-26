@@ -154,7 +154,7 @@
           <Type>0</Type>
           <LineNumber>157</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134239320</Address>
+          <Address>134242124</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -286,6 +286,11 @@
           <count>23</count>
           <WinNumber>1</WinNumber>
           <ItemText>adcOffset,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>24</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>hi2c1</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>

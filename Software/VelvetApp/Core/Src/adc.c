@@ -219,9 +219,7 @@ float findAverage(float *a, uint8_t n){
 	return avg/n;
 }
 
-void startCalibration(){
-	float avgWeight;
-	
+void startCalibration(){	
 	#ifdef HX711
 		hx711_calibration(&loadcell, hx711_offset_get(&loadcell), hx711_value_ave(&loadcell, 10), calibrationWeight);
 		saveCoefficientsToFlash(hx711_offset_get(&loadcell), hx711_coef_get(&loadcell));
