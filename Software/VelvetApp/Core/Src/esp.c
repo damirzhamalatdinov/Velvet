@@ -112,7 +112,7 @@ void sendMsgToESP(EspMsg_t sendMessageType){
 				//HAL_UART_Transmit_IT(&huart4,sendWeightPrepareCmd,8);		
 			break;
 			case CHECK_FW:
-//				checkFWCmd[1] = (versionNum&0xff00)>>8; mytest
+//				checkFWCmd[1] = (versionNum&0xff00)>>8;
 //				checkFWCmd[2] = versionNum&0xff;
 				currentCmdESP = 1;
 				HAL_UART_Transmit(pUart,checkFWCmd,8,1000);				
@@ -134,7 +134,7 @@ void sendMsgToESP(EspMsg_t sendMessageType){
 void sendMsgToESPTask(void *argument){	
 	static uint8_t messageReceived = 0;
 	static uint8_t ingnoreCounter = 0;
-	EspMsg_t sendMessageType = CHECK_FW;//EMPTY_MSG; mytest
+	EspMsg_t sendMessageType = EMPTY_MSG;
 	
 	pUart = (UART_HandleTypeDef*) argument;	
 	HAL_GPIO_WritePin(ESP_EN_GPIO_Port, ESP_EN_Pin, GPIO_PIN_SET);

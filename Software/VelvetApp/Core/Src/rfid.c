@@ -30,8 +30,8 @@ static uint8_t currentTag[6] = {0};
 static uint8_t deviceAddress = 0;
 static uint8_t currentCmdRFID = 0;
 static uint8_t tagsBuffer[5][6];
-static uint8_t calibrationTag[6] = {1, 2, 3, 4, 5, 6};
-static uint8_t offsetTag[6] = {6, 5, 4, 3, 2, 1};
+static uint8_t calibrationTag[6] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x05};//{0x03, 0x40, 0xF0, 0x11, 0x72, 0x09};//
+static uint8_t offsetTag[6] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06};//{0x03, 0x40, 0xF0, 0x09, 0x22, 0x08};//
 // static const uint8_t calibrationMsg = 1;
 
 uint16_t uiCrc16Calc(uint8_t *buf, uint8_t length)
@@ -257,8 +257,7 @@ void readRfidTask(void *argument)
 				HAL_UART_DMAStop(pUart);
 		}
 		else
-			HAL_UART_DMAStop(pUart);
-		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
+			HAL_UART_DMAStop(pUart);		
 	}
 	/* USER CODE END readRfid */
 }
