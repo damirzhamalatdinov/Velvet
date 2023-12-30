@@ -1,30 +1,29 @@
 {
-    "name": "Settings_ESP",
-    "version": "1.0.0",
-    "description": "Library for ESP32 and STM communication",
-    "keywords": [
-      "Settings",
-      "Wi-Fi",
-      "debug"
-    ],
-    "authors": [
-      {
-        "name": "Maxat Suieubayev",
-        "email": "maxat.suieubayev@gmail.com"
-      }
-    ],
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/your_username/ntp_sync.git"
-    },
-    "frameworks": [
-      "arduino"
-    ],
-    "platforms": [
-      "espressif32"
-    ],
-    "dependencies": {
-      "Time": ">=1.5.0"
+  "name": "Settings_ESP",
+  "version": "1.0.0",
+  "description": "Library for ESP32 and STM communication",
+  "keywords": [
+    "Settings",
+    "Wi-Fi",
+    "debug"
+  ],
+  "authors": [
+    {
+      "name": "Maxat Suieubayev",
+      "email": "maxat.suieubayev@gmail.com"
     }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your_username/ntp_sync.git"
+  },
+  "frameworks": [
+    "arduino"
+  ],
+  "platforms": [
+    "espressif32"
+  ],
+  "dependencies": {
+    "Time": ">=1.5.0"
   }
-  
+}
