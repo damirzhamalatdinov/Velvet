@@ -35,9 +35,9 @@
 #include <HTTPClient.h>
 #include <Update.h>
 
-const char* ssid = "R";
-const char* password = "12121957";
-bool debug_flag = true;
+const char* ssid = "R";     //TODO: Заменить SSID;
+const char* password = "12121957"; //TODO: Заменить пароль;
+bool debug_flag = true; //TODO: В случае теста флаг - true; в продакшн флаг - false;
 String serialNumber = String(ESP.getChipRevision());
 
 //HardwareSerial Serial2(2);
