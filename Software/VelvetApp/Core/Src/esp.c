@@ -41,6 +41,7 @@ static union weight{
 } weight;
 static uint16_t versionNum = 1;
 static uint8_t currentCmdESP = 0;
+static EspMsg_t sendMessageType = EMPTY_MSG;
 
 EspResponse_t checkResponse(uint8_t* buf){
 	if(memcmp(buf, checkFWRspOK, 8) == 0) return RestartSTM;
