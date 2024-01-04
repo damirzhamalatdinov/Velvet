@@ -2,7 +2,6 @@
  * @file Settings_ESP.h
  * @brief Файл содержит внешние объявления функции отладки, SSID и пароля Wi-Fi.
  */
-
 #ifndef Settings_ESP_h
 #define Settings_ESP_h
 

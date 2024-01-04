@@ -22,7 +22,6 @@
  * * отправка метки времени в формате unix timestamp;
  * * передача данных прошивки на STM.
 */
-
 class ESP32_STM_UART {
   public:
 /**
@@ -30,7 +29,6 @@ class ESP32_STM_UART {
  * @param serial Интерфейс UART, который будет использоваться для коммуникации.
  * @param baudRate Скорость передачи данных в бодах.
 */
-
   ESP32_STM_UART(HardwareSerial &serial, uint32_t baudRate);
 /**
  * @brief Проверяет наличие подключения к Wi-Fi. 
@@ -82,10 +80,8 @@ private:
  * @param timestamp Метка времени в формате unix timestamp.
  * @param result Результат выполнения команды.
 */
-
   void sendTimestampRsp(uint32_t timestamp, uint8_t result);
 /**
-
  * @brief Отправляет команду на подготовку передачи весовых данных.
  * Эта функция отправляет команду STM32 на подготовку передачи весовых данных.
 */
@@ -97,14 +93,12 @@ private:
  * @param firmwareData Данные прошивки.
  * @param firmwareSize Размер прошивки.
 */
-
   void sendFirmwareToSTM(const uint8_t *firmwareData, size_t firmwareSize);
 /**
  * @brief Отправляет ответ на команду CHECK_FW_CMD.
  * Эта функция отправляет ответ STM32 на команду CHECK_FW_CMD с указанным результатом.
  * @param result Результат выполнения команды.
 */
-
   void sendCheckFwRsp(uint8_t result);
 /**
  * @brief Функция вычисления контрольной суммы CRC32
@@ -120,14 +114,12 @@ private:
  * Функция получает текущее время в формате Unix timestamp (количество секунд, прошедших с 1 января 1970 года).
  * @return Текущее время в формате Unix timestamp.
 */
-
   uint32_t getUnixTimestamp();
 /**
  * @brief Перечисление типов сообщений, используемых в протоколе общения между ESP32 и STM32
  * Это перечисление определяет типы сообщений, которые используются для обмена данными между ESP32 и STM32 в протоколе общения.
  * Оно определяет значения, используемые в поле типа сообщения пакета.
 */
-
   enum MessageType {
     CHECK_FW_CMD = 0x01,
     BOOTLOADER_READY_CMD = 0x02,
