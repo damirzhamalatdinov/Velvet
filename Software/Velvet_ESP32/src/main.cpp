@@ -1,7 +1,7 @@
 
 /**
- * @mainpage Velvet_ESP32
- * @brief Проект Velvet_ESP32 предназначен для реализации протокола общения между микроконтроллерами ESP32 и STM32
+ * @mainpage ESP32_STM_UART
+ * @brief Проект ESP32_STM_UART предназначен для реализации протокола общения между микроконтроллерами ESP32 и STM32
  * с использованием интерфейса UART. Проект содержит файлы ESP32_STM_UART.h и Settings_ESP.h.
  * @section structure Структура проекта
  * * main.cpp
@@ -35,9 +35,10 @@
 #include <HTTPClient.h>
 #include <Update.h>
 
-const char* ssid = "SSID";
-const char* password = "PASSWORD";
-bool debug_flag = true;
+const char* ssid = "R";     //TODO: Заменить SSID;
+const char* password = "12121957"; //TODO: Заменить пароль;
+bool debug_flag = true; //TODO: В случае теста флаг - true; в продакшн флаг - false;
+String serialNumber = String(ESP.getChipRevision());
 
 //HardwareSerial Serial2(2);
 uint32_t uartBaudRate = 115200; 
@@ -54,25 +55,43 @@ ESP32_STM_UART stmUart(Serial2, uartBaudRate);
  * @brief Настраивает начальные параметры, такие как последовательный порт и подключение Wi-Fi.
  */
 void setup() {
+    Serial2.begin(uartBaudRate, SERIAL_8N1, 12, 13);
     Serial.begin(uartBaudRate);
-    
+    print_debug(debug_flag, String("Ready"));
     //WiFi.begin(ssid, password);
-
-    uint8_t retries = 5;
     /**
      * @brief Подключение к wi-fi retries раз
     */
-    if (!stmUart.check_wifi()) {
+    int retries = 5;
+    
+    while (WiFi.status() != WL_CONNECTED && retries > 0) {
+        delay(500);
+        WiFi.begin(ssid, password);
+        if (WiFi.status() == WL_CONNECTED) {
+            print_debug(debug_flag, String("Wifi connected"));
+        }
+        retries--;
+        print_debug(debug_flag, String("Wi-Fi not connected!"));
+    }
         /**
          * @brief Не удалось подключиться к Wi-Fi, здесь можно добавить обработку ошибок
         */ 
         // Serial.println("Не удалось подключиться к Wi-Fi");
-    }
+    
+    print_debug(debug_flag, String("Wi-Fi connected!"));
 }
+
+// void sendcmd(uint8_t result) {
+//   uint8_t response[8] = {0x01, result, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+//   Serial2.write(response, sizeof(response));
+// }
 
 /**
  * @brief Основной цикл программы, обрабатывает входящие сообщения через stmUart.
  */
 void loop() {
+    //print_debug(debug_flag, String("We are in loop"));
     stmUart.processIncomingMessage();
+    //stmUart.sendcmd(0x02);
+    //delay(200);
 }

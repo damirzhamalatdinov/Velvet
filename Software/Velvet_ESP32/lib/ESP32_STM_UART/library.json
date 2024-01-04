@@ -1,0 +1,32 @@
+{
+    "name": "ESP32_STM_UART",
+    "version": "1.0.0",
+    "description": "Library for ESP32 and STM communication",
+    "keywords": [
+      "UART",
+      "protocol",
+      "communication"
+    ],
+    "authors": [
+      {
+        "name": "Maxat Suieubayev",
+        "email": "maxat.suieubayev@gmail.com"
+      }
+    ],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/your_username/ntp_sync.git"
+    },
+    "frameworks": [
+      "arduino"
+    ],
+    "platforms": [
+      "espressif32"
+    ],
+    "dependencies": {
+      "Time": ">=1.5.0"
+    }
+  }
+  
+  
+  

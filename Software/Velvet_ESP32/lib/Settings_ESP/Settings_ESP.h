@@ -6,7 +6,10 @@
 #define Settings_ESP_h
 
 #pragma once
-
+/**
+ * @brief Серийный номер устройства, определяется номером ревизии чипа ESP32
+*/
+extern String serialNumber;
 /**
  * @brief SSID Wi-Fi сети, к которой должен подключаться ESP32.
  */
@@ -15,13 +18,10 @@ extern const char* ssid;
  * @brief Пароль Wi-Fi сети, к которой должен подключаться ESP32.
  */
 extern const char* password;
-
 /**
  * @brief Логическое значение, определяющее, следует ли печатать входную переменную.
  */
 extern bool debug_flag;
-
-template <typename T>
 
 /**
  * @brief Функция отладки, которая печатает входную переменную, если флаг равен true. Состояние флага устанавливается в main.cpp но видно во всём проекте.
@@ -40,6 +40,7 @@ template <typename T>
  *   print_debug(debug_flag, number);
  * @endcode
  */
+template <typename T>
 void print_debug(bool flag, const T& variable) {
   if (flag) {
     Serial.println(variable);
